@@ -13,6 +13,14 @@ console.log('Topic: Date object');
 // RU: Создать объект Date из строки '15.03.2025'.
 // EN: Create an object Date from the string '15.03.2025'.
 
+// Task 01111111111111111111111111111111111111111111 padStart
+// RU: Объявите три переменных: hour, minute, second.
+//     Присвойте им следующие значения: 4, 35, 5.
+//     Выведите в консоль время в формате 04:35:05.
+// EN: Declare three variables: hour, minute, second.
+//     Assign them the following values: 4, 35, 5.
+//     Display the time in the format 04:35:05 in the console.
+
 // Task 3
 // RU: Создать объект Date, который содержит:
 //     1. завтрашнюю дату,
