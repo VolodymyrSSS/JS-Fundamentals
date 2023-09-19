@@ -88,6 +88,91 @@ console.log('Topic: Objects');
 // 'щеОдинСловоВираз'.exclaim(2);
 // const str = 'abcdef';
 // str.exclaim(3);
+// ====================================================================
+
+// =====================Task ??===================================
+// UA: Поясніть концептуальне поняття 'прототип' і 'успадкованість'
+//     у JavaScript використовуючи лише функціональний підхід (не класовий).
+//     Отже, у нас є дві функції-конструктори: Animal і Dog. Функція-конструктор
+//     Animal приймає параметр name і призначає його властивості name
+//     новоствореного об’єкта за допомогою this.name. Ми додаємо метод greet
+//     до Animal.prototype, який буде спільний для всіх екземплярів, створених
+//     за допомогою функції конструктора Animal. Функція конструктора Dog
+//     розширює функцію конструктора Animal за допомогою Animal.call(this, name)
+//     для успадкування властивостей від конструктора Animal.
+//     Вашe завдання:
+//     - встановити прототипний ланцюг для Dog;
+//     - додати метод bark до прототипу дочірнього елемента, вивести в консолі
+//     вираз 'Гав, гав..';
+//     - створити екземпляри Animal і Dog: const animal, const dog;
+//     - використати успадкований метод для animal і dog:
+//     екземпляр animal використовує метод greet, успадкований від Animal.prototype;
+//     екземпляр dog використовує як метод greet, успадкований від Animal.prototype,
+//     так і метод bark, визначений у Dog.prototype (спеціальний метод для дочірнього).
+// EN: Explain what is the Prototypes and Prototypal Inheritance concepts
+//     in JavaScript using only functional approach (not Class). So,
+//     we have two constructor functions: Animal and Dog. The Animal constructor
+//     function takes a name parameter and assigns it to the name property
+//     of the newly created object using this.name. We add a greet method
+//     to the Animal.prototype, which will be shared by all instances created
+//     from the Animal constructor function. The Dog constructor function extends
+//     the Animal constructor function using Animal.call(this, name) to inherit
+//     properties from the Animal constructor.
+//     Your tasks are:
+//     - establish the prototype chain for the Dog;
+//     - add method bark to the child's prototype - in console: 'Woof, woof..';
+//     - create instances of Animal and Dog: const animal, const dog;
+//     - use inherited method for animal and dog:
+//       the animal instance uses the greet method inherited from Animal.prototype;
+//       the dog instance uses both the greet method inherited from Animal.prototype
+//       and the bark method defined in Dog.prototype (specific method for the child)
+
+// parent constructor function
+// function Animal(name) {
+// 	this.name = name;
+// }
+// adding a methods to the perent's prototype
+// Animal.prototype.greet = function () {
+// 	console.log(`Hello, my name is ${this.name}`);
+// };
+// child constructor function
+// function Dog(name, breed) {
+// 	Animal.call(this, name);
+// 	this.breed = breed;
+// }
+
+// solution:
+/* A prototype is an object from which other objects inherit properties
+   and methods. When a property or method is accessed on an object,
+   JavaScript first checks if the object itself has that property. If not,
+   it looks up the prototype chain by checking the object’s prototype,
+   then the prototype’s prototype, and so on until it finds the property
+   or reaches the end of the chain.
+   So, first we establish the prototype chain by creating a new object and
+   assigning it to Dog.prototype. This links the prototype of Dog instances
+   to Animal.prototype, enabling inheritance: 
+*/
+// establishing the prototype chain
+// Dog.prototype = Object.create(Animal.prototype);
+// Dog.prototype.constructor = Dog;
+// adding a methods to the childs's prototype
+// Dog.prototype.bark = function () {
+// 	console.log('Woof, woof..');
+// };
+// create instances
+// const animal = new Animal('Max');
+// const dog = new Dog('Buddy', 'Labrador');
+// // using the inherited methods
+// animal.greet(); // Hello, my name is Max
+// dog.greet(); // Hello, my name is Buddy
+// using the specific method for the child
+// dog.bark(); // Woof, woof..
+/* Prototypes and prototypal inheritance are fundamental concepts 
+   in JavaScript. They allow objects to inherit properties and methods  
+   from other objects, enabling code reuse and establishing relationships 
+  between objects.
+*/
+// ====================================================================
 
 // Task 04
 // UA: Створіть функцію-конструктор Book(title, author).
@@ -249,6 +334,47 @@ console.log('Topic: Objects');
 // console.log(book3.getPublishingHouse());
 // console.log(book3.getFullBookName());
 // console.log(book3.getBookData());
+
+// =====================Task 05===================================
+// UA: В нас є масив об'єктів. Кожен об'єкт має поле name та age.
+// 		 Відсортуйте об'єкти на збільшення по полю age.
+// 		 А тепер відсортуйте об'єкти по полю name. А що буде, якщо перший
+// 		 символ рядка поля name буде починатись з маленької букви?
+// EN: We have an array of objects. Each object has a name and age
+// 		 field. Sort the objects in ascending order by the age field.
+//		 And now sort the objects by the name field. And what will happen
+//		 if the first character of the name field string starts with a small letter?
+
+// const usersArr = [
+// 	{ name: 'Modest', age: 42 },
+// 	{ name: 'Alex', age: 34 },
+// 	{ name: 'Ellis', age: 29 },
+// 	{ name: 'Christina', age: 35 },
+// ];
+
+// solution for sorting by field age:
+// let ageSortedArr = usersArr.sort((user1, user2) => user1.age - user2.age);
+// console.log(ageSortedArr); // [{ name: 'Ellis', age: 29 },{ name: 'Alex', age: 34 },...]
+
+// solution for sorting by field name using own algorithm:
+// let nameSortedArr = usersArr.sort((user1, user2) => {
+// 	if (user1.name < user2.name) return -1;
+// 	if (user1.name == user2.name) return 0;
+// 	if (user1.name > user2.name) return 1;
+// });
+
+// solution for sorting by field name using str.localeCompare(str2)-method:
+// To consider the register we need to take into accoult as well an alphabet. But
+// alphabets are different for different languages. So, the browser needs to know
+// the language to compare. Modern browsers support the internationalization
+// standard ECMA-402 which provides a special method to compare strings in
+// different languages that is str.localeCompare(str2) returns an integer indicating
+// whether str is less, equal or greater than str2.
+// let nameSortedArr = usersArr.sort((user1, user2) => {
+// 	return user1.name.localeCompare(user2.name);
+// });
+
+// console.log(nameSortedArr); // [{name: 'Alex', age: 34}, {name: 'Christina', age: 35},...]
 
 // Task 05
 // UА: Створіть клас Shape із статичною властивістю count.
@@ -482,7 +608,7 @@ console.log('Topic: Objects');
 // console.log(task1);
 // console.log(task1.toString());
 
-// Task 10 Transform Array into Map (Maksym Koval1 <Maksym_Koval1@epam.com>)
+// Task 10 Transform Array into Map
 // UА: Претворити масив в меп по зразку
 // EN: Transform array into map according to pattern
 // const entries = [
@@ -503,14 +629,14 @@ console.log('Topic: Objects');
 //     'FOURTH_KEY': 'value1'
 // }
 
-const entries = [
-	{ key: 'FIRST_KEY', value: 'FIRST_KEY_VALUE' },
-	{ key: 'FIRST_KEY', value: 'FIRST_KEY_NOT_SAME_VALUE' },
-	{ key: 'SECOND_KEY', value: 'value1' },
-	{ key: 'SECOND_KEY', value: 'value4' },
-	{ key: 'THIRD_KEY', value: 'value6' },
-	{ key: 'FOURTH_KEY', value: 'value1' },
-];
+// const entries = [
+// 	{ key: 'FIRST_KEY', value: 'FIRST_KEY_VALUE' },
+// 	{ key: 'FIRST_KEY', value: 'FIRST_KEY_NOT_SAME_VALUE' },
+// 	{ key: 'SECOND_KEY', value: 'value1' },
+// 	{ key: 'SECOND_KEY', value: 'value4' },
+// 	{ key: 'THIRD_KEY', value: 'value6' },
+// 	{ key: 'FOURTH_KEY', value: 'value1' },
+// ];
 
-const resultMap = entries.reduce();
-console.log(set);
+// const resultMap = entries.reduce();
+// console.log(set);
