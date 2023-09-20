@@ -1,4 +1,71 @@
 console.log('Topic: Promises');
+
+// ======================= Task 1 ===================================
+// UА: Що представляє собою проміс? Створіть функцію fetchData яка
+//     покаже сутність використання промісів. Для симуляції асинхронної
+//     операції використайте setTimeout в результаті проміс переходить
+//     у стан resolve через 2 скунди та повертає дані, які визначені у
+//     змінній const data = { id: 42, name: 'Modest Rampala' }; Отримайте
+//     дані промісу та виведіть їх у консоль.
+//     У разі якщо проміс відхилений, виведіть повідомлення про помилку
+//     'Failed to fetch data' у консолі. Передбачте також виведення
+//     повідомлення 'Fetch operation completed' незважаючи на результат
+//     виконання промісу.
+// EN: What is a propromise? Create a function fetchData which will show
+//     the essence of using promises. To simulate an asynchronous operation,
+//     use setTimeout as a result, the promise goes into the resolve state
+//     after 2 seconds and returns the data defined in the variable
+//     const data = { id: 42, name: 'Modest Rampala' }; Get the promise data
+//     and output it to the console. If the promise is rejected, display
+//     the error message 'Failed to fetch data' in the console. Also provide
+//     for the output of the message 'Fetch operation completed' regardless
+//     of the result of the promise.
+
+// solution:
+// A promise represents the eventual result of an asynchronous operation, which
+// can be either a resolved value or a reason for rejection. It has three possible
+// states: pending, fulfilled (resolved), or rejected.
+// To create a promise, you use the Promise constructor, which takes a callback
+// function with two parameters: resolve and reject. Inside this callback, you
+// perform your asynchronous task and call either resolve(value) to fulfill the
+// promise with a value or reject(reason) to reject it with a reason (typically
+// an error object).
+// The then() method is used to handle the fulfillment of a promise.
+// It takes a callback function that receives the resolved value as its
+// argument. You can chain multiple then() calls to perform sequential
+// operations or transformations on the resolved value.
+// The catch() method is used to handle the rejection of a promise. It
+// takes a callback function that receives the reason for rejection (an
+// error) as its argument. It’s typically used at the end of the promise
+// chain to handle any errors that occurred during the asynchronous operation.
+// Promises also provide additional methods such as finally(), which
+// allows you to specify a callback that will be called regardless of
+// whether the promise is fulfilled or rejected, and Promise.all(), which
+// can be used to wait for multiple promises to fulfill.
+
+function fetchData() {
+	return new Promise((resolve, reject) => {
+		// simulating an asynchronous operation (example API request)
+		setTimeout(() => {
+			const data = { id: 42, name: 'Modest Rampala' };
+			resolve(data); // resolve the promise with the fetched data
+			// reject( new Error('Failed to fetch data')); // uncomment to simulate rej-state
+		}, 2000);
+	});
+}
+
+fetchData()
+	.then((data) => {
+		console.log('Fetched data :', data);
+	})
+	.catch((error) => {
+		console.log('Error :', error.message);
+	})
+	.finally(() => {
+		console.log('Fetch operation completed');
+	});
+// ==================================================================
+
 // Task 01
 // UA: Створіть проміс, який постійно знаходиться в стані "pending".
 //     В конструкторі промису виведіть в консоль повідомлення "Promise is created".
@@ -704,3 +771,56 @@ console.log('Topic: Promises');
 // 	.catch((error) => {
 // 		console.log(error.name + ' ' + error.message);
 // 	});
+
+// =====================Task ??===================================
+// UA: Що собою представляє цикл подій? Наведіть приклад, як працює
+//     цикл подій працює в JavaScript.
+// EN: What is the event loop? Give an example of how the event loop
+//     works in JavaScript.
+
+/*
+  Цикл подій є невід’ємною частиною середовища виконання JavaScript. Цикл   
+  подій показує порядок обробки виконання асинхронних завдань, гарантуючи, 
+  що вони не блокують основне виконання і дозволяють JavaScript бути постійно    
+  дієвим. Давайте наведемо приклад, як цикл подій працює в JavaScript, 
+  імітуючи асинхронну поведінку. Ось у якій черзі програма виконається:
+*/
+
+// console.log('Start'); // 1
+
+// setTimeout(() => {
+// 	console.log('Timeout1'); // 4
+// }, 0);
+
+// setTimeout(() => {
+// 	console.log('Timeout2'); // 5
+// }, 0);
+
+// Promise.resolve().then(() => {
+// 	console.log('Promise resolved'); // 3
+// });
+
+// console.log('End'); // 2
+
+/*
+  Програма запускається шляхом виводу 'Start' в консоль.
+  Дві функції setTimeout() викликаються із затримкою в 0 мілісекунд.
+  Хоча затримка кожної встановлена у значення 0, JavaScript розглядає 
+  цю затримку як мінімальну, і яка додасть функцію callback спочатку до 
+  черги завдань/подій і вже потім до стеку викликів (або стеку поточного 
+  контексту виконання). Далі, викликається Promise.resolve().then(), 
+  додаючи виклик callback до черги мікрозадач. Мікрозадачі, такі як  
+  promise, мають вищий пріоритет ніж ті, які знаходяться у звичайній 
+  черзі завдань/подій, тому promise буде виконуватись раніше і цикл 
+  подій коли буде перевіряти чергу мікрозадач виконає зворотний виклик 
+  Promise.resolve().then() та виведе в консоль 'Promise resolved'.
+  Програма виводить 'End' в консоль.
+  Далі цикл подій перевіряє стек викликів і виявляє, що він порожній.
+  Потім цикл подій перевіряє чергу завдань і вибирає найстаріше завдання
+  (в нашому випадку, це перший callback для виконання - перший setTimeout()).
+  'Timeout1' виводиться у консоль.
+  Цикл подій знову перевіряє стек викликів і виявляє, що він порожній.
+  Цикл подій переходить до наступного завдання в черзі завдань і виконує
+  другий зворотний виклик setTimeout(). 'Timeout2' виводиться у консоль.
+  Цикл подій знову перевіряє стек викликів і виявляє, що він порожній.
+*/
