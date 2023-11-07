@@ -1,5 +1,64 @@
 console.log('Topic: Objects');
 
+// ============================Task 1===================================+
+// UA: В нас є об'єкт person. Як з'ясувати, чи існує ключ name в цьому об'єкті?
+// EN: We have an object person. How to find out if the key name exists in this object?
+
+// const person = {
+// 	name: 'Modest',
+// 	age: 42,
+// };
+
+// solution via hasOwnProperty() method:
+// this method is used to determine whether an object has a specific property
+// if (person.hasOwnProperty('name')) {
+// 	console.log('The "name" key exists in the person object. ✔️');
+// } else {
+// 	console.log('The "name" key does not exist in the person object. ❌');
+// }
+
+// solution via using the in operator:
+// if ('name' in person) {
+// 	console.log('The "name" key exists in the person object. ✔️');
+// } else {
+// 	console.log('The "name" key does not exist in the person object. ❌');
+// }
+
+// solution via using undefined or null
+// this method might not work correctly if the key exists but has a value of undefined or null
+// if (person.name !== undefined) {
+// 	console.log('The "name" key exists in the person object. ✔️');
+// } else {
+// 	console.log('The "name" key does not exist in the person object. ❌');
+// }
+
+// solution via using optional chaining:
+/* optional chaining (?.) checks if person exists and then if person.name exists. 
+   It returns undefined if any part of the chain is missing */
+// if (person?.name) {
+// 	console.log('The "name" key exists in the person object. ✔️');
+// } else {
+// 	console.log('The "name" key does not exist in the person object. ❌');
+// }
+// ======================================================================
+
+// ============================Task 2====================================
+// UA: Маємо об'єкт myObject. Як дізнатись скільки елементів є в цьому об'єкті?
+// EN: We have an object myObject. How to find out how many elements there
+//     are in this object?
+
+// const myObject = {
+// 	channel: 'W3School JavaScript course',
+// 	author: 'W3Consorcium',
+// };
+
+// solution via Object.keys() method and prop length:
+// const myObjKeys = Object.keys(myObject);
+// console.log(myObjKeys); // ['channel', 'author']
+// console.log(myObjKeys.length); // 2
+
+// =====================================================================
+
 // Task 01
 // RU: Создать функцию-конструктор Tune(title, artist) для создания объектов
 //     с публичными свойствами title, artist и методом concat().
@@ -551,6 +610,88 @@ console.log('Topic: Objects');
 
 // person.age = 50;
 // console.log(person);
+
+// ============================Task ??===================================
+// UA: В нас є клас Car, в конструкторі якого задано властивості для
+//     створення на його основі 3х об'єктів (інстанси автомобілів). Якщо
+//     вивести в консоль усі створені об'єкти, то вони будуть відображати
+//     усі поля та їх значення, якщо використати табличну консоль, то в
+//     першій колонці будемо мати індкси цих інстансів, а в інших їх
+//     поля та їх значення. Як виправити, щоб відобразити в таблиці
+//     консолі інстанси без їх індексних номерів.
+// EN: We have a Car class, in the constructor of which properties are set
+//     for creating 3 objects (instances of cars) based on it. If you display
+//     all the created objects in the console, they will display all the
+//     fields and their values, if you use the tabular console, then in the
+//     first column we will have the indexes of these instances, and in the
+//     others their fields and their values. How to fix to display instances
+//     without their index numbers in the console table.
+
+// class Car {
+//    constructor(make, model) {
+//       this.make = make;
+// 		this.model = model;
+// 	}
+// }
+// const hisCar = new Car('Maserati', 'A6');
+// const yourCar = new Car('Audi', 'A4');
+// const myCar = new Car('BMV', 'X5');
+
+// solution via console.table({}):
+// console.log(hisCar, yourCar, myCar); // Car {make: 'Maserati', model: 'A6'}, Car {make: 'Audi',...
+// console.clear();
+// console.table([hisCar, yourCar, myCar]); // in column 'index' will be 0, 1, 2
+// console.clear();
+// console.table({ hisCar, yourCar, myCar }); // in column 'index' will be hisCar, yourCar, myCar
+// ======================================================================
+
+// ============================Task ??===================================
+// UA: У нас є масив, який містить елементи, що повторяються. Напишіть код,
+//     який буде отримувати  масив, що містить тільки унікальні значення, але
+//     щоб ці значення були також і ключами об'єкту.
+//     Виведіть у консолі масив, унікальних значень.
+// EN: We have an array that contains repeating elements. Write code that will
+//     receive an array containing only unique values, but so that these values
+//     are also the keys of the object.
+//     Display an array of unique values in the console.
+
+// const arr = ['sony', 'hp', 'apple', 'sony', 'dell', 'sony', 'hp', 'dell', 'hp'];
+
+// solution via forEach and Object.keys methods:
+// Create an empty object to store unique values as keys
+// const uniqueBrands = {};
+
+// Loop through each element in the input array
+// arr.forEach((brand) => {
+// 	// set each element as a key in the uniqueBrands object with a value of true
+// 	// this effectively removes duplicate elements because object keys are unique
+// 	uniqueBrands[brand] = true;
+// });
+// Get an array of the keys (unique values) from the uniqueBrands object
+// const result = Object.keys(uniqueBrands);
+// console.log(result); // ['sony', 'hp', 'apple', 'dell']
+
+// the solution via func creation:
+// const uniqueBrands = (list) => {
+// 	const uniqueBrands = {};
+
+// 	list.forEach((brand) => {
+// 		uniqueBrands[brand] = true;
+// 	});
+
+// 	return Object.keys(uniqueBrands);
+// };
+// console.log(uniqueBrands(brands)); // ['sony', 'hp', 'apple', 'dell']
+
+// solution via reduce method:
+// const uniqueBrands = arr.reduce((accumulator, brand) => {
+// 	if (!accumulator.includes(brand)) {
+// 		accumulator.push(brand);
+// 	}
+// 	return accumulator;
+// 	// initialize an empty array as the accumulator
+// }, []);
+// ======================================================================
 
 // Task 09 TodoList Application
 // UA: Створіть класи 'Завдання' и 'Список завдань' з таким функціоналом:

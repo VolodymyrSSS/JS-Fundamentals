@@ -496,7 +496,7 @@ console.log('Topic: Strings-Numbers');
 // xxxx
 // ...
 
-// solution via two for loops:
+// solution via two for loops and empty row:
 // 	// constructing rows
 // for (let i = 1; i <= 10; i++) {
 // 	let row = '';
@@ -506,6 +506,20 @@ console.log('Topic: Strings-Numbers');
 // 	}
 // 	console.log(row); // move through each iteration of the outer loop,
 //                    // the number of 'x's added to row increases
+// }
+
+// solution via two for loops and char x:
+// for (let i = 1; i <= 10; i++) {
+// 	let charX = 'x';
+// 	for (let j = 1; j < i; j++) {
+// 		charX += 'x';
+// 	}
+// 	console.log(charX);
+// }
+
+// solution via repeat() method:
+// for (let i = 1; i <= 10; i++) {
+// 	console.log('x'.repeat(i));
 // }
 // =====================================================================
 
@@ -910,12 +924,38 @@ console.log('Topic: Strings-Numbers');
 // console.log(maxValueNum); // '43210'
 // =====================================================================
 
-// ===========================Task 21===================================
-// Task 04. includes + index
-// RU: Проверить, содержит ли строка второе вхождение подстроки,
-//     вернуть true/false.
-// EN: Check whether the string contains a second occurrence of a substring,
-//     return true / false.
+// ============================Task 22==================================
+// UA: Є рядок символів представлений у форматі rgb-кольору, наприклад
+//     'rgb(255, 255, 78)'. Необхідно вичленити з цього рядка символів
+//      одні числа та вивести їх у консоль через роздільник "-".
+// EN: There is a string representing the rgb color, for example
+//     'rgb(255, 255, 78)'. It is necessary to extract the numbers of
+//     colors from the string and output them to the console through
+//     the "-" separator.
+
+// let str = 'rgb(255, 255, 78)';
+
+// solution via chain methods like slice, split and join:
+// let dashedNums = str.slice(4, -1).split(', ').join('-');
+// console.log(dashedNums); // 255-255-78
+
+// solution via slice and replaceAll methods:
+/* extract the substring that starts right after 'rgb(' and
+   ends at the second-to-last character of the string */
+// let depictedNums = str.slice('rgb('.length, -1);
+// console.log(depictedNums); // '255, 255, 78'
+// let dashedNums = depictedNums.replaceAll(', ', '-');
+// replace all of the occurrences of ', ' with '-'
+// console.log(dashedNums); // 255-255-78
+
+// using regExp:
+// const filteredStr = (string) =>
+// 	string.replace(/, /g, '-').replace(/rgb/g, '').replace(/[()]/g, '');
+// let dashedStr = filteredStr(str);
+// console.log(dashedStr); // 255-255-78
+// =====================================================================
+
+// ============================Task ??==================================
 
 // Task 05. Template literal
 // RU: Создать строку: "ten times two totally is 20"
@@ -938,9 +978,3 @@ console.log('Topic: Strings-Numbers');
 //     Compare 2 strings:
 //     var str1 = '\u006d\u0061\u00f1';
 //     var str2 = '\u006d\u0061\u006e\u0303';
-
-// Task 07. endsWith
-// RU: Создайте функцию, которая на вход получает массив имен файлов и расширение файла
-//     и возвращает новый массив, который содержит файлы указанного расширения.
-// EN: Create a function that gets an array of file names and a file extension as its parameters
-//     and returns a new array that contains the files of the specified extension.

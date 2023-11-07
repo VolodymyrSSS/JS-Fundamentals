@@ -4,7 +4,7 @@ console.log('Topic: Functions');
 // UА: Маємо функцію introduce, яка використовує спеціальне ключове
 //     слово 'this' для передачі контенту title, що визначений в обєктах
 //     lecturer та student. Покажіть, як викликати цю функцію із цим
-//     контентом для різних аргументів використавши метод call?
+//     контентом для різних аргументів використавши метод call()?
 //     Аргументи:
 //     lecturer: firstName = 'Derek', lastName = 'Asencheim'
 //     student: firstName = 'Nike', lastName = 'Terner'
@@ -12,7 +12,7 @@ console.log('Topic: Functions');
 // EN: We have the introduce function, which uses the special keyword
 //     'this' to transfer the title content defined in the lecturer
 //     and student objects. Show how to call this function with this
-//     content for different arguments using the apply method?
+//     content for different arguments using the call() method?
 //     Arguments:
 //     lecturer: firstName = 'Derek', lastName = 'Asencheim'
 //     student: firstName = 'Nike', lastName = 'Terner'
@@ -21,16 +21,18 @@ console.log('Topic: Functions');
 // function introduce(firstName, lastName) {
 // 	console.log(`Hello, I am ${this.title} ${firstName} ${lastName}.`);
 // }
+
 // const lecturer = {
 // 	title: 'Dr.',
 // };
+
 // const student = {
 // 	title: 'student',
 // };
 
 // solution via call method:
-// the call() method of Function instances calls this function with
-// a given this value and arguments provided individually
+/* the call() method of Function instances calls this function with
+   a given this value and arguments provided individually */
 // introduce.call(lecturer, 'Derek', 'Asencheim'); // "Hello, I am Dr. Derek Asencheim."
 // introduce.call(student, 'Nike', 'Terner'); // "Hello, I am student Nike Terner."
 // introduce.call(student, 'Mark-Andre', 'Machony'); // "Hello, I am student Mark-Andre Machony."
@@ -217,6 +219,32 @@ console.log('Topic: Functions');
 // 	button.addEventListener('click', handler);
 // })();
 
+// ============================Task 17===================================
+// UA: Створіть масив з цілих чисел. Напишіть функцію, яка на основі
+//     створеного масиву, буде відображаи цей масив в бінарному, восьмирічному
+//     та шістнадцятирічному виді. Виведіть ці масиви у консоль.
+// EN: Create an array of integers. Write a function that, based on the created
+//     array, will display this array in binary, octal and sixteenth format.
+//     Output these arrays to the console.
+
+// let arr = [24, 42, 254, 320, 4, 17];
+
+// const convertToStrRadix = (number, radix) => number.toString(radix);
+// console.log(convertToStrRadix(6, 2)); // 110 - вірно, працює
+
+// let arrBinary = [...arr].map(function (item, i, arr) {
+// 	return convertToStrRadix(item, 2);
+// });
+// let arrX8 = [...arr].map(function (item, i, arr) {
+// 	return convertToStrRadix(item, 8);
+// });
+// let arrX16 = [...arr].map(function (item, i, arr) {
+// 	return convertToStrRadix(item, 16);
+// });
+// console.log(arrBinary);
+// console.log(arrX8);
+// console.log(arrX16);
+
 // Task 4. NFE
 // UА: Створіть функцію fibo, яка повинна підраховувати числа Фібоначчі по формулі
 //     F0 = 0, F1 = 1, Fn = Fn-1 + Fn-2.
@@ -293,14 +321,14 @@ console.log('Topic: Functions');
 
 // =====================Task 07===================================
 // UA: Будь ласка, поясніть, як працює функція callback, і наведіть
-//     простий приклад.
-// EN: Please explain what a callback function is and give a simple
-//     example.
+//     декілька прикладів.
+// EN: Please explain what a callback function is and give a few simple
+//     examples.
 
 // solution:
 /* A callback function is a function that is passed as an argument 
   to another function and executed after an operation completes. Below 
-  is an example of a simple callback function that logs into the console
+  is a first example of a simple callback function that logs into the console
   after performing a few operations:
 */
 // function modifyArray(arr, callback) {
@@ -314,6 +342,19 @@ console.log('Topic: Functions');
 // 	console.log('array has been modified: ', arr); // array has been modified: (6) [1, 2, 3, 4, 5, 100]
 // });
 
+/*Here is a second example to destinguish high order function and callback function*/
+// function add(a, b) {
+// 	return a + b;
+// }
+// function divide(a, b) {
+// 	return a / b;
+// }
+// function calculate(x, y, operation) {
+// 	return operation(x, y);
+// }
+// check usage
+// console.log(calculate(40, 2, add)); // 42
+// console.log(calculate(40, 2, divide)); // 20
 // =====================Task 08===================================
 // UA: Ми маємо рядок string як речення. Створіть функцію findVowels
 //     яка підрахує число голосних букв у цьому реченні.
@@ -431,6 +472,62 @@ console.log('Topic: Functions');
 // console.log(parts(param1, param2));
 
 // via ...rest
+
+// ============================Task ??===================================
+// UA: Напишіть функцію яка перевіряє чи рядок містить цифри? А як зміниться
+//     функція якщо перевіряти чи містяться в рядку тільки цифри?
+// EN: Write a function that checks whether a string contains numbers? And
+//     how will the function change if you check whether the string contains
+//     only numbers?
+
+// solution via RegEx using test method:
+// function containsNumbers(str) {
+// 	return /\d/.test(str); // the \d metacharacter matches any digit (0 - 9) in the string
+// 	// or can use [0-9] like:
+// 	// return /[0-9]/.test(str);
+// }
+
+// usage check
+// console.log(containsNumbers('hello123')); // true
+// console.log(containsNumbers('javascript')); // false
+// console.log(containsNumbers('3 apples')); // true
+
+// solution via regExp using test method to check only numbers:
+/* the ^ character marks the beginning of the string input, and
+   the $ character marks the end of it. Adding the + character 
+   after the \d makes regex match one or more occurrences of the
+   \d pattern.*/
+// function containsOnlyNumbers(str) {
+// 	return /^\d+$/.test(str); //
+// 	// or can use [0-9] like:
+// 	// return /^[0-9]+$/.test(str);
+// }
+// usage check:
+// console.log(containsOnlyNumbers('hello123')); // false
+// console.log(containsOnlyNumbers('3453')); // true
+// console.log(containsOnlyNumbers('3 apples')); // false
+
+// solution via RegEx using String match() method:
+/* the String match() method returns an array of all the matches
+   of a regular expression in a string. If there are no matches, 
+   it returns null. */
+// function containsNumbers(str) {
+// 	return str.match(/\d/);
+// }
+// console.log(containsNumbers('hello123')); // [ '1', index: 5, input: 'hello123', groups: undefined ]
+// console.log(containsNumbers('javascript')); // null
+// console.log(containsNumbers('3 apples')); // [ '3', index: 0, input: '3 apples', groups: undefined ]
+
+/* That's why we pass the result of match() to the Boolean() constructor
+ to convert it to a Boolean value. Boolean() converts truthy values to true, 
+ and falsy values to false. */
+// function containsNumbers(str) {
+// 	return Boolean(str.match(/\d/));
+// }
+// console.log(containsNumbers('hello123')); // true
+// console.log(containsNumbers('javascript')); // false
+// console.log(containsNumbers('3 apples')); // true
+// ======================================================================
 
 // =====================Task 09===================================
 // UА: Є масив fruits з елементами які повторяються. Потрібно дізнатись,
@@ -876,8 +973,7 @@ value by 1*/
 // =====================================================================
 
 // ===========================Task 21===================================
-// UA: Створіть функцію, яка повинна вивести в консоль таку піраміду
-//     Приклад:
+// UA: Створіть функцію, яка повинна вивести в консоль таку піраміду:
 //     pyramid(1) = '#'
 //
 //     pyramid(2) = ' # '
@@ -886,8 +982,7 @@ value by 1*/
 //     pyramid(3) = '  #  '
 //                  ' ### '
 //                  '#####'
-// EN: Create a function that should display the next pyramid in the console
-//     Example:
+// EN: Create a function that should display the next pyramid in the console:
 //     pyramid(1) = '#'
 //
 //     pyramid(2) = ' # '
@@ -897,7 +992,7 @@ value by 1*/
 //                  ' ### '
 //                  '#####'
 
-// // solution via two for loops:
+// solution via two for loops:
 // function pyramid(levels) {
 // 	for (let i = 0; i < levels; i++) {
 // 		let line = '';
@@ -1141,3 +1236,126 @@ value by 1*/
 // 	.filter((num) => num > 50)
 // 	.reduce((acc, curr) => acc + curr);
 // console.log(sumNumsMoreThan50);
+
+// Task 07. endsWith
+// RU: Создайте функцию, которая на вход получает массив имен файлов и расширение файла
+//     и возвращает новый массив, который содержит файлы указанного расширения.
+// EN: Create a function that gets an array of file names and a file extension as its parameters
+//     and returns a new array that contains the files of the specified extension.
+
+// ============================Task ??===================================
+// UA: В нас є функція getDayNum(), яка повертає порядковий номер дня тижня
+//     починаючи з понеділка: для понеділка - 1, для вівторка - 2 і т. д.
+//     Для створення цієї функції було використано умову if-else, для
+//     оптимізації - switch. Можете ще більше оптимізувати цю функцію
+//     використавши структуру Map?
+// EN: We have a getDayNum() function that returns the ordinal number of
+//     the day of the week starting from Monday: 1 for Monday, 2 for Tuesday,
+//     and so on. An if-else condition was used to create this function,
+//     and a switch was used for optimization. Can you further optimize
+//     this function by using the Map structure?
+
+// function getDayNum(day) {
+// 	if (day == 'Понеділок') {
+// 		return 1;
+// 	}
+// 	if (day == 'Вівторок') {
+// 		return 2;
+// 	}
+// 	if (day == 'Середа') {
+// 		return 3;
+// 	}
+// 	if (day == 'Четверг') {
+// 		return 4;
+// 	}
+// 	if (day == "П'ятниця") {
+// 		return 5;
+// 	}
+// 	if (day == 'Субота') {
+// 		return 6;
+// 	}
+// 	if (day == 'Неділя') {
+// 		return 7;
+// 	}
+// }
+// console.log(getDayNum('Вівторок')); // 2
+
+// optimisation via switch:
+/*A switch statement can replace multiple if checks.
+   It gives a more descriptive way to compare a value with 
+   multiple variants.
+   switch(x) {
+     case 'value1':  // if (x === 'value1')
+      ...
+      [break]
+     case 'value2':  // if (x === 'value2')
+      ...
+      [break]
+     default:
+      ...
+      [break]
+   }
+   The value of x is checked for a strict equality to the value from the first 
+   case (that is, value1) then to the second (value2) and so on. If the equality
+   is found, switch starts to execute the code starting from the corresponding 
+   case, until the nearest break (or until the end of switch). If no case is 
+   matched then the default code is executed (if it exists).
+*/
+// function getDayNum(day) {
+// 	switch (day) {
+// 		case 'Понеділок':
+// 			console.log(1);
+// 			break;
+// 		case 'Вівторок':
+// 			console.log(2);
+// 			break;
+// 		case 'Середа':
+// 			console.log(3);
+// 			break;
+// 		case 'Четверг':
+// 			console.log(4);
+// 			break;
+// 		case "П'ятниця":
+// 			console.log(5);
+// 			break;
+// 		case 'Субота':
+// 			console.log(6);
+// 			break;
+// 		case 'Неділя':
+// 			console.log(7);
+// 			break;
+// 	}
+// }
+// console.log(getDayNum('Четверг')); // 4
+
+// solution via new Map()
+/* Map is a collection of keyed data items, just like an Object. But
+   the main difference is that Map allows keys of any type. So, here
+   to optimise the code, we need methods:
+   const map = new Map() – creates the map;
+   map.set(key, value) – stores the value by the key;
+   map.get(key) – returns the value by the key, undefined if key doesn’t exist in map;
+*/
+// function getDayNum(day) {
+// 	const dayMap = new Map();
+// 	dayMap.set('Понеділок', 1);
+// 	dayMap.set('Вівторок', 2);
+// 	dayMap.set('Середа', 3);
+// 	dayMap.set('Четверг', 4);
+// 	dayMap.set("П'ятниця", 5);
+// 	dayMap.set('Субота', 6);
+// 	dayMap.set('Неділя', 7);
+// or shoter version:
+// const dayMap = new Map([
+// 	['Понеділок', 1],
+// 	['Вівторок', 2],
+// 	['Середа', 3],
+// 	['Четверг', 4],
+// 	["П'ятниця", 5],
+// 	['Субота', 6],
+// 	['Неділя', 7],
+// ]);
+// 	return dayMap.get(day);
+// }
+// console.log(getDayNum('Неділя')); // 7
+// ======================================================================

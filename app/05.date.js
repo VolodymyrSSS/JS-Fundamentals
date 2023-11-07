@@ -1,8 +1,32 @@
 console.log('Topic: Date object');
 
-// Task 0111111111111111111111111111111111111111111
-// Объявите переменную days и проинициализируйте ее числом от 1 до 10.
-// Преобразуйте это число в количество секунд и выведите в консоль.
+// ===========================Task 01===================================
+// UA: Задайте змінну days та проініціалізуйте її числом від 1 до 10.
+//     Спробуйте ініціалізувати кількість днів рандомно. І далі,
+//     перетворіть це число на кількість секунд та виведіть його в консоль.
+// EN: Declare a variable days and initialize it with a number from 1 to
+//     10. Try initializing the number of days randomly. And then, convert
+//     this number to the number of seconds and output it to the console.
+
+// solution via manual initializing the quantity of days:
+// let days = 7;
+// const msInMinute = 1000 * 60;
+// const msInHour = msInMinute * 60;
+// const msInDay = msInHour * 24;
+// const msInYear = msInDay * 365; // we don't need it here
+// // so
+// let msIn7days = days * msInDay;
+// console.log(msIn7days); // // 604800000
+
+// solution via rendomly initialising the days:
+// initialize variable days with a random number between 1 and 10.
+// const days = Math.floor(Math.random() * 10) + 1;
+
+// const secondsInADay = days * 24 * 60 * 60 * 1000; // calculate the number of seconds in a day
+// console.log(`There are ${secondsInADay} seconds in ${days} day(s).`);
+// There are 518400000 seconds in 6 day(s). or
+// There are 604800000 seconds in 7 day(s). or ...
+// =====================================================================
 
 // Task 1
 // RU: Создать текущую дату и вывести ее в формате dd.mm.yyyy и dd Month yyyy

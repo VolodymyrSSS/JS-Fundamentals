@@ -595,6 +595,34 @@ fetchData()
 // 		console.log(error); // "All promises were rejected" when subcode2 and subcode3; {name: "Unknown"} when subcode1 and subcode3; when subcode0 and subcode1;
 // 	});
 
+// ============================Task ??===================================
+// UA: Можете показати як правельно використовувати fetch з промісами, щоб
+//     передбачити обробку основних помилок статусу?
+// EN: Can you show how to correctly use fetch with promises to predict
+//     the handling of basic status errors?
+
+// solution via if-condition, switch:
+// fetch('/user')
+// 	.then((res) => {
+// 		if (!res.ok) {
+// 			switch (res.status) {
+// 				case 400:
+// 					break;
+// 				case 401:
+// 					break;
+// 				case 404:
+// 					break;
+// 				case 500:
+// 					break;
+// 			}
+// 		}
+// 		return res.json();
+// 	})
+// 	.catch((error) => {
+// 		console.error(error);
+// 	});
+// ======================================================================
+
 // Task 16
 // UA: Отримайте перелік користувачів в списку використавши метод для запиту
 //     на сервер fetch та для роботи з асинхронним кодом promise. При цьому,
