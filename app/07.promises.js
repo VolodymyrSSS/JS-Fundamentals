@@ -43,27 +43,27 @@ console.log('Topic: Promises');
 // whether the promise is fulfilled or rejected, and Promise.all(), which
 // can be used to wait for multiple promises to fulfill.
 
-function fetchData() {
-	return new Promise((resolve, reject) => {
-		// simulating an asynchronous operation (example API request)
-		setTimeout(() => {
-			const data = { id: 42, name: 'Modest Rampala' };
-			resolve(data); // resolve the promise with the fetched data
-			// reject( new Error('Failed to fetch data')); // uncomment to simulate rej-state
-		}, 2000);
-	});
-}
+// function fetchData() {
+// 	return new Promise((resolve, reject) => {
+// 		// simulating an asynchronous operation (example API request)
+// 		setTimeout(() => {
+// 			const data = { id: 42, name: 'Modest Rampala' };
+// 			resolve(data); // resolve the promise with the fetched data
+// 			// reject( new Error('Failed to fetch data')); // uncomment to simulate rej-state
+// 		}, 2000);
+// 	});
+// }
 
-fetchData()
-	.then((data) => {
-		console.log('Fetched data :', data);
-	})
-	.catch((error) => {
-		console.log('Error :', error.message);
-	})
-	.finally(() => {
-		console.log('Fetch operation completed');
-	});
+// fetchData()
+// 	.then((data) => {
+// 		console.log('Fetched data :', data);
+// 	})
+// 	.catch((error) => {
+// 		console.log('Error :', error.message);
+// 	})
+// 	.finally(() => {
+// 		console.log('Fetch operation completed');
+// 	});
 // ==================================================================
 
 // Task 01

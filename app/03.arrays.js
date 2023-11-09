@@ -259,7 +259,7 @@ console.log('Topic: Arrays');
 // for (let i = 1; i < arr.length; i++) {
 // 	maxEl = Math.max(arr[i], maxEl);
 // }
-console.log(maxEl);
+// console.log(maxEl);
 
 // solution for max via func and while loop:
 /* This function loops through an array comparing each value with 
