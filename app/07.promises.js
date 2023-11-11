@@ -1,6 +1,6 @@
 console.log('Topic: Promises');
 
-// ======================= Task 1 ===================================
+// ===========================Task 01===================================
 // UА: Що представляє собою проміс? Створіть функцію fetchData яка
 //     покаже сутність використання промісів. Для симуляції асинхронної
 //     операції використайте setTimeout в результаті проміс переходить
@@ -22,26 +22,26 @@ console.log('Topic: Promises');
 //     of the result of the promise.
 
 // solution:
-// A promise represents the eventual result of an asynchronous operation, which
-// can be either a resolved value or a reason for rejection. It has three possible
-// states: pending, fulfilled (resolved), or rejected.
-// To create a promise, you use the Promise constructor, which takes a callback
-// function with two parameters: resolve and reject. Inside this callback, you
-// perform your asynchronous task and call either resolve(value) to fulfill the
-// promise with a value or reject(reason) to reject it with a reason (typically
-// an error object).
-// The then() method is used to handle the fulfillment of a promise.
-// It takes a callback function that receives the resolved value as its
-// argument. You can chain multiple then() calls to perform sequential
-// operations or transformations on the resolved value.
-// The catch() method is used to handle the rejection of a promise. It
-// takes a callback function that receives the reason for rejection (an
-// error) as its argument. It’s typically used at the end of the promise
-// chain to handle any errors that occurred during the asynchronous operation.
-// Promises also provide additional methods such as finally(), which
-// allows you to specify a callback that will be called regardless of
-// whether the promise is fulfilled or rejected, and Promise.all(), which
-// can be used to wait for multiple promises to fulfill.
+/* A promise represents the eventual result of an asynchronous operation, which
+   can be either a resolved value or a reason for rejection. It has three possible
+   states: pending, fulfilled (resolved), or rejected.
+   To create a promise, you use the Promise constructor, which takes a callback
+   function with two parameters: resolve and reject. Inside this callback, you
+   perform your asynchronous task and call either resolve(value) to fulfill the
+   promise with a value or reject(reason) to reject it with a reason (typically
+   an error object).
+   The then() method is used to handle the fulfillment of a promise.
+   It takes a callback function that receives the resolved value as its
+   argument. You can chain multiple then() calls to perform sequential
+   operations or transformations on the resolved value.
+   The catch() method is used to handle the rejection of a promise. It
+   takes a callback function that receives the reason for rejection (an
+   error) as its argument. It’s typically used at the end of the promise
+   chain to handle any errors that occurred during the asynchronous operation.
+   Promises also provide additional methods such as finally(), which
+   allows you to specify a callback that will be called regardless of
+   whether the promise is fulfilled or rejected, and Promise.all(), which
+   can be used to wait for multiple promises to fulfill.*/
 
 // function fetchData() {
 // 	return new Promise((resolve, reject) => {
@@ -64,27 +64,30 @@ console.log('Topic: Promises');
 // 	.finally(() => {
 // 		console.log('Fetch operation completed');
 // 	});
-// ==================================================================
+// ======================================================================
 
-// Task 01
-// UA: Створіть проміс, який постійно знаходиться в стані "pending".
-//     В конструкторі промису виведіть в консоль повідомлення "Promise is created".
-// EN: Create a promise that is constantly in the pending state.
-//     In the promise constructor, print the message "Promise is created" to the console
+// ===========================Task 02====================================
+// UA: Створіть проміс, який постійно знаходиться в стані "pending". В
+//     конструкторі промису виведіть в консоль повідомлення "Promise is created".
+// EN: Create a promise that is constantly in the pending state. In the promise
+//     constructor, print the message "Promise is created" to the console.
 
 // const pendingPromise = new Promise((resolve, reject) => {
 // 	console.log('Promise is created');
 // });
 
 // console.log(pendingPromise); // Promise {<pending>} ->
-// //              [[Prototype]]: Promise, [[PromiseState]]: "pending", [[PromiseResult]]: undefined
+// //[[Prototype]]: Promise, [[PromiseState]]: "pending", [[PromiseResult]]: undefined
+// ======================================================================
 
-// Task 02
-// UA: Створіть проміс, який покаже сутність його роботи. Всередині тіла створювваного промісу
-//     задайте простиу математичну дію (типу 2 + 2) та помістіть результат у змінну, назвем її sum.
-//     В умові if задайте вирази: якщо проміс вирішується успішно, то передається рядок 'Success',
-//     а якщо невдача, то передається рядок 'Failed'.
-//     Обробіть результати промісу при стані resolve та стані reject та виведіть їх у консоль.
+// ===========================Task 03====================================
+// UA: Створіть проміс, який покаже сутність його роботи. Всередині тіла
+//     створювваного промісу задайте простиу математичну дію (типу 2 + 2)
+//     та помістіть результат у змінну, назвем її sum. В умові if задайте
+//     вирази: якщо проміс вирішується успішно, то передається рядок
+//     'Success', а якщо невдача, то передається рядок 'Failed'. Обробіть
+//     результати промісу при стані resolve та стані reject та виведіть їх
+//     у консоль.
 // EN: Create a promise that will show the essence of it's work. Inside the body of the promise
 //     to be created, specify a simple mathematical operation (like 2 + 2) and place the result
 //     in a variable, let's call it sum. In the if condition, set the expressions: if the promise
@@ -129,7 +132,7 @@ console.log('Topic: Promises');
 // // via attached handler to settled promise - handler just runs immediately
 // const promise = new Promise((resolve) => resolve('Promise Data'));
 // promise.then(console.log); // 'Promise Data'
-
+// =====================================================================
 // Task 04
 // UA: Створіть проміс, який після створення відразу переходить у стан rejected
 //     і повертає рядок 'Promise Error'.
@@ -449,59 +452,101 @@ console.log('Topic: Promises');
 // 	})
 // 	.catch((err) => console.log(`Unexpected err ${err}`));
 
-// Task 13
-// UA: Створіть проміс, який перейде у стан resolve через 5с і поверне
-//     рядок 'Promise Data'. Створіть другий проміс, який перейде в стан rejected по кліку
-//     на кнопку "Cancel Promise". Додайте обробник для кнопки. Використовуючи метод race,
-//     організуйте "скасування промісу".
-// EN: Create a promise that will resolve in 5s and return the string 'Promise Data'.
-//     Create a second promise, which will go into the rejected state when the "Cancel
-//     Promise" button is clicked. Add a button handler.
-//     Use the race method to organize the "cancellation of the promise".
+// ===========================Task 01===================================
+// UА: В нас є 5 промісів. 3 виконались успішно, а 2 виконались з помилкою.
+//     Використовуючи метод Promise.all() напишіть рішення для тих промісів:
+//     1) які усі вирішились успішно;
+//     2) серед яких один виконався з помилкою, а решта успішно;
+//     3) серед яких два виконались з помилкою, а решта успішно;
+//     Результати виведіть в консоль.
+// EN: We have 5 promises. 3 were executed successfully, and 2 were executed with
+//     an error. Using the Promise.all() method, write a solution for those
+//     promises:
+//     1) all of which were successfully resolved;
+//     2) among which one executed with an error, and the rest successfully;
+//     3) among which two were completed with an error, and the rest were completed
+//     successfully. Output the results to the console.
 
-// const promise5SecDelay = new Promise((resolve) => {
-// 	setTimeout(() => {
-// 		resolve('Promise Data');
-// 	}, 5000);
+// const p1 = Promise.resolve(1);
+// const p2 = new Promise((resolve) => {
+// 	setTimeout(() => resolve(2), 1000);
 // });
-
-// const promiseCanseled = new Promise((resolve, reject) => {
-// 	document
-// 		.getElementById('btn-cancel-promise')
-// 		.addEventListener('click', () => {
-// 			reject('Cancel Promise');
-// 		});
+// const p3 = new Promise((resolve) => {
+// 	setTimeout(() => resolve(3), 3000);
 // });
+// const p4 = Promise.reject('err4');
+// const p5 = Promise.reject('err5');
 
-// Promise.race([promise5SecDelay, promiseCanseled])
-// 	.then(console.log)
+// // solution for all Promises Succeed
+// const p11 = Promise.all([p1, p2, p3])
+// 	.then(console.log) // [ 1, 2, 3 ]
 // 	.catch(console.log);
 
-// via function creation for delayed promise
-// function delayPromise(ms, value) {
-// 	return new Promise((resolve) => {
-// 		setTimeout(() => {
-// 			resolve(value);
-// 		}, ms);
-// 	});
-// }
-// const promise1 = delayPromise(5000, 'Promise Data');
+// // solution for promises among which there is a Promise that fails
+// const p12 = Promise.all([p1, p2, p4]).then(console.log).catch(console.log); // err4
 
-// const promise2 = new Promise((resolve, reject) => {
-// 	document
-// 		.getElementById('btn-cancel-promise')
-// 		.addEventListener('click', () => {
-// 			reject(new Error('Cancel Promise'));
-// 		});
+// // solution for promises among which there are two Promise failures
+// const p13 = Promise.all([p1, p4, p5]).then(console.log).catch(console.log); // err4- the first failed return value
+// ======================================================================
+
+// ===========================Task 02====================================
+// UА: В нас є 5 промісів. 3 виконались успішно, а 2 виконались з помилкою.
+//     Створіть власну функцію, яка буде симулювати дію методу Promise.all()
+//     Перевірте роботу функції та результати виведіть в консоль.
+// EN: We have 5 promises. 3 were executed successfully, and 2 were executed
+//     with an error. Create your own function that will simulate the action
+//     of the Promise.all() method. Check the operation of the function and
+//     output the results to the console.
+
+// const p1 = Promise.resolve(1);
+// const p2 = new Promise((resolve) => {
+// 	setTimeout(() => resolve(2), 1000);
 // });
+// const p3 = new Promise((resolve) => {
+// 	setTimeout(() => resolve(3), 3000);
+// });
+// const p4 = Promise.reject('err4');
+// const p5 = Promise.reject('err5');
 
-// Promise.race([promise1, promise2])
-// 	.then((result) => {
-// 		console.log(result); // Цей блок виконається при успішному вирішенні promise1 -> Promise Data
-// 	})
-// 	.catch((error) => {
-// 		console.error(error.message); // Цей блок виконається при відхиленні promise2 -> Error: Cancel Promise
+// // solution for all Promises Succeed
+// Promise.myAll = (promises) => {
+// 	return new Promise((rs, rj) => {
+// 		// counter
+// 		let count = 0;
+// 		// to store the results
+// 		let result = [];
+// 		const len = promises.length;
+
+// 		if (len === 0) {
+// 			return rs([]);
+// 		}
+
+// 		promises.forEach((p, i) => {
+// 			// Note: Some array items may not be Promise and need to be converted to Promise manually.
+// 			Promise.resolve(p)
+// 				.then((res) => {
+// 					count += 1;
+// 					// Collect the return value of each Promise
+// 					result[i] = res;
+// 					// When all Promises are successful, set the returned Promise result to result
+// 					if (count === len) {
+// 						rs(result);
+// 					}
+// 					// As long as one Promise fails, the result fails
+// 				})
+// 				.catch(rj);
+// 		});
 // 	});
+// };
+
+// check the work:
+// const pr1 = Promise.myAll([p1, p2, p3]).then(console.log).catch(console.log);
+// console.log(pr1); // in 3sec [1, 2. 3]
+// const pr2 = Promise.myAll([p1, p2, p4]).then(console.log).catch(console.log);
+// console.log(pr2); // err4
+// const pr3 = Promise.myAll([p1, p4, p5]).then(console.log).catch(console.log);
+// console.log(pr3); // err4
+// ======================================================================
 
 // Task 14
 // UA: Створіть два проміси. Перший проміс повертає об'єкт { name: "Anna" } через 2с,
