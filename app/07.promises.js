@@ -846,34 +846,58 @@ console.log('Topic: Promises');
 // 	});
 
 // =====================Task ??===================================
-// UA: Що собою представляє цикл подій? Наведіть приклад, як працює
-//     цикл подій працює в JavaScript.
-// EN: What is the event loop? Give an example of how the event loop
+// UA: Що собою представляє цикл подій? Наведіть приклади, як працює
+//     цикл подій в JavaScript.
+// EN: What is the event loop? Give the examples of how the event loop
 //     works in JavaScript.
 
 /*
-  Цикл подій є невід’ємною частиною середовища виконання JavaScript. Цикл   
-  подій показує порядок обробки виконання асинхронних завдань, гарантуючи, 
+  Цикл подій є невід’ємною частиною середовища виконання JavaScript.   
+  Цикл подій показує порядок обробки виконання асинхронних завдань, гарантуючи, 
   що вони не блокують основне виконання і дозволяють JavaScript бути постійно    
-  дієвим. Давайте наведемо приклад, як цикл подій працює в JavaScript, 
+  дієвим. Oсь порядок, у якому виконується код:
+  1.Synchronous code. That is the code that is executed in a single, linear 
+  sequence such a for loop, console.log, and variable declaration;
+  2.Animation frames. That is the code that is executed before the browser 
+  repaints the screen;
+  3.Microtasks. That is short-running code, such as Promise callbacks or 
+  process.nextTick in Node.js;
+  4.Macrotasks. That is long-running code, such as I/O operations, setTimeout(), 
+  and setInterval();
+  Давайте наведемо приклади, як цикл подій працює в JavaScript, 
   імітуючи асинхронну поведінку. Ось у якій черзі програма виконається:
 */
 
-// console.log('Start'); // 1
+// example 1:
+// console.log('A'); // 1 - logs ‘A’ to the console as it is synchronous code
+
+// setTimeout(function() {
+//   console.log('B'); // 3 - is added to the macrotasks queue
+// }, 0);
+
+// console.log('C'); // 2 - logs ‘C’ to the console
+
+// The call stack is now empty, so the event loop checks the macrotasks queue
+// for any pending tasks and invokes setTimeout callback.
+
+// example 2:
+// console.log('Start'); // 1 - logs ‘Start’ to the console as it is synchronous code
 
 // setTimeout(() => {
-// 	console.log('Timeout1'); // 4
+// 	console.log('Timeout1'); // 4 - the callback function is added to the macrotasks queue
 // }, 0);
 
 // setTimeout(() => {
-// 	console.log('Timeout2'); // 5
+// 	console.log('Timeout2'); // 5 - the callback function is added to the macrotasks queue
 // }, 0);
 
 // Promise.resolve().then(() => {
-// 	console.log('Promise resolved'); // 3
+// 	console.log('Promise resolved'); // 3 - promise initialization and resolve are added to the microtasks queue
 // });
 
-// console.log('End'); // 2
+// console.log('End'); // 2  - logs ‘End’ to the console as it is synchronous code
+
+// When call stack is empty, the event loop checks the microtasks, then macrotasks queues for any pending tasks. Than Invokes setTimeout callbacks in order - first came, first outcome.
 
 /*
   Програма запускається шляхом виводу 'Start' в консоль.

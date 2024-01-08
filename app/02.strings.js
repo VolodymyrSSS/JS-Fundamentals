@@ -939,7 +939,7 @@ console.log('Topic: Strings-Numbers');
 // let dashedNums = str.slice(4, -1).split(', ').join('-');
 // console.log(dashedNums); // 255-255-78
 
-// solution via slice and replaceAll methods:
+// solution via slice and regEx replaceAll() methods:
 /* extract the substring that starts right after 'rgb(' and
    ends at the second-to-last character of the string */
 // let depictedNums = str.slice('rgb('.length, -1);
@@ -953,6 +953,80 @@ console.log('Topic: Strings-Numbers');
 // 	string.replace(/, /g, '-').replace(/rgb/g, '').replace(/[()]/g, '');
 // let dashedStr = filteredStr(str);
 // console.log(dashedStr); // 255-255-78
+// =====================================================================
+
+// ============================Task 23==================================
+// UA: Напишіть функцію, яка приймає на вхідні речення. Речення буде
+//     складатись зі слів. Функція має повертати те саме речення, слова
+//     повинні залишатись на своїх місцях, але мають бути перевернуті.
+//     Функція повинна зробити це найбільш ефективним способом, тобто
+//     за один прохід по цьому реченні. При розв’язанні ми не можемо
+//     використовувати методи перетворення рядка в масив і методи масивів,
+//     а також методи типу reverse() і їм подібні.
+// EN: Write a function that takes a string as input. The string will be
+//     a simple sentence of words. The function should return the same
+//     sentence, the words are still in their places, but they will be
+//     reversed. The function should do this in the most efficient way,
+//     that is, in one pass over this sentence. When making a decision,
+//     we cannot use methods for converting a string into an array and
+//     methods of arrays, as well as methods like reverse() and the like.
+
+// let myString = 'The quick smart fox jumped over the lazy dog';
+
+// solution via for loop and helper func to to reverse only characters in the word:
+// function getSentenceWithReversedWords(sentence) {
+// 	// initialize variables
+// 	let currentWord = ''; // variable to store the current word
+// 	let reversedWord = ''; // variable to build the reversed word
+// 	let resultSentence = ''; // variable to store the result sentence
+
+// iterate through each word in the input sentence
+// for (let i = 0; i < sentence.length; i++) {
+/* сheck if the current word is a space: without this check, the code would
+       not know when a word ends, and it might append characters continuously, 
+       resulting in incorrect word reversals. By checking for spaces, the code 
+       can detect the end of each word and appropriately reverse and append it 
+       to the result sentence.
+      */
+// 	if (sentence[i] === ' ') {
+// 		// reverse the characters within the current word
+// 		reversedWord = reverseCharacter(currentWord);
+
+// 		// add the reversed word to the result sentence
+// 		resultSentence += reversedWord;
+
+// 		// add a space after each word (except the last one) in the result sentence
+// 		if (i < sentence.length - 1) {
+// 			resultSentence += ' ';
+// 		}
+
+// 		// reset the current word for the next iteration
+// 		currentWord = '';
+// 	} else {
+// 		// build the current word by appending each character
+// 		currentWord += sentence[i];
+// 	}
+// }
+
+// 	return resultSentence;
+// }
+
+// define a helper function to reverse characters
+// function reverseCharacter(word) {
+// 	// initialize an empty string to store the reversed word
+// 	let reversedWord = '';
+
+// 	// iterate through each character in the input word from the back
+// 	for (let i = word.length - 1; i >= 0; i--) {
+// 		// append each character to the reversed string
+// 		reversedWord += word[i];
+// 	}
+
+// 	return reversedWord;
+// }
+// // Example usage
+// console.log(getSentenceWithReversedWords(myString));
+// ehT kciuq trams xof depmuj revo eht yzal god
 // =====================================================================
 
 // ============================Task ??==================================

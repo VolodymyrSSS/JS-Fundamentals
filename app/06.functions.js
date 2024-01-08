@@ -1,6 +1,6 @@
 console.log('Topic: Functions');
 
-// =====================Task 1 FDS===================================
+// =====================Task 1 FDS=====================================
 // UА: Маємо функцію introduce, яка використовує спеціальне ключове
 //     слово 'this' для передачі контенту title, що визначений в обєктах
 //     lecturer та student. Покажіть, як викликати цю функцію із цим
@@ -36,20 +36,19 @@ console.log('Topic: Functions');
 // introduce.call(lecturer, 'Derek', 'Asencheim'); // "Hello, I am Dr. Derek Asencheim."
 // introduce.call(student, 'Nike', 'Terner'); // "Hello, I am student Nike Terner."
 // introduce.call(student, 'Mark-Andre', 'Machony'); // "Hello, I am student Mark-Andre Machony."
-// ==================================================================
+// ====================================================================
 
-// =====================Task 2 FDS===================================
+// =====================Task 2 FDS=====================================
 // UА: Маємо функцію greet, яка використовує спеціальне ключове слово 'this'
 //     для передачі контенту title, що визначений в обєктi agent.
 //     Покажіть, як викликати цю функцію із цим контентом для різних аргументів
-//     використавши метод apply? Аргументи:
-//     salutation = 'Вітання!', name = 'Тарас', salutation = 'Greetings!', name = 'John',
-//     salutation = 'Salutation!', name = 'Sharlise', salutation = 'Gruß!', name = 'Fritz',
-//     salutation = 'Saludo!', name = 'Carlos', salutation = '挨拶!', name = 'Saki',
+//     використавши метод apply? Аргументи для задачі подані нижче.
 // EN: We have the introduce function, which uses the special keyword 'this'
 //     to transfer the title content defined in the lecturer and student objects.
 //     Show how to call this function with this content for different arguments using
-//     the apply method? Arguments:
+//     the apply method?
+
+//     Arguments for the task:
 //     salutation = 'Вітання!', name = 'Тарас', salutation = 'Greetings!', name = 'John',
 //     salutation = 'Salutation!', name = 'Sharlise', salutation = 'Gruß!', name = 'Fritz',
 //     salutation = 'Saludo!', name = 'Carlos', salutation = '挨拶!', name = 'Saki',
@@ -70,27 +69,142 @@ console.log('Topic: Functions');
 // greet.apply(agent, ['Gruß!', 'Fritz']); // Gruß!, real-estate agent Fritz
 // greet.apply(agent, ['Saludo!', 'Carlos']); // Saludo!, real-estate agent Carlos
 // greet.apply(agent, ['挨拶！', 'Saki']); // 挨拶!, real-estate agent Saki
-// ==================================================================
+// ====================================================================
 
-// =====================Task 3 FDS===================================
-// UА: Для чого використовують 'сlosure' (замикання) в JavaScript? Покажіть
-//     сутність замикання на прикладі використавши для цього дані:
-//     function outerFunction(){}, function innerFunction() {},
+// ============================Task 3 pureFunc=========================
+// UA: У нас є масив об’єктів. Кожен об'єкт символізує домашню тварину.
+//     В кожного об'єкта параметрами задані ім'я, вік та його вид.
+//     Підрахуйте вік усіх собак, причому у собачих роках.
+//     Чи можете ви рішення показати створивши чисті функції?
+// EN: We have an array of objects. Each object represents a pet. The pets
+//     have a name, an age, and a type. Sum all of the dogs ages in dog years.
+//     Can you split yor solution to pure functions?
+
+// data = [
+// 	{
+// 		name: 'Butters',
+// 		age: 3,
+// 		type: 'dog',
+// 	},
+// 	{
+// 		name: 'Lizzy',
+// 		age: 6,
+// 		type: 'dog',
+// 	},
+// 	{
+// 		name: 'Red',
+// 		age: 1,
+// 		type: 'cat',
+// 	},
+// 	{
+// 		name: 'Joey',
+// 		age: 3,
+// 		type: 'dog',
+// 	},
+// ];
+
+// solution via for loop:
+/* To translate dog ages into dog years, someone told that we have 
+   to multiply them by seven */
+// function getAges(data) {
+// 	let sum = 0;
+// 	for (let i = 0; i < data.length; i++) {
+// 		if (data[i].type === 'dog') {
+// 			let tempAge = data[i].age;
+// 			sum += tempAge * 7;
+// 		}
+// 	}
+// 	return sum;
+// }
+// console.log(getAges(data)); // 84
+
+// solution via chaining arrays methods like filter(), map(), reduce():
+// let ages = data
+// 	.filter((animal) => {
+// 		return animal.type === 'dog'; // return true on a an animal if its type is equal to dog
+// 	})
+// 	.map((animal) => {
+// 		return animal.age * 7; // to convert the ages of the dogs by multiply by 7
+// 	})
+// 	.reduce((sum, animal) => {
+// 		return sum + animal.age; // to sum the ages of all of our dogs
+// 	});
+// console.log(ages); // 84
+
+// solution via creation of pure functions:
+/* pure function in JavaScript is one that given the same input, will always return
+   the same output without side effects. Put simply, pure functions only depend on 
+   their input arguments */
+// First, we’ll create a function that checks if an element is a dog.
+// It takes our element as input and returns either true or false.
+// let isDog = (animal) => {
+// 	return animal.type === 'dog';
+// };
+// Next, we’ll create a function that multiplies the age of an element by seven
+// and returns only the age in dog years:
+// let dogYears = (animal) => {
+// 	return animal.age * 7;
+// };
+// Finally, we need a function that sums two numbers and returns the result:
+// let sum = (sum, animal) => {
+// 	return sum + animal;
+// };
+// Now that we have our three functions, we can use them with our map(),
+// filter(), and reduce() chain:
+// let ages = data
+//   .filter(isDog)
+//   .map(dogYears)
+//   .reduce(sum);
+// console.log(ages); // 84
+// ====================================================================
+
+// =====================Task 3 FDS closure ============================
+// UА: Що таке замикання (сlosure), і для чого його використовують в JavaScript?
+//     Покажіть сутність замикання на прикладax використавши для цього дані:
+//     для прикладу 1: function makeLogger(), function logMessage(),
+//     let message = 'Hello';
+//     для прикладу 2: function outerFunction(), function innerFunction(),
 //     const outerVariable = 'I am from outer function';
-// EN: What is 'closure' used for in JavaScript? Show the essence of
-//     the 'closure' with an example using the following data:
-//     function outerFunction(){}, function innerFunction() {},
+// EN: What is a closure and what is 'closure' used for in JavaScript?
+//     Show the essence of the 'closure' with the examples using the following data:
+//     for example1: function makeLogger(), function logMessage(),
+//     let message = 'Hello';
+//     for example2: function outerFunction(){}, function innerFunction() {},
 //     const outerVariable = 'I am from outer function';
 
-// solution:
-// Closures are commonly used to create private variables and encapsulation
-// in JavaScript. By defining variables within an outer function and returning
-// an inner function that accesses and modifies those variables, you can
-// control the visibility and manipulation of data. This allows you to achieve
-// information hiding and avoid global namespace pollution.
-// Closures are often used in scenarios such as event handlers, callbacks, and
-// maintaining state in functional programming. They provide a way to create
-// persistent references to variables. So, the example will be:
+// solution via first example:
+/* A closure in JavaScript is a way for a function to remember and access
+   the variables from the environment where it was created. In JavaScript,
+   closures are created every time a function is created, at function 
+   creation time.
+   Here, we define a local variable message and an inner function 
+   logMessage. The inner function will preserve access to the variable
+   even after makeLogger the invocation, that is because makeLogger 
+   forms a closure that contains the variable.
+*/
+// function makeLogger() {
+// 	let message = 'Hello';
+
+// 	function logMessage() {
+// 		console.log(message);
+// 	}
+
+// 	return logMessage;
+// }
+
+// const logMessage = makeLogger();
+// logMessage(); // "Hello"
+
+// solution via second example:
+/* Closures are commonly used to create private variables and encapsulation
+   in JavaScript. By defining variables within an outer function and returning
+   an inner function that accesses and modifies those variables, you can
+   control the visibility and manipulation of data. This allows you to achieve
+   information hiding and avoid global namespace pollution.
+   Closures are often used in scenarios such as event handlers, callbacks, and
+   maintaining state in functional programming. They provide a way to create
+   persistent references to variables. So, the second example will be:
+*/
 // function outerFunction() {
 // 	const outerVariable = 'I am from outer function';
 // 	function innerFunction() {
@@ -100,6 +214,7 @@ console.log('Topic: Functions');
 // }
 // const closure = outerFunction();
 // closure(); // I am from outer function
+// ====================================================================
 
 // =====================Task 2 FDS===================================
 // Task 1. FDS
@@ -183,15 +298,15 @@ console.log('Topic: Functions');
 // 	return a === b ? 1 : -1;
 // }
 
-// Task 3. AF
-// UA: Створіть анонімну функцію, яка повинна
-//     вивести повідомлення 'message in console' в конолі.
-//     Використовуйте її як обробник події click для кнопки.
-//     При цьому виведіть в консоль що показує ключове слово this.
-// EN: Create an anonymous function, which should display
-//     message 'message in console' in console.
-//     Use it as an event handler of event click of the button.
-//     At the same time, display the keyword this in the console.
+// =====================Task ? AF ====================================
+// UA: Створіть анонімну функцію, яка повинна вивести повідомлення
+//     'message in console' в конолі. Використовуйте її як обробник
+//     події click для кнопки. При цьому виведіть в консоль що показує
+//     ключове слово this?
+// EN: Create an anonymous function, which should display message
+//     'message in console' in console. Use it as an event handler
+//     of event click of the button. At the same time, display
+//     the keyword this in the console.
 
 // const button = document.getElementById('btn-create-promise'); // define the button-node
 
@@ -202,14 +317,14 @@ console.log('Topic: Functions');
 // };
 // button.addEventListener('click', handler);
 
-// solution via arrow function
+// solution via arrow function:
 // const handler = () => {
 // 	console.log('message in console');
 // 	console.log(this); // {} because the arrow function is used
 // };
 // button.addEventListener('click', handler);
 
-// var 3 - via IIFE
+// solution via IIFE
 // (function () {
 // 	const button = document.getElementById('btn-create-promise');
 // 	const handler = function () {
@@ -218,6 +333,32 @@ console.log('Topic: Functions');
 // 	};
 // 	button.addEventListener('click', handler);
 // })();
+
+// =====================Task ? AF closure ==============================
+// UА: Вам потрібно написати функцію makeCounter. Вона повинна прийняти
+//     початкове значення лічильника та повернути об’єкт, який має методи:
+//     зменшити значення, збільшити значення та отримати значення. Покажіть
+//     в рішенні сутність використання замикання.
+// EN: You need to write makeCounter implementation. It should accept
+//     the initial value of the counter and return an object, which has
+//     methods: decrease, increase, and get. Show the essence of closure.
+
+// solution via closure and usage of arrow function:
+// const makeCounter = (initialValue = 0) => {
+// 	let value = initialValue;
+
+// 	return {
+// 		increase: () => ++value,
+// 		decrease: () => --value,
+// 		get: () => value,
+// 	};
+// };
+
+// const counter = makeCounter(10);
+// console.log(counter.increase()); // 11
+// console.log(counter.decrease()); // 10
+// console.log(counter.get()); // 10
+// ======================================================================
 
 // ============================Task 17===================================
 // UA: Створіть масив з цілих чисел. Напишіть функцію, яка на основі
@@ -355,7 +496,60 @@ console.log('Topic: Functions');
 // check usage
 // console.log(calculate(40, 2, add)); // 42
 // console.log(calculate(40, 2, divide)); // 20
-// =====================Task 08===================================
+// ======================================================================
+
+// ============================Task ??===================================
+// UA: Поясніть на прикладі обчислення факторіалу що таке рекурсія? А потім
+//     вирішіть задачу: маємо масив із вкладеними підмасивами. Напишіть функцію
+//     яка перетворить його в однорідний масив (не має рівнів вкладеності)
+//     використавши для цього рекурсію.
+// EN: Explain what recursion is on the example of factorial calculation?
+//     And then solve the problem: you are given a nested array as input,
+//     and you need to write a function to convert it to a one-level array
+//     (with no subarrays in it) using recursion for this.
+
+// solution via theory:
+/* Що ж таке рекурсія в функції? По суті, це техніка, коли функція викликає
+   сама себе, доки не буде виконано певну умову, а відсутність цієї умови 
+   призводить до переповнення стеку та повного збою програми.
+*/
+
+// function factorial(x) {
+// 	// base case
+// 	if (x === 0) return 1;
+
+// 	// recursive case (function calls itself)
+// 	return x * factorial(x - 1);
+// }
+
+/* Як бачимо, рекурсивна функція складається з двох умов: рекурсивної та 
+базової. Базова умова - це умова, яка завершує виконання функції в нескінченому
+ланцюгу викликів. Тому кожна рекурсивна функція повинна мати принаймні одну 
+базову умову виходу, щоб не сталось переповнення стеку викликів. 
+А рекурсивна умова - це умова, яка викликає цю саму функцію знову - саму себе. */
+
+// const input = [1, [2, 3, [4, 5]]];
+
+// // solution via recursion for second task:
+// function flatArray(array) {
+// 	return array.reduce((accom, item) => {
+// 		// recursive case
+// 		if (Array.isArray(item)) {
+// 			return accom.concat(flatArray(item));
+// 		}
+
+// 		// base case
+// 		return accom.concat(item);
+
+// 		// or simply write it using ternary operators
+// 		// return accom.concat(Array.isArray(item) ? flatArray(item) : item);
+// 	}, []);
+// }
+
+// console.log(flatArray(input));
+// ======================================================================
+
+// ==========================Task 08=====================================
 // UA: Ми маємо рядок string як речення. Створіть функцію findVowels
 //     яка підрахує число голосних букв у цьому реченні.
 // EN: We have the string. Create a function findVowels that
@@ -395,6 +589,19 @@ console.log('Topic: Functions');
 
 // const conc = (a, b) => String(a) + String(b);
 
+// solution via IIFE:
+/* the purpose of a self-executing function or IIFE - it’s all about variable 
+   scoping. By default, variables declared in the self-executing function are 
+   only available to code within the self-executing function. This allows code 
+   to be written without concern of how variables are named in other blocks of 
+   JavaScript code. Here is example:
+   (function() {
+      var foo = 3;
+      console.log(foo); // 3
+   })();
+   console.log(foo); // error - 'foo' is not defined
+*/
+
 // (function conc(a, b) {
 // 	console.log(`${a}${b}`);
 // })(4, 2);
@@ -402,6 +609,41 @@ console.log('Topic: Functions');
 // (function conc(a, b) {
 // 	console.log(`${a}${b}`);
 // })('4', '2');
+
+// ==========================Task 08=====================================
+// UA: Створіть функцію, яка приймає на вхід два аргумента: масив унікальних
+//     цілих чисел та суму у виді цілого числа. Якщо сума двух чисел масиву
+//     з першого аргументу дорівнює сумі числа яке прийшло як другий аргумент,
+//     то функція повинна повернути масив цих чисел в любому порядку, а якщо
+//     рішення не має, то функція повинна повернути пустий масив.
+// EN: Create a function that takes two arguments: an array of unique integers
+//     and an integer sum. If the sum of two array numbers from the first argument
+//     is equal to the sum of the number that came as the second argument, then
+//     the function must return an array of these numbers in any order, and if
+//     there is no solution, then the function must return an empty array.
+
+// const myNumbers1 = [3, 5, -4, 8, 11, 1, -1, 6];
+// const myNumbers2 = [3, 5, -4, 8, 11, 1, -12, 6];
+// const sum = 10;
+
+// const geNumbersForSum = (nums, target) => {
+// 	for (let i = 0; i < nums.length; i++) {
+// 		const firstNum = nums[i];
+
+// 		for (let j = i + 1; j > nums.length; j++) {
+// 			const secondNum = nums[j];
+// 		}
+
+// 		if (firstNum + secondNum === target) {
+// 			return [firstNum, secondNum];
+// 		}
+// 	}
+// 	return [];
+// };
+
+// console.log(geNumbersForSum(myNumbers1, sum)); // [11, -1]
+// console.log(geNumbersForSum(myNumbers2, sum)); // []
+// =======================================================================
 
 // Task 8. Arguments Object, Rest
 // UA: Створіть функцію parts, яка отримує невідому кількість параметрів.
@@ -1358,4 +1600,110 @@ value by 1*/
 // 	return dayMap.get(day);
 // }
 // console.log(getDayNum('Неділя')); // 7
+// ======================================================================
+
+// ============================Task ??===================================
+// UA: В нас є такі масиви які складаються з унікальних елементів і такі,
+//     які мають дублюючі елементи. Напишіть функцію, яка буде виводити в
+//     консоль true, коли масив має дублі, і false - коли немає і є унікальним.
+// EN: We have such arrays that consist of unique elements and those that
+//     have duplicate elements. Write a function that will output true to
+//     the console when the array has duplicates, and false when there are
+//     none and is unique.
+
+// const arr1 = [1, 2, 3, 4];
+// const arr2 = ['a', 'b', 'b', 'a'];
+// const arr3 = [7, 4, 2, 4];
+// const arr4 = ['id', 'css', 'url', 'js'];
+
+// // solution via set construction
+// function containsDuplicate(array) {
+// 	const set = new Set(); // колекція містить тільки унікальниі елементи
+
+// 	// перевіримо чи містить масив дублі
+// 	for (const el of array) {
+// 		if (set.has(el)) {
+// 			return true; // масив містить дублі
+// 		} // а інакше
+// 		set.add(el); // додати в колекцію елемент
+// 	}
+
+// 	return false; // масив містить унікальні елементи
+// }
+
+// console.log(containsDuplicate(arr1)); // false
+// console.log(containsDuplicate(arr2)); // true
+// console.log(containsDuplicate(arr3)); // true
+// console.log(containsDuplicate(arr4)); // false
+// ======================================================================
+
+// ============================Task ??===================================
+// UA: Як розбити рядок на підрядки довжиною по N символів?
+// EN: How to split a string into substrings each N characters long?
+
+// const str = 'codingbeautydev';
+
+// solution via for-loop:
+/* On each iteration, we call the String substring() method to get a substring
+   between index i and index i + N exclusive in the string, and add the substring
+   to the resulting array. 
+   The expression 'i += N' means increment the value of i by N. In the context of
+   this loop, it's saying "move the index i ahead by N characters in each iteration"
+   For example, if N is 4, in the first iteration, i starts at 0. After the iteration,
+   i becomes 4. In the next iteration, it starts at 4 and becomes 8, and so on. This 
+   way, the loop processes the string in chunks of length N. */
+
+// function splitString(str, N) {
+// 	const arr = [];
+// 	// Loop through the characters of the input string with a step size of N
+// 	for (let i = 0; i < str.length; i += N) {
+// 		arr.push(str.substring(i, i + N)); // Push the substring of length N into the array
+// 	}
+// 	return arr; // Return the array containing the substrings
+// }
+// console.log(splitString('codingbeautydev', 4)); // [ 'codi', 'ngbe', 'auty', 'dev' ]
+
+// Solution via array method using reduce():
+/* This code uses the reduce function to iterate over an array of characters,
+   building an array of substrings based on the specified length N. The 
+   ternary operator is used to determine whether to update the last substring
+   or add a new one, and the spread operator is used to create new arrays. The
+   result is an array of substrings. */
+// const splitString = (str, N) =>
+// 	// use the spread operator to convert the string into an array of characters
+// 	[...str].reduce(
+// 		// to process each character in the array
+// 		(substrings, ch) =>
+// 			(substrings.at(-1)?.length ?? N) < N // check if the last substring exists and its length is less than N
+// 				? // if true, update the last substring by concatenating the current character
+// 				  [...substrings.slice(0, -1), substrings.at(-1) + ch]
+// 				: // if false, add a new substring with the current character
+// 				  [...substrings, ch],
+// 		[] // initial value for the reduce function is an empty array
+// 	);
+// console.log(splitString('codingbeautydev', 4)); // [ 'codi', 'ngbe', 'auty', 'dev' ]
+
+/* Якщо довжина останнього підрядка в підрядках менше N, це означає ми можемо 
+   додати поточний символ ch до останнього підрядка. Якщо це так, то повертається
+   вираз [...substrings.slice(0, -1), substrings.at(-1) + ch]. Це створює новий 
+   масив з усіма елементами, крім останнього, а останній елемент оновлюється 
+   шляхом додавання до нього поточного символу ch. Якщо довжина не менше N, це 
+   означає, що нам потрібно почати новий підрядок. У цьому випадку повертається 
+   вираз [...substrings, ch], в результаті створюється новий масив з усіма існуючими
+   підрядками, а новий підрядок починається з поточного символу ch.
+*/
+
+// Solution via regEx using match() method:
+/* the "." (dot) metacharacter matches any single character in the string. The
+braces in the form {min, max} match at least min characters and at most max 
+characters of the pattern preceding it. In our case, that pattern is the "."
+character, min is 1, and max is 4, meaning that .{1, 4} matches between 1 and 
+4 characters in the string. We use the g (global) flag to make every occurrence
+of the pattern in the string get matched. It makes the regex keep splitting 
+the string by the N characters until it gets to the end. Without the g flag, 
+only the first instance of the pattern will be matched. If there are no matches
+for the regex in the string, match() returns null. This is why we use the null
+coalescing operator (??) to return an empty array ([]) in such a case */
+// const result = str.match(/.{1,4}/g) ?? [];
+// console.log(result); // [ 'codi', 'ngbe', 'auty', 'dev' ]; // last item is less than 4 characters long
 // ======================================================================

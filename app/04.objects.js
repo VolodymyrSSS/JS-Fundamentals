@@ -1,8 +1,10 @@
 console.log('Topic: Objects');
 
-// ============================Task 1===================================+
-// UA: В нас є об'єкт person. Як з'ясувати, чи існує ключ name в цьому об'єкті?
-// EN: We have an object person. How to find out if the key name exists in this object?
+// ============================Task 01====================================
+// UA: В нас є об'єкт 'person'. Як з'ясувати, чи існує ключ 'name' в цьому
+//     об'єкті?
+// EN: We have an object 'person'. How to find out if the key 'name' exists
+//     in this object?
 
 // const person = {
 // 	name: 'Modest',
@@ -16,8 +18,29 @@ console.log('Topic: Objects');
 // } else {
 // 	console.log('The "name" key does not exist in the person object. ❌');
 // }
+/* BUT, this method does not work for objects created using 
+   Object.create(null) as it does not inherit from Object.prototype, 
+   which makes the hasOwnProperty() unreachable for the created object.
+   Using hasOwnProperty(), the object will throw an exception, like:
+   const user = Object.create({ name: 'Gantz' });
+   console.log(user.hasOwnProperty('name')); // false
 
-// solution via using the in operator:
+   That is why, we have static hasOwn() method inside the Object class.
+   Object.hasOwn() is recommended over hasOwnProperty(), in browsers where 
+   it is supported. Object.hasOwn() is the intended alternative for the 
+   Object.prototype.hasOwnProperty() method.
+*/
+// const hasAge = Object.hasOwn(person, 'age');
+// if (hasAge) {
+//   console.log(`We have age property ✔️ value ${person.age}`);
+// } else {
+//   console.log("We don't have age property ❌");
+// }
+// or let's apply directly, like:
+// const user = Object.create({ name: 'Gantz' });
+// console.log(Object.hasOwn(person, 'name')); // true
+
+// solution via using the 'in' operator:
 // if ('name' in person) {
 // 	console.log('The "name" key exists in the person object. ✔️');
 // } else {
@@ -25,27 +48,90 @@ console.log('Topic: Objects');
 // }
 
 // solution via using undefined or null
-// this method might not work correctly if the key exists but has a value of undefined or null
+/* this method might not work correctly if the key exists but has
+ a value of 'undefined' or 'null' */
 // if (person.name !== undefined) {
 // 	console.log('The "name" key exists in the person object. ✔️');
 // } else {
 // 	console.log('The "name" key does not exist in the person object. ❌');
 // }
 
-// solution via using optional chaining:
-/* optional chaining (?.) checks if person exists and then if person.name exists. 
-   It returns undefined if any part of the chain is missing */
+// solution via using optional chaining operator:
+/* optional chaining (?.) checks first if person exists and then if person.name  
+   exists. It returns 'undefined' if any part of the chain is missing */
 // if (person?.name) {
 // 	console.log('The "name" key exists in the person object. ✔️');
 // } else {
 // 	console.log('The "name" key does not exist in the person object. ❌');
 // }
-// ======================================================================
 
-// ============================Task 2====================================
-// UA: Маємо об'єкт myObject. Як дізнатись скільки елементів є в цьому об'єкті?
-// EN: We have an object myObject. How to find out how many elements there
-//     are in this object?
+// solution via Object.keys() and Array.prototype.some() methods:
+/* Basically, we are converting the object to the array of properties, and then
+   we have some method with predicate function where we are checking the presence
+   of the target property 'name'. But this method has the same drawback as the 
+   Object.prototype.hasOwnProperty() because we can’t find the object property
+   if the object is created with Object.create() method.
+*/
+// const hasName = Object.keys(person).some(key => key === 'name');
+// console.log(hasName); // true
+
+// const user = Object.create({ name: 'Thomas' });
+// const hasName = Object.keys(user).some(property => property === 'name');
+// console.log(hasName); // false
+
+// solution via custom JavaScript util function:
+/* This hasKey() function accepts object and target property 'name' arguments 
+   and if both arguments are defined we have for-in loop through the object
+   and inside each iteration we have a check if current property key is equals
+   to the target one (input parameter). Implementation will be like:
+*/
+// const user = Object.create({ name: 'Kevin' });
+
+// function hasKey(object, target) {
+//   if (object && target) {
+//     for (const key in object) {
+//       if (key === target) {
+//         return true;
+//       }
+//     }
+//     return false;
+//   } else {
+//     return false;
+//   }
+// }
+
+// console.log(hasKey(person, 'name')); // true
+// console.log(hasKey(person, 'location')); // false
+// console.log(hasKey(user, 'name')); // true
+// =======================================================================
+
+// ============================Task 02====================================
+// UA: Як з'ясувати, чи об'єкт пустий чи має якісь властивості?
+// EN: How to find out whether an object is empty or has some properties?
+
+// const obj = {};
+
+// solution via Object.keys() construction:
+// if (Object.keys(obj).length === 0) {
+// 	console.log('The object is empty. ✔️');
+// }
+
+// solution via Object.entries() construction:
+// if (Object.entries(obj).length === 0) {
+// 	console.log('The object is empty. ✔️');
+// }
+
+// solution via JSON.stringify() method:
+// if (JSON.stringify(obj) === '{}') {
+// 	console.log('The object is empty. ✔️');
+// }
+// =======================================================================
+
+// ============================Task 03====================================
+// UA: Маємо об'єкт 'myObject'. Як дізнатись скільки елементів є в цьому
+//     об'єкті?
+// EN: We have an object 'myObject'. How to find out how many elements
+//     there are in this object?
 
 // const myObject = {
 // 	channel: 'W3School JavaScript course',
@@ -56,8 +142,451 @@ console.log('Topic: Objects');
 // const myObjKeys = Object.keys(myObject);
 // console.log(myObjKeys); // ['channel', 'author']
 // console.log(myObjKeys.length); // 2
+// =======================================================================
 
-// =====================================================================
+// ============================Task 04====================================
+// UA: Ми маємо масив 'myArr'. На його основі, створіть об'єкт ключами
+//     якого є елементи масиву а значеннями - індекси.
+//     Виведіть цей об'єкт в консоль.
+// EN: We have an array 'myArr'. Based on it, create an object whose keys
+//     are array elements and values are indices.
+//     Print this object to the console.
+
+// let myArr = [1, 2, 3, 4];
+// have to get a new array like:
+// [
+//   {value: 1, index: 0},
+//   {value: 2, index: 1},
+//   {value: 3, index: 2},
+//   {value: 4, index: 3}
+// ]
+
+// solution via map() method:
+// let newArr = myArr.map((val, i, arr) => {
+// 	return {
+// 		value: val,
+// 		index: i,
+// 	};
+// });
+// console.log(newArr);
+// =======================================================================
+
+// ============================Task 05====================================
+// UA: Маємо масив об'єктів 'data'. Потрібно створити новий масив об'єктів
+//     який буде мати лише об'єтки з країнами, які мають населення понад
+//     500 мільйонів.
+//     Дрге завдання: підрахуйте кількість населення яке проживає в усіх
+//     країнах, крім Китаю.
+// EN: We have an array of objects 'data'. It is necessary to create a new
+//     array of objects that will have only objects with countries with a
+//     population of more than 500 million.
+//     The second task: count the number of people living in all countries
+//     except China.
+
+// let data = [
+// 	{
+// 		country: 'China',
+// 		population: 1_409_517_397,
+// 	},
+// 	{
+// 		country: 'India',
+// 		population: 1_339_180_127,
+// 	},
+// 	{
+// 		country: 'USA',
+// 		population: 324_459_463,
+// 	},
+// 	{
+// 		country: 'Indonesia',
+// 		population: 263_991_379,
+// 	},
+// ];
+
+// for the first: we have to get a new array like:
+// [
+//   {country: "China", population: 1409517397},
+//   {country: "India", population: 1339180127}
+// ]
+
+// solution via filter() method:
+// let hugeCountries = data.filter((objVal) => {
+// 	return objVal.population > 500_000_000;
+// });
+// console.log(hugeCountries);
+
+// for the second: population living in those countries is 1_927_630_969
+
+// solution via reduce() method and ternary operator:
+/* If the the country name of the current element matches 'China', I  return
+   the accumulator unchanged — this essentially skips China. If the country 
+   is anything other than China, I return the accumulator plus the population
+   of the current country. So implementation is like: 
+*/
+// let topCountryPopulationWithoutChina = data.reduce((acc, val) => {
+// 	return val.country == 'China' ? acc : acc + val.population;
+// }, 0);
+
+// console.log(topCountryPopulationWithoutChina); // 1_927_630_969
+// =======================================================================
+
+// ============================Task 06====================================
+// UA: Ми маємо об'єкт 'obj' у якого параметрами є змінна 'location' та метод
+//     'getLocation' що використовує ключеве слово 'this' для доступу до цієї
+//     змінної. Далі ми присвоюємо метод змінній 'myLocation' та виводимо в
+//     консоль значення, яке буде undefined. Чому так сталось? Як вирішити
+//     завдання, щоб все ж таки отримати значення змінної 'getLocation'?
+// EN: We have an 'obj' object whose parameters are the 'location' variable and
+//     a 'getLocation' method that uses the 'this' keyword to access the variable.
+//     Next, we assign the method to the variable 'myLocation' and output the
+//     value to the console, which will be undefined. Why did this happen? How
+//     to solve the task to still get the value of the 'getLocation' variable?
+
+// let obj = {
+// 	location: 'New York',
+// 	getLocation: function () {
+// 		return this.location;
+// 	},
+// };
+
+// let myLocation = obj.getLocation;
+// console.log(myLocation()); // undefined
+
+/* This happened because of myLocation call references to the global scope, but
+we need to have a reference to 'obj' object. Here we lost context of 'this'. */
+
+// solution via bind() method to refer to the obj:
+// let myLocation = obj.getLocation.bind(obj);
+// console.log(myLocation()); // New York
+
+// solution via direct method call:
+// console.log(obj.getLocation()); // New York
+// ======================================================================
+
+// ============================Task 07===================================
+// UA: В нас є масив об'єктів. Кожен об'єкт має поле name та age. Відсортуйте
+// 	 об'єкти на збільшення по полю age. А потім відсортуйте об'єкти по полю
+// 	 name. А що буде, якщо перший символ рядка поля name буде починатись з
+// 	 маленької букви?
+// EN: We have an array of objects. Each object has a name and age field.
+// 	 Sort the objects in ascending order by the age field. And then sort
+//		 the objects by the name field. And what will happen if the first
+//		 character of the name field string starts with a small letter?
+
+// const usersArr = [
+// 	{ name: 'Modest', age: 42 },
+// 	{ name: 'Alex', age: 34 },
+// 	{ name: 'Ellis', age: 29 },
+// 	{ name: 'Christina', age: 35 },
+// ];
+
+// we have to get sorted array by age like:
+// [
+// 	{ name: 'Ellis', age: 29 },
+// 	{ name: 'Alex', age: 34 },
+// 	{ name: 'Christina', age: 35 },
+// 	{ name: 'Modest', age: 42 },
+// ];
+// we have to get sorted array by name like:
+// [
+// 	{ name: 'Alex', age: 34 },
+// 	{ name: 'Christina', age: 35 },
+// 	{ name: 'Ellis', age: 29 },
+// 	{ name: 'Modest', age: 42 },
+// ];
+
+// solution via sort() method for field age:
+// let ageSortedArr = usersArr.sort((user1, user2) => user1.age - user2.age);
+// console.log(ageSortedArr);
+
+// solution via sort() method for field name using own algorithm:
+// let nameSortedArr = usersArr.sort((user1, user2) => {
+// 	if (user1.name < user2.name) return -1;
+// 	if (user1.name == user2.name) return 0;
+// 	if (user1.name > user2.name) return 1;
+// });
+// console.log(nameSortedArr);
+
+// solution via str.localeCompare(str2) method for field name:
+/* To consider the register we need to take into accoult as well an alphabet. But
+   alphabets are different for different languages. So, the browser needs to know
+   the language to compare. Modern browsers support the internationalization
+   standard ECMA-402 which provides a special method to compare strings in
+   different languages that is str.localeCompare(str2) returns an integer indicating
+   whether str is less, equal or greater than str2.
+*/
+// let nameSortedArr = usersArr.sort((user1, user2) => {
+// 	return user1.name.localeCompare(user2.name);
+// });
+
+// console.log(nameSortedArr);
+// ======================================================================
+
+// ============================Task 08====================================
+// UA: Маємо масив об'єктів 'users'. Відсортуйте об'єкти за їх булевими
+//     значеннями так, щоб спочатку в масиві були об'єкти, у яких булеве
+//     значення було true, потім об'єкти з булевим значенням false.
+//     А можете відсортувати так, щоб вихідний масив об'єктів не змінювався?
+// EN: We have an array of objects 'users'. Sort the objects by their boolean
+//     values so that the array first contains the objects with the boolean
+//     value true, then the objects with the boolean value false.
+//     And can you sort so that the original array of objects is not mutated?
+
+// const users = [
+// 	{ name: 'Kate', premium: false },
+// 	{ name: 'Bob', premium: true },
+// 	{ name: 'Jeff', premium: false },
+// 	{ name: 'Samantha', premium: true },
+// ];
+
+// solution via sort() method but with mutation:
+/* If the returned value is negative, 'a' is placed before 'b' in the sorted
+   array. If the value is positive, 'b' is placed before 'a'. If the value  
+   is 0, the order of 'a' and 'b' is not changed.
+   The subtraction operator (-) on the boolean values, they are coerced to 
+   numbers before the subtraction happens. Truthy values are coerced to 1, 
+   and falsy values to 0. 
+   console.log(true + true); // 2       
+   console.log(true + false); // 1
+   console.log(false + false); // 0
+*/
+// const premiumFirst1 = users.sort((a, b) => b.premium - a.premium);
+// console.log(premiumFirst1);
+// [
+//     { name: 'Bob', premium: true },
+//     { name: 'Samantha', premium: true },
+//     { name: 'Kate', premium: false },
+//     { name: 'Jeff', premium: false }
+//   ]
+
+// solution via spred operator and sort() method without modification:
+/* The sort() method sorts the array in place, which means it gets modified. 
+   To prevent this, we can use the spread syntax (...) to create a shallow copy 
+   of the array for the sort. By avoiding mutations, we can make our code more 
+   readable, predictable, and modular. So, solution is:
+*/
+// const premiumFirst2 = [...users].sort((a, b) => b.premium - a.premium);
+// console.log(premiumFirst2);
+// [
+//     { name: 'Bob', premium: true },
+//     { name: 'Samantha', premium: true },
+//     { name: 'Kate', premium: false },
+//     { name: 'Jeff', premium: false }
+//   ]
+// Original array is not modified:
+// console.log(users);
+// const users = [
+// 	{ name: 'Kate', premium: false },
+// 	{ name: 'Bob', premium: true },
+// 	{ name: 'Jeff', premium: false },
+// 	{ name: 'Samantha', premium: true },
+// ];
+// =======================================================================
+
+// ============================Task 09====================================
+// UA: Як перевірити, чи значення об'єкта є об'єктом чи ні?
+// EN: How to check whether the object value is an object or not?
+
+// solution via typeof operator:
+// typeof anyVariable === 'object' && anyVariable !== null;
+/* перевірку на ноль також потрібно проводити бо 
+   typeof null = object - загальнопризнана помилка JS
+*/
+// =======================================================================
+
+// ============================Task 10====================================
+// UA: У нас є масив, який містить елементи, що повторяються. Напишіть код:
+//     1) який підрахує скільки разів кожен елемент зустрічається в масиві.
+//        Виведіть результат у виді об'єкту у якому для кожного ключа буде
+//        елемент масиву а його значенням, число скільки кожен елемент
+//        зустрічається у цьому масиві, типу {'sony': 3, 'dell': 2, ...}
+//     2) який буде отримувати  масив, що містить тільки унікальні значення.
+//        Виведіть у консолі масив цих унікальних значень.
+// EN: We have an array that contains repeating elements. Write code:
+//     1) that will receive an array containing only unique values. Display
+//        an array of these unique values in the console;
+//     2) which will count how many times each element occurs in the array.
+//        Output the result in the form of an object in which the keys will
+//        be the elements of the array and their value will be the number of
+//        times each element occurs in this array, such as {'sony': 3, ...}.
+
+// const brands = [
+// 	'sony',
+// 	'hp',
+// 	'apple',
+// 	'sony',
+// 	'dell',
+// 	'sony',
+// 	'hp',
+// 	'dell',
+// 	'hp',
+// ];
+
+// for1) solution via forEach() method in a function:
+
+// const countBrend = (list) => {
+// 	const count = {}; // об'єкт для встановлення 'ключ/бренд : значення/число-з'являння'
+// 	list.forEach((brand) => {
+// 		// якщо об'єкт count не містить ключ з назвою поточного бренду
+// 		if (!count[brand]) {
+// 			// додати цей ключ із встановленим значенням "1"
+// 			count[brand] = 1;
+// 		} else {
+// 			// збільшити значення на одиницю
+// 			count[brand]++;
+// 		}
+// 	});
+// 	return count;
+// };
+
+// console.log(countBrend(brands)); // {sony: 3, hp: 3, apple: 1, dell: 2}
+
+// for2) solution via forEach() and Object.keys() methods in a function:
+
+// const uniqueBrands = (list) => {
+// 	const uniques = {}; // кладем сюди унікальні ключі
+// 	list.forEach((brand) => {
+// 		/* встановити кожному ключу значення true і при кожній ітерації
+// 		значення елементу буде перезаписуватись на це true. Так ефективно
+// 		можна позбутись дублікатів бо ключі об'єктів є унікальними */
+// 		uniques[brand] = true;
+// 	});
+// 	// але в результаті ми отримаємо об'єкт тільки з унікальними ключами типу
+// 	// {sony: true, hp: true, apple: true, dell: true}
+// 	// щоб отримати масив з унікальними ключами використаємо цей метод:
+// 	return Object.keys(uniques);
+// };
+// console.log(uniqueBrands(brands)); // ['sony', 'hp', 'apple', 'dell']
+
+// for2) solution via reduce() method:
+
+// const uniqueBrands = arr.reduce((accumulator, brand) => {
+// 	if (!accumulator.includes(brand)) {
+// 		accumulator.push(brand);
+// 	}
+// 	return accumulator;
+// 	// initialize an empty array as the accumulator
+// }, []);
+// =======================================================================
+
+// ============================Task 11====================================
+// UA: Створіть функцію, яка згрупує студентів по віку. В результаті
+//     роботи повинні отримати об'єкт де ключами буде вік, а значеннями
+//     масив у якому елементи - це студенти із цим віком.
+// EN: Create a function that groups students by age. As a result, the
+//     work should receive an object where the keys will be age, and the
+//     values are an array in which the elements are students with this age.
+
+// const students = [
+// 	{ name: 'anna', age: 20 },
+// 	{ name: 'mike', age: 24 },
+// 	{ name: 'bob', age: 20 },
+// 	{ name: 'sem', age: 19 },
+// 	{ name: 'keti', age: 23 },
+// 	{ name: 'polly', age: 20 },
+// 	{ name: 'elly', age: 23 },
+// ];
+
+// маємо отримати такий об'єкт в консолі:
+// {
+//    19: [{ name: 'sem', age: 19 } ],
+//    20: [{ name: 'anna', age: 20 }, { name: 'bob', age: 20 }, { name: 'polly', age: 20 }],
+//    23: [{ name: 'keti', age: 23 }, { name: 'elly', age: 23 }],
+//    24: [{ name: 'mike', age: 24 }]
+// }
+
+// solution via forEach() method in a function:
+
+// const groupedByAge = (arrList) => {
+// 	const grouped = {} // створюємо об'єкт;
+// 	arrList.forEach((student) => {
+// 		// якщо немає такого ключа 'grouped[student.age]' в об'єкті 'grouped'
+// 		if (!grouped[student.age]) {
+// 			// додати цей ключ до цього об'єкту із встановленим значенням - масив об'єктів
+// 			grouped[student.age] = [student];
+// 		} else {
+// 			// додати об'єкт 'student' до масиву
+// 			grouped[student.age].push(student);
+// 		}
+// 	});
+// 	return grouped;
+// };
+
+// console.log(groupedByAge(students));
+// =======================================================================
+
+// ============================Task 12====================================
+// UA: Як порівняти два об’єкти та їх значення, щоб побачити, чи мають вони
+//     однаковий вміст, навіть якщо вони вкладені в інші об’єкти чи масиви?
+// EN: How to compare two objects and their values to see if they have the same
+//     content, even if they are nested within other objects or arrays?
+
+// solution via a deep equality function that traverses objects and arrays recursively:
+
+/* This function is a valuable tool for comparing complex JS objects and
+   values for deep equality, but have limitations:
+   - it may not work as expected when objects have different prototypes;
+   - when comparing very large data structures, the recursive approach might 
+   result in a stack overflow (than use Lodash’s _.isEqual);
+*/
+
+// function deepEqual(obj1, obj2) {
+// 	// база рекурсії: якщо обидва об'єкти ідентичні то повернути true
+// 	if (obj1 === obj2) {
+// 		return true;
+// 	}
+
+// 	// перевірка чи об'єкти належать до типу 'object' та недорівнюють null
+// 	if (
+// 		typeof obj1 !== 'object' ||
+// 		typeof obj2 !== 'object' ||
+// 		obj1 === null ||
+// 		obj2 === null
+// 	) {
+// 		return false;
+// 	}
+
+// 	// отримаємо масив ключів обох об'єктів для подальшого порівняння
+// 	const keys1 = Object.keys(obj1);
+// 	const keys2 = Object.keys(obj2);
+
+// 	// перевірка чи кількість ключів обох об'єктів одинакова
+// 	if (keys1.length !== keys2.length) {
+// 		return false;
+// 	}
+
+// 	// ітеруємо по ключам та рекурсивно порівнюєм їх значення - умова з рекурсією
+// 	for (const key of keys1) {
+// 		if (!keys2.includes(key) || !deepEqual(obj1[key], obj2[key])) {
+// 			return false;
+// 		}
+// 	}
+
+// 	// якщо усі перевірки пройшли, то об'єкти ідентичні на всіх рівнях - глубоке порівняння
+// 	return true;
+// }
+
+// const movie1 = {
+// 	name: 'Sisu',
+// 	genre: ['action', 'war', 'drama'],
+// 	actors: [
+// 		{ name: 'Jorma Tommila', gender: 'male' },
+// 		{ name: 'Aksel Hennie', gender: 'male' },
+// 		{ name: 'Mimosa Willamo', gender: 'female' },
+// 	],
+// }; reverse()
+
+// const movie2 = {
+// 	name: 'Sisu',
+// 	genre: ['action', 'war', 'drama'],
+// 	actors: [
+// 		{ name: 'Jorma Tommila', gender: 'male' },
+// 		{ name: 'Mimosa Willamo', gender: 'female' },
+// 		{ name: 'Aksel Hennie', gender: 'male' },
+// 	],
+// };
+
+// console.log(deepEqual(movie1, movie2)); // false
+// =======================================================================
 
 // Task 01
 // RU: Создать функцию-конструктор Tune(title, artist) для создания объектов
@@ -190,41 +719,47 @@ console.log('Topic: Objects');
 // function Animal(name) {
 // 	this.name = name;
 // }
+
 // adding a methods to the perent's prototype
 // Animal.prototype.greet = function () {
 // 	console.log(`Hello, my name is ${this.name}`);
 // };
-// child constructor function
+
+// then child constructor function
 // function Dog(name, breed) {
 // 	Animal.call(this, name);
 // 	this.breed = breed;
 // }
 
 // solution:
-/* A prototype is an object from which other objects inherit properties
-   and methods. When a property or method is accessed on an object,
-   JavaScript first checks if the object itself has that property. If not,
-   it looks up the prototype chain by checking the object’s prototype,
-   then the prototype’s prototype, and so on until it finds the property
-   or reaches the end of the chain.
-   So, first we establish the prototype chain by creating a new object and
-   assigning it to Dog.prototype. This links the prototype of Dog instances
-   to Animal.prototype, enabling inheritance: 
+/* Прототип, це є об'єкт від якого інші об'єкти успадковують свої властивості 
+   і методи. Коли ми хочемо якусь властивість або метод використати то JS
+   спочатку перевіряє чи сам об'єкт має таку властивість/метод. І якщо не має, 
+   то йде по ланцюжку в його прототип і якщо знову не має то йде далі в прототип
+   прототипу і так далі доки не знайде властивість/метод або не досягне кінця
+   ланцюжка.
+   Отже, створюючи новий об'єкт, потрібно визначити прототипний ланцюжок 
+   і задати його в Dog.prototype. Цей ланщюжок поєднає прототип екземпляра Dog із
+   прототипом Animal.prototype, встановивши успадкованість властивостей і методів. 
 */
-// establishing the prototype chain
+// establishing the prototype chain and constructor:
 // Dog.prototype = Object.create(Animal.prototype);
 // Dog.prototype.constructor = Dog;
-// adding a methods to the childs's prototype
+
+// adding a methods to the childs's prototype:
 // Dog.prototype.bark = function () {
 // 	console.log('Woof, woof..');
 // };
-// create instances
+
+// create instances:
 // const animal = new Animal('Max');
 // const dog = new Dog('Buddy', 'Labrador');
-// // using the inherited methods
+
+// // using the inherited methods:
 // animal.greet(); // Hello, my name is Max
 // dog.greet(); // Hello, my name is Buddy
-// using the specific method for the child
+
+// using the specific method for the child:
 // dog.bark(); // Woof, woof..
 /* Prototypes and prototypal inheritance are fundamental concepts 
    in JavaScript. They allow objects to inherit properties and methods  
@@ -393,47 +928,6 @@ console.log('Topic: Objects');
 // console.log(book3.getPublishingHouse());
 // console.log(book3.getFullBookName());
 // console.log(book3.getBookData());
-
-// =====================Task 05===================================
-// UA: В нас є масив об'єктів. Кожен об'єкт має поле name та age.
-// 		 Відсортуйте об'єкти на збільшення по полю age.
-// 		 А тепер відсортуйте об'єкти по полю name. А що буде, якщо перший
-// 		 символ рядка поля name буде починатись з маленької букви?
-// EN: We have an array of objects. Each object has a name and age
-// 		 field. Sort the objects in ascending order by the age field.
-//		 And now sort the objects by the name field. And what will happen
-//		 if the first character of the name field string starts with a small letter?
-
-// const usersArr = [
-// 	{ name: 'Modest', age: 42 },
-// 	{ name: 'Alex', age: 34 },
-// 	{ name: 'Ellis', age: 29 },
-// 	{ name: 'Christina', age: 35 },
-// ];
-
-// solution for sorting by field age:
-// let ageSortedArr = usersArr.sort((user1, user2) => user1.age - user2.age);
-// console.log(ageSortedArr); // [{ name: 'Ellis', age: 29 },{ name: 'Alex', age: 34 },...]
-
-// solution for sorting by field name using own algorithm:
-// let nameSortedArr = usersArr.sort((user1, user2) => {
-// 	if (user1.name < user2.name) return -1;
-// 	if (user1.name == user2.name) return 0;
-// 	if (user1.name > user2.name) return 1;
-// });
-
-// solution for sorting by field name using str.localeCompare(str2)-method:
-// To consider the register we need to take into accoult as well an alphabet. But
-// alphabets are different for different languages. So, the browser needs to know
-// the language to compare. Modern browsers support the internationalization
-// standard ECMA-402 which provides a special method to compare strings in
-// different languages that is str.localeCompare(str2) returns an integer indicating
-// whether str is less, equal or greater than str2.
-// let nameSortedArr = usersArr.sort((user1, user2) => {
-// 	return user1.name.localeCompare(user2.name);
-// });
-
-// console.log(nameSortedArr); // [{name: 'Alex', age: 34}, {name: 'Christina', age: 35},...]
 
 // Task 05
 // UА: Створіть клас Shape із статичною властивістю count.
@@ -645,54 +1139,6 @@ console.log('Topic: Objects');
 // console.table({ hisCar, yourCar, myCar }); // in column 'index' will be hisCar, yourCar, myCar
 // ======================================================================
 
-// ============================Task ??===================================
-// UA: У нас є масив, який містить елементи, що повторяються. Напишіть код,
-//     який буде отримувати  масив, що містить тільки унікальні значення, але
-//     щоб ці значення були також і ключами об'єкту.
-//     Виведіть у консолі масив, унікальних значень.
-// EN: We have an array that contains repeating elements. Write code that will
-//     receive an array containing only unique values, but so that these values
-//     are also the keys of the object.
-//     Display an array of unique values in the console.
-
-// const arr = ['sony', 'hp', 'apple', 'sony', 'dell', 'sony', 'hp', 'dell', 'hp'];
-
-// solution via forEach and Object.keys methods:
-// Create an empty object to store unique values as keys
-// const uniqueBrands = {};
-
-// Loop through each element in the input array
-// arr.forEach((brand) => {
-// 	// set each element as a key in the uniqueBrands object with a value of true
-// 	// this effectively removes duplicate elements because object keys are unique
-// 	uniqueBrands[brand] = true;
-// });
-// Get an array of the keys (unique values) from the uniqueBrands object
-// const result = Object.keys(uniqueBrands);
-// console.log(result); // ['sony', 'hp', 'apple', 'dell']
-
-// the solution via func creation:
-// const uniqueBrands = (list) => {
-// 	const uniqueBrands = {};
-
-// 	list.forEach((brand) => {
-// 		uniqueBrands[brand] = true;
-// 	});
-
-// 	return Object.keys(uniqueBrands);
-// };
-// console.log(uniqueBrands(brands)); // ['sony', 'hp', 'apple', 'dell']
-
-// solution via reduce method:
-// const uniqueBrands = arr.reduce((accumulator, brand) => {
-// 	if (!accumulator.includes(brand)) {
-// 		accumulator.push(brand);
-// 	}
-// 	return accumulator;
-// 	// initialize an empty array as the accumulator
-// }, []);
-// ======================================================================
-
 // Task 09 TodoList Application
 // UA: Створіть класи 'Завдання' и 'Список завдань' з таким функціоналом:
 //     1. Додати завдання в список;
@@ -781,3 +1227,48 @@ console.log('Topic: Objects');
 
 // const resultMap = entries.reduce();
 // console.log(set);
+
+// ============================Task ??====================================
+// UA: Маємо об'єкт 'person'. Ми працюємо з ним: додаємо властивості,
+//     перевіряєм наявність якихось ключів, видаляємо неактуальну властивість,
+//     отримали розмір об'єкту, ітеруємо по власних властивостях об'єкту і т.д.
+//     А чи можемо ми оптимізувати роботу з цим об'єктом?
+// EN: We have a 'person' object. We work with it: we add properties, check
+//     the presence of some keys, delete an irrelevant property, get the size
+//     of the object, iterate on the object's own properties, etc.
+//     But can we optimize work with this object?
+// const person = {
+// 	name: 'Modest',
+// 	age: 42,
+// 	car: 'Audi A6 allroads',
+// };
+// person['married status'] = 'divorced'; // додали властивість
+// person.hasChildren = true; // додали властивість
+// const isHasKey = 'name' in person; // перевіряємо наявність властивості 'name'
+// delete person['hasChildren']; // видалили неактуальну властивість
+// const size = Object.keys(person).length; // отримали кількість ключів (розмір) об'єкту
+// console.log('number of keys - ', size); // 4
+// ітеруємось по власних властивостях об'єкту
+// for (let key in person) {
+// 	if (person.hasOwnProperty(key)) {
+// 		console.log(key + ' - ' + person[key]);
+// 	}
+// }
+
+// solution via Map structure
+// const person = new Map([
+// 	['name', 'Modest'],
+// 	['age', 42],
+// 	['car', 'Audi A6 allroads'],
+// ]);
+// person.set('married status', 'divorced'); // додали властивість
+// person.set('hasChildren', true); // додали властивість
+// const isHasKey = person.has('name'); // перевіряємо наявність властивості 'name'
+// person.delete('hasChildren'); // видалили неактуальну властивість
+// const size = person.size; // отримали кількість ключів (розмір) об'єкту
+// console.log('number of keys - ', size); // 4
+// // ітеруємось по власних властивостях об'єкту
+// for (let [key, value] of person) {
+// 	console.log(key + ' - ' + value);
+// }
+// =======================================================================

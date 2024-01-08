@@ -308,7 +308,82 @@ console.log('Topic: Arrays');
 // 	return min;
 // }
 // console.log(myArrayMin(arr)); // -2
+// =====================================================================
 
+// ============================Task ??===================================
+// UА: Ми маємо масив myArr. За допомогою циклу for ми перебрали його
+//     елементи та до кожного додали 5 і результати вивели в консоль.
+//     Замініть цикл for на потрібний метод масивів щоб отримати той самий
+//     результат.
+//     А тепер виведіть в консоль всі елементи але результати обчислення
+//     зробіть лише для парних чисел, кожне перемножене на 2.
+// EN: We have an array myArr. Using a for loop, we looped through its
+//     elements and added 5 to each, and output the results to the console.
+//     Replace the for loop with the desired array method to get the same
+//     result.
+//     And now output to the console all elements but some
+//     of the values - even numbers must be multiplied by 2.
+
+// const myArr = [1, 2, 3, 4];
+
+// solution via for loop:
+// let plus5 = [];
+// for (let i = 0; i < arr.length; i++) {
+// 	plus5[i] = arr[i] + 5;
+// }
+// console.log(plus5); // [6,7,8,9]
+
+// solution via map() method:
+/* The map() method is used to apply a function on every element in an 
+   array. A new array is then returned. the syntax looks like:
+   let newArr = oldArr.map((val, index, arr) => {
+      // return element to new Array
+   });
+*/
+
+// let plus5 = myArr.map((val, index, arr) => {
+// 	return val + 5;
+// });
+// console.log(plus5); // [6,7,8,9]
+
+// solution for calculating even numbers:
+// let newArr = arr.map((v, i, a) => {
+// 	return v % 2 === 0 ? v * 2 : v;
+// });
+// console.log(newArr); // [1,4,3,8];
+// =====================================================================
+
+// ============================Task ??===================================
+// UА: Ми маємо масив myArr. За допомогою циклу for ми перебрали його
+//     елементи та в умові кожне парне число помножили на 2 і ці обчислення
+//     вивели у консоль. Вирішіть цю задачу за допомогою методу filter().
+// EN: We have an array myArr. Using the for loop, we looped through its
+//     elements and in the condition multiplied each even number by 2 and
+//     output these calculations to the console. Solve this problem using
+//     the filter() method.
+
+// let myArr = [1, 2, 3, 4, 5, 6];
+
+// solution via for loop and if statement:
+// let even = [];
+// for (var i = 0; i < myArr.length; i++) {
+// 	if (myArr[i] % 2 === 0) even.push(myArr[i]);
+// }
+// console.log(even); // [2,4,6]
+
+// solution via filter() method:
+/* The filter() method returns a new array created from all elements 
+   that pass a certain test preformed on an original array. Syntax 
+   looks like:
+   let newArr = oldArr.filter(callback); where callback — the function 
+   used to test each element of the oldArr. Returning true keeps the 
+   element, returning false to not keep it. Callback function can take 
+   three arguments: element, index, arr.
+   */
+// let even = myArr.filter((val) => {
+// 	return val % 2 === 0;
+// });
+// console.log(even); // [2,4,6]
 // =====================================================================
 
 // ============================Task 9===================================
@@ -318,16 +393,25 @@ console.log('Topic: Arrays');
 
 // const arr = [1, 2, 2, 3, 4, 4, 4, 5, 5, 6];
 
-// // solution via for-loop:
+// solution via for-loop:
 // let sum = 0;
 // for (let i = 0; i < arr.length; i++) {
 // 	sum += arr[i];
 // }
 
-// // solution via reduce-method:
+// solution via reduce() method:
+/* The reduce() method is used to apply a function to each element in the 
+   array to reduce the array to a single value. Syntax looks like:
+   let result = arr.reduce(callback, initValue); where callback — the function 
+   to execute on each element in the array and has  four arguments:
+   accumulator — the accumulator accumulates all of the callbacks returned values.
+   val — the current value being processed
+   index — the current index of the value being processed
+   arr — the original array
+*/
 // let sum = arr.reduce((acc, next) => acc + next, 0);
 
-// console.log(sum);
+// console.log(sum); // 36
 // =====================================================================
 
 // ============================Task 9===================================
@@ -698,11 +782,11 @@ console.log('Topic: Arrays');
 
 // ============================Task 21===================================
 // UA: Маємо два одинакових масива. Проте коли їх порівнювати нестрогим
-//     порівнянням, то отримаємо false. Як нам все ж таки порівняти ці масиви
-//     щоб результат був true?
+//     порівнянням, то отримаємо false. Як нам все ж таки порівняти ці
+//     масиви щоб результат був true?
 // EN: We have two identical arrays. However, when they are compared by a
-//     not strict comparison, we will get false. How should we compare these
-//     arrays so that the result is true?
+//     not strict comparison, we will get false. How should we compare
+//     these arrays so that the result is true?
 
 // const arr1 = [1, 2, 3, 4];
 // const arr2 = [1, 2, 3, 4];
@@ -710,4 +794,85 @@ console.log('Topic: Arrays');
 
 // solution via JSON.stringify() method:
 // console.log(JSON.stringify(arr1) == JSON.stringify(arr2)); // true
+// ======================================================================
+
+// ============================Task 21===================================
+// UA: Маємо масив persons, елементами якого є об'єкти. Покажіть старий
+//     та новий спосіб, як можна згрупувати елементи по властивості
+//     елементу - name?
+// EN: We have an array - 'persons', the elements of which are objects.
+//     Show the old and new ways how to group elements by the
+//     elements property - 'name'?
+
+// const persons = [
+// 	{ name: 'Kyle', age: 29 },
+// 	{ name: 'Sally', age: 36 },
+// 	{ name: 'Modest', age: 42 },
+// 	{ name: 'Ellis', age: 38 },
+// ];
+
+// solution via old way - reduce() method:
+// const groupedByName = persons.reduce((group, person) => {
+//    // create an empty array
+// 	if (group[person.name] == null) {
+// 		group[person.name] = [];
+// 	}
+// 	group[person.name].push(person);
+// 	return group;
+// }, {});
+
+// solution via new way - groupBy() method:
+// const groupedByName = Object.groupBy(persons, (person) => person.name);
+
+// console.log(groupedByName); // {Kyle: Array(1), Sally: Array(1),
+// Modest: Array(1), Ellis: Array(1)}
+// ======================================================================
+
+// ============================Task 22===================================
+// UA: Маємо масив об'єктів 'customers'. Кожен об'єкт одною з властивостей
+//     має також масив, елементами якого є назви улюблених піц клієнта.
+//     Отримайте єдиний масив з усіх піц, які замовляють клієнти та виведіть
+//     його в консоль.
+// EN: We have an array of objects 'customers'. Each object also has an array
+//     as one of its properties, the elements of which are the names of the
+//     client's favorite pizzas. Get a single array of all the pizzas that
+//     customers order and output it to the console.
+
+// const customers = [
+// 	{ name: 'Alex', pizzas: ['cheese', 'pepperoni'] },
+// 	{ name: 'Ellis', pizzas: ['salami', 'margarita'] },
+// 	{ name: 'Kail', pizzas: ['four seasons', 'meat'] },
+// 	{ name: 'Sara', pizzas: ['salmon'] },
+// 	{ name: 'Sofia', pizzas: ['broccoli'] },
+// ];
+
+// solution via forEach() and concat() methods:
+// let allPizzas = []; // initialize an empty array to store all pizzas
+// iterate over each customer using forEach:
+// customers.forEach((customer) => {
+// 	// Конкатенувати (додати) поточний масив 'pizzas' до загального масиву 'allPizzas'
+// 	allPizzas = allPizzas.concat(customer.pizzas);
+// });
+
+// solution via reduce() method:
+// const allPizzas = customers.reduce((acc, curr) => {
+// 	/* Два оператори розширення конкатенують (об’єднують)
+//    масив елементів від попередніх клієнтів, що знаходяться в acc з
+//    масивом елементів від поточного кілєнта, що знаходиться в curr
+//    у результаті чого створюється новий масив, який включає всі піци
+//    від попередніх клієнтів і поточного клієнта.*/
+// 	return [...acc, ...curr.pizzas];
+// }, []);
+
+// solution via flatMap() method:
+/* Використання методу flatMap дозволяє одночасно взяти елементи  
+   з масиву pizzas та звести їх в єдиний масив. Тут функція 
+   (customer) => customer.pizzas просто і безпосередньо повертає
+   масив ключа 'pizzas' кожного клієнта.
+*/
+// const allPizzas = customers.flatMap((customer) => customer.pizzas);
+
+// перевірка роботи:
+// console.log(allPizzas);
+// ['cheese', 'pepperoni', 'salami', 'margarita', 'four seasons', 'meat', 'salmon', 'broccoli']
 // ======================================================================

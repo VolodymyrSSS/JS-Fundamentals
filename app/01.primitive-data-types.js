@@ -611,6 +611,57 @@ This ensures that we only consider even numbers */
 // =====================================================================
 
 // ===========================Task 22===================================
+// UA: Напишіть цикл, який пропонує prompt ввести будь-яке число.
+//     Якщо користувач ввів не число – попросити ввести число ще раз, і
+//     так далі. Цикл повинен запитувати введення числа доки відвідувач
+//     не введе саме число, або не натисне кнопку Cancel (ESC), чи узагалі
+//     нічого не введе (залишить пустий рядок). Виведіть введене число у
+//     консоль а в разі введення не числа рядок - 'Невірні дані, введіть
+//     іменно число'.
+// EN: Write a loop that prompts to enter any number. If the user entered
+//     the wrong number, ask to enter the number again, and so on. The loop
+//     should ask for a number until the visitor enters the number itself,
+//     or presses the Cancel (ESC) button, or does not enter anything at all
+//     (leaves a blank line). Output the entered number to the console, and
+//     in the case of entering a non-number, the line - 'Invalid data, enter
+//     a nominal number'.
+
+// solution via while-loop with the prompt() function and isFinite() method:
+/* notice: isFinite(value) конвертує аргумент в число і повертає true, якщо 
+   воно є числом і, одночасно, не є NaN/Infinity/-Infinity, Ось приклади:
+   alert( isFinite("15") ); // true
+   alert( isFinite("str") ); // false, бо після конвертації отримуємо NaN
+   alert( isFinite(Infinity) ); // false, бо після конвертації отримуємо Infinity
+   Інколи isFinite використовують для перевірки чи містить рядок число, приклад:
+   let num = +prompt("Введіть число:", ''); ;тут буде повернуто true завжди, крім 
+   ситуацій, коли аргументами є Infinity/-Infinity чи нечисло.
+   alert( isFinite(num) );
+*/
+
+// let num;
+// do {
+// 	num = prompt('Enter any number', '');
+
+// 	// check if user pressed the Cancel button or ESC key or empty string
+// 	if (num === null || num === '') {
+// 		console.log('It is not a number or nothing!');
+// 		break;
+// 	}
+
+// 	num = +num; // convert to number
+
+// 	// output a message if the entered value is NOT a finite
+// number (не є числом або є NaN/Infinity/-Infinity)
+// 	if (!isFinite(num)) {
+// 		console.log('Invalid input. Please enter a nominal number.');
+// 	}
+// } while (!isFinite(num)); // Check if the entered value is a finite
+// number to ensure that the user enters a valid numeric value
+
+// console.log(`You entered the number: ${num}`);
+// =====================================================================
+
+// ===========================Task 23===================================
 // UA: Напишіть цикл, який пропонує prompt ввести число більше 100.
 //     Якщо користувач ввів інше число – попросити ввести ще раз, і так далі.
 //     Цикл повинен запитувати число доки відвідувач не введе число,
@@ -661,10 +712,22 @@ This ensures that we only consider even numbers */
 
 // askForNumberGreaterThan100();
 
-// solution in case we need to handle non-numeric strings with do..while-loop:
-/* notice: isNaN() returns true for values that are not the value NaN but 
-are not numbers either, and Number.isNaN() doesn't attempt to convert
-the parameter to a number, so non-numbers always return false.*/
+// solution in case we need to handle non-numeric strings with do..while-loop and Number.isNaN:
+/* notice: isNaN(value) перетворює значення в число та перевіряє чи є воно NaN:
+     alert( isNaN(NaN) ); // true  чи   alert( isNaN("str") ); // true
+   Натомість метод Number.isNaN не перетворює аргумент в число, а перевіряє
+   чи є аргумент числом (чи належить до типу number). Number.isNaN(value) повертає 
+   true тільки у випадку, якщо аргумент належить до типу number та одночасно є NaN.
+   У всіх інших випадках повертає false. Ось декілька прикладів:
+   alert( Number.isNaN(NaN) ); // true чи alert( Number.isNaN("str" / 2) ); // true
+   alert( !Number.isNaN("str") ); // true бо протилежний типу string (тобто належить
+   до типу number) і одночсно не є NaN.
+   So, isNaN() returns true for values that are not the value NaN but are
+   not numbers either, and Number.isNaN() doesn't attempt to convert the
+   parameter to a number, so non-numbers always return false. Ось різниця:
+   alert( Number.isNaN("str") ); // false, бо "str" є текстовий рядок, а не число
+   alert( isNaN("str") ); // true, бо isNaN спочатку перетворює "str" в число і отримує NaN
+*/
 
 // function askForNumberGreaterThan100() {
 // 	let userInput;
@@ -675,13 +738,49 @@ the parameter to a number, so non-numbers always return false.*/
 // 			return;
 // 		}
 // 		const number = Number(userInput);
-// 		// check if the conversion is successful and
-// 		// if the resulting number is greater than 100
-// 		// using Number.isNaN(number) and number > 100, respectively
+//       // якщо це є не текстовий рядок одночасно і не є NaN і воно більше 100
 // 		if (!Number.isNaN(number) && number > 100) {
 // 			console.log('User entered a number greater than 100: ', number);
 // 			return;
 // 		}
+// 		console.log('Invalid input. Please enter a valid number greater than 100.');
+// 	} while (true);
+// }
+
+// solution in case we need to handle non-numeric strings with do..while-loop and Number.isFinite:
+/* notice: isFinite(value) конвертує аргумент в число і повертає true, якщо 
+   воно є числом і, одночасно, не є NaN/Infinity/-Infinity, Ось приклади:
+   alert( isFinite("15") ); // true
+   alert( isFinite("str") ); // false, бо після конвертації отримуємо NaN
+   alert( isFinite(Infinity) ); // false, бо після конвертації отримуємо Infinity
+   Інколи isFinite використовують для перевірки чи містить рядок число, приклад:
+   let num = +prompt("Введіть число:", ''); ;тут буде повернуто true завжди, крім 
+   ситуацій, коли аргументами є Infinity/-Infinity чи нечисло.
+   alert( isFinite(num) );
+   Але є метод Number.isFinite(value), який не конвертує аргумент в число, а перевіряє
+   чи є аргумент числом (або належить до типу number). Mетод Number.isFinite(value) 
+   повертає true тільки у випадках коли аргумент належить до типу number та одночасно 
+   не є NaN/Infinity/-Infinity. У решті випадків повертає false, приклади
+   alert( Number.isFinite(123) ); // true
+   alert( Number.isFinite(Infinity) ); // false
+   alert( Number.isFinite(2 / 0) ); // false
+*/
+
+// function askForNumberGreaterThan100() {
+// 	let userInput;
+
+// 	do {
+// 		userInput = prompt('Enter a number greater than 100:');
+// 		if (userInput === null) {
+// 			console.log('Canceled');
+// 			return;
+// 		}
+// 		const number = Number(userInput);
+//       if (Number.isFinite(number) && number > 100) {
+// 			console.log('User entered a number greater than 100: ', number);
+// 			return;
+// 		}
+
 // 		console.log('Invalid input. Please enter a valid number greater than 100.');
 // 	} while (true);
 // }
