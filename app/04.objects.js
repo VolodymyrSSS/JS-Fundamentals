@@ -1,6 +1,148 @@
 console.log('Topic: Objects');
 
 // ============================Task 01====================================
+// UA: Покажіть можливі методи як створити об'єкт в JavaScript? 
+// EN: Show possible methods of creating an object in JavaScript?
+
+// solution via Object literal:
+/* З літералом об’єкта ми маємо сутність із конкретними назвами властивостей
+   об’єкта та значенням для кожної властивості об’єкта, де все згруповано у 
+   фігурних дужках. Ми можемо мати статичні та динамічні властивості всередині
+   об’єкта. Для динамічних властивостей ми використовуємо квадратні дужки навколо 
+   імені змінної властивості або виразу. Ми також можемо мати скорочене 
+   позначення для імені властивості об’єкта. Ось приклад:
+*/
+// const ageKey = 'age';
+// const myName = 'John';
+
+// // person object literal
+// const person = {
+//   myName, // shorthand notation for myName property
+//   surname: 'Doe', // classic or standard initialization of the surname property
+//   [ageKey]: 42, // dynamic property (key) for age property
+//   ['location']: 'New York', // dynamic property with expression for location property
+//   // object method where “this” object represents the reference to the person object
+//   getName() {
+//     return this.myName;
+//   },
+//   // arrow function where we are showing the outer context where person object is initialized using this object
+//   showOuterContext: () => {
+//     console.log(this);
+//   }
+// };
+
+// console.log(person); // { myName: 'John', surname: 'Doe', age: 42, location: 'New York',
+// //                       getName: ƒ getName(), showOuterContext: f showOuterContext }
+// console.log(person.getName()); // John
+// console.log(person.age); // 42
+// console.log(person.showOuterContext()); // Window { ... } or undefined
+
+// solution via Constructor function
+/* Коли у нас є функція-конструктор, ми передаємо усі властивості як аргументи
+   конструктора, а потім нам потрібно ініціалізувати цей об’єкт за допомогою
+   оператора "new".
+*/
+// here, we have object.assign() function call in order to assign all properties to this object using property shorthand notation
+// function Person(name, surname, age) {
+//    Object.assign(this, { name, surname, age });
+// }
+// const person = new Person('John', 'Doe', 42);
+// console.log(person); // { name: 'John', surname: 'Doe', age: 42 }
+
+// solution via EcmaScript6 Class:
+/* ECMAScript 6 (ES6) представив значні вдосконалення JavaScript, і одним 
+   із найпомітніших доповнень є синтаксис класу. Класи забезпечують більш 
+   структурований та об’єктно-орієнтований спосіб визначення та роботи з 
+   об’єктами та прототипами в JavaScript.
+*/
+
+// class Person {
+//    constructor(name = 'John', surname = 'Doe', age = 42) {
+//       Object.assign(this, { name, surname, age });
+//    }
+// }
+
+// const defaultPerson = new Person();
+// console.log(defaultPerson); // Person { name: 'John', surname: 'Doe', age: 42 }
+// const person = new Person('Mark', 'Robertson', 44);
+// console.log(person); // Person { name: 'Mark', surname: 'Robertson', age: 44 }
+
+// solution via Factory function:
+/* По суті, фабрична функція створює об’єкт за допомогою літералу, де ми маємо 
+   аргументи функції як властивості об’єкта.
+*/
+
+// function Person(name, surname, age) {
+//    return {
+//       name,
+//       surname,
+//       age
+//    }
+// }
+// const person = Person('John', 'Doe', 42);
+// console.log(person); // { name: 'John', surname: 'Doe', age: 42 }
+
+// solution via method from Object class:
+/* Метод Create приймає об’єкт JavaScript, який використовуватиметься 
+   як прототип нового об’єкта (результат методу create).
+*/
+
+// const personData = {
+//     name: 'Mark',
+//     surname: 'Harris',
+//     showFullName: function() {
+//         console.log(`${this.name} ${this.surname}`);
+//     }
+// };
+// const person = Object.create(personData);
+
+// // "age" is a property set on "person", but not on "personData" object
+// person.age = 41; 
+// console.log(person.showFullName()); // Mark Harris
+// console.log(person); // {age: 41, [[Prototype]: name: "Mark", showFullName: ƒ (),
+// //                      surname: "Harris", [[Prototype]]: Object}
+// =======================================================================
+
+// ============================Task 02====================================
+// UA: В нас є об'єкт 'myObj'. Виведіть властивості об'єкта в структурі
+//     типу: заголовок з назвою бренду авто, який включає модельний ряд, 
+//     цього бренуд; один з прикладів надано нижче:
+// EN: We have an object 'myObj'. Display the properties of the object in 
+//     a structure of the type: a title with the name of the car brand, 
+//     which includes the model range of this car brend; one of еру example:
+// Ford -> -Fiesta, -Focus, -Mustang,
+// BMW -> -320, -X3, -X5,
+// Fiat -> -500, -Panda,
+
+// const myObj = {
+//   name: "Modest",
+//   age: 50,
+//   cars: [
+//     {name:"Ford", models:["Fiesta", "Focus", "Mustang"]},
+//     {name:"BMW", models:["320", "X3", "X5"]},
+//     {name:"Fiat", models:["500", "Panda"]}
+//   ]
+// }
+
+// solution via for..in loop:
+/* Інструкція JavaScript for..in циклично переглядає властивості об’єкту -
+   тобто блок коду всередині циклу for..in буде виконано один раз для кожної
+   властивості об'єкту. А найкраще отримати доступ до вкладених об’єктів за 
+   допомогою нотації: "через крапку" або "через-квадратні дужки".
+*/
+// let x = "";
+// for(let i in myObj.cars) {
+//    x += myObj.cars[i].name + '->';
+//    for (let j in myObj.cars[i].models) {
+//       x += '-' + myObj.cars[i].models[j] + ',' + ' ';
+//    }
+// }
+
+// console.log(x);
+// =======================================================================
+
+
+// ============================Task 03====================================
 // UA: В нас є об'єкт 'person'. Як з'ясувати, чи існує ключ 'name' в цьому
 //     об'єкті?
 // EN: We have an object 'person'. How to find out if the key 'name' exists
@@ -1272,3 +1414,20 @@ we need to have a reference to 'obj' object. Here we lost context of 'this'. */
 // 	console.log(key + ' - ' + value);
 // }
 // =======================================================================
+
+function sum(a, b) {
+  return a + b;
+}
+
+function sumTransformed(a) {
+   return function (b) {
+      return (a + b);
+   };
+}
+
+// перевіримо карування:
+console.log(sumTransformed(2)(0)); // 2
+console.log(sumTransformed(0)(2)); // 2
+
+console.log(sumTransformed(2, 0)); // 2
+console.log(sumTransformed(0, 2)); // 2

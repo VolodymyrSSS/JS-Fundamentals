@@ -1,14 +1,98 @@
 console.log('Topic: Functions');
 
-// =====================Task 1 FDS=====================================
-// UА: Маємо функцію introduce, яка використовує спеціальне ключове
-//     слово 'this' для передачі контенту title, що визначений в обєктах
-//     lecturer та student. Покажіть, як викликати цю функцію із цим
+// =====================Task 1 call-apply and this=====================
+// UА: В нас є об'єкт "person" у якого визначено два методи: "fullName"
+//     та "place of borne". Можете:
+//     - застосувати (викликати) метод "fullName", який визначений в
+//     об'єкті "person" для об'єкта "person1" і для об'єкта "person2"?
+//     - застосувати (викликати) метод "plase of borne" із додатковими
+//     параметрами та отримати дані місця народження акторів?
+// EN: We have a "person" object that has two methods: "fullName" and 
+//     "place of borne". Can you:
+//     - use (call) the "fullName" method that is defined in the person 
+//     object on the "person1" object and on the "person2" object?
+//     - use (call) call the "place of borne" method with additional 
+//     parameters and get data for the actors?
+
+// const person = {
+//   fullName: function() {
+//    return "Name: " + this.firstName + " " + this.lastName;
+//   },
+//   ["place of borne"]: function(city, country) {
+//    return this.lastName  + " was born in " + city  + ", " + country
+//   }
+// }
+// const person1 = {
+//   firstName:"Matthew",
+//   lastName: "McConaughey"
+
+// }
+// const person2 = {
+//   firstName:"Angelina",
+//   lastName: "Jolie"
+// }
+
+/*In JavaScript, the "this" keyword refers to an object.
+   Which object depends on how "this" is being invoked (used or called).
+   In an object method, "this" refers to the object.
+   Alone, "this" refers to the global object.
+   In a function, "this" refers to the global object.
+   In a function, in strict mode, "this" is undefined.
+   In an event, "this" refers to the element that received the event.
+   Methods like call(), apply(), and bind() can refer "this" to any object.
+*/
+
+// solution via call() method and keyword this:
+/* Метод call() є попередньо визначеним методом JavaScript.
+   Його можна використовувати для виклику методу, що 
+   визначений в будь-якому об’єкті. Для цього, потрібно
+   в параметри методу call() передати об’єкт, метод якого 
+   потрібно застосувати.
+*/
+// let actor1 = person.fullName.call(person1);
+// let actor2 = person.fullName.call(person2);
+
+// console.log(actor1); // Matthew McConaughey
+// console.log(actor2); // Angelina Jolie
+
+// let actor1wasBorne = person["place of borne"].call(person1, "Uvalde", "USA (Texas)");
+// let actor2wasBorne = person["place of borne"].call(person2, "Los Angeles", "USA (California)");
+
+// console.log(actor1wasBorne); // McConaughey was born in Uvalde, USA (Texas)
+// console.log(actor2wasBorne); // Jolie was born in Los Angeles, USA (California)
+
+// solution via apply() method and keyword this:
+/* Метод apply() є попередньо визначеним методом JavaScript також.
+   За допомогою методу apply() ви можете написати метод, який можна 
+   використовувати для різних об’єктів. Метод apply() подібний до 
+   методу call(), проте метод apply() приймає аргументи у вигляді 
+   масиву, а метод call() приймає аргументи окремо. Тому, застомуєм
+   метод apply() для отримання повного імені актора:
+    
+*/
+// let actor1 = person.fullName.apply(person1);
+// let actor2 = person.fullName.apply(person2);
+
+// console.log(actor1); // Matthew McConaughey
+// console.log(actor2); // Angelina Jolie
+
+/* Метод apply() дуже зручний, якщо ви хочете використовувати
+   масив замість списку аргументів. Це його відмінність від call і 
+   для другого завдання вирішити це так:
+*/
+// let actor1wasBorne = person["place of borne"].apply(person1, ["Uvalde", "USA (Texas)"]);
+// let actor2wasBorne = person["place of borne"].apply(person2, ["Los Angeles", "USA (California)"]);
+
+// console.log(actor1wasBorne); // McConaughey was born in Uvalde, USA (Texas)
+// console.log(actor2wasBorne); // Jolie was born in Los Angeles, USA (California)
+// ====================================================================
+
+// =====================Task 2 call and this===========================
+// UА: Маємо функцію "introduce", яка використовує спеціальне ключове
+//     слово "this" для передачі контенту "title", що визначений в обєктах
+//     "lecturer" та "student". Покажіть, як викликати цю функцію із цим
 //     контентом для різних аргументів використавши метод call()?
-//     Аргументи:
-//     lecturer: firstName = 'Derek', lastName = 'Asencheim'
-//     student: firstName = 'Nike', lastName = 'Terner'
-//     student: firstName = 'Mark-Andre', lastName = 'Machony'
+//     Аргументи надано нижче:
 // EN: We have the introduce function, which uses the special keyword
 //     'this' to transfer the title content defined in the lecturer
 //     and student objects. Show how to call this function with this
@@ -31,18 +115,39 @@ console.log('Topic: Functions');
 // };
 
 // solution via call method:
-/* the call() method of Function instances calls this function with
-   a given this value and arguments provided individually */
+/* The call() method of Function instances calls this function
+   with a given "this" value and arguments provided individually. 
+   Methods like call(), apply(), and bind() can refer this to any object.
+*/
 // introduce.call(lecturer, 'Derek', 'Asencheim'); // "Hello, I am Dr. Derek Asencheim."
 // introduce.call(student, 'Nike', 'Terner'); // "Hello, I am student Nike Terner."
 // introduce.call(student, 'Mark-Andre', 'Machony'); // "Hello, I am student Mark-Andre Machony."
 // ====================================================================
 
-// =====================Task 2 FDS=====================================
-// UА: Маємо функцію greet, яка використовує спеціальне ключове слово 'this'
-//     для передачі контенту title, що визначений в обєктi agent.
-//     Покажіть, як викликати цю функцію із цим контентом для різних аргументів
-//     використавши метод apply? Аргументи для задачі подані нижче.
+// =====================Task 3 apply and this==========================
+// UА: Оскільки масиви JavaScript не мають методу max(), замість нього 
+//     можна застосувати метод Math.max(). Покажіть як це можна зробити?
+// EN: Since JavaScript arrays do not have a max() method, you can apply
+//     the Math.max() method instead. Show how it can be done?
+// Math.max(14, 24, 347, 422); // 422
+
+// solution via apply() method:
+// const maxNum = Math.max.apply(null, [14, 24, 347, 422]); // 422
+// /* Перший аргумент (null) не має значення. Ці рішення дадуть той самий результат: */
+// const maxNum2 = Math.max.apply(" ", [14, 24, 347, 422]); // 422
+// const maxNum3 = Math.max.apply(0, [14, 24, 347, 422]); // 422
+// const maxNum4 = Math.max.apply(Math, [14, 24, 347, 422]); // 422
+/* У строгому режимі JavaScript, якщо перший аргумент методу apply() 
+   не є об’єктом, він стає власником (об’єктом) викликаної функції. 
+   У "нестрогому" режимі він стає глобальним об'єктом.
+*/
+// ====================================================================
+
+// =====================Task 4 apply and this==========================
+// UА: Маємо функцію "greet", яка використовує спеціальне ключове слово
+//     "this" для передачі контенту "title", що визначений в обєктi "agent".
+//     Покажіть, як викликати цю функцію із цим контентом для різних
+//     аргументів використавши метод apply? Аргументи для задачі задані нижче.
 // EN: We have the introduce function, which uses the special keyword 'this'
 //     to transfer the title content defined in the lecturer and student objects.
 //     Show how to call this function with this content for different arguments using
@@ -71,14 +176,112 @@ console.log('Topic: Functions');
 // greet.apply(agent, ['挨拶！', 'Saki']); // 挨拶!, real-estate agent Saki
 // ====================================================================
 
+// =====================Task 5 bind and this===========================
+// UА: Маємо два об'єкти "person" та "member". В об'єкті "person" визначений
+//     метод "fullName".
+//     1) Можете використати цей метод для об'єкта "member"?
+//     2) А якщо використати метод як колбек функцію, ми отримуєм undefined.
+//        Як виправити це та отримати вірне значення? Поясніть?
+// EN: We have two objects person and member. The fullName method is defined
+//     in the person object. 
+//     1) Can you use this method on the member object?
+//     2) And if we use the method as a callback function, we get undefined. 
+//        How to fix this and get the correct value? Explain.
+
+// const person = {
+//   firstName:"Marthin",
+//   lastName: "Luter",
+//   fullName: function() {
+//    return this.firstName + " " + this.lastName;
+//   }
+// }
+// const member = {
+//   firstName:"Hege",
+//   lastName: "Nilsen",
+// }
+
+// for the 1st - solution via bind() method:
+/* The member object borrows the fullname method from person. */
+// let fullName = person.fullName.bind(member);
+// console.log(fullName()); // Hege Nilsen
+
+// for the 2nd - solution via bind() method:
+// when a function is used as a callback, "this" is lost. Look here:
+// const person = {
+//   firstName:"Marthin",
+//   lastName: "Luter",
+//   fullName: function() {
+//    return console.log(this.firstName + " " + this.lastName);
+//   }
+// }
+// let fullName = person.fullName;
+// setTimeout(fullName, 3000); // undefined undefined - in 3sec
+/* The bind() method solves this problem. Here, the bind() method 
+   is used to bind person.fullName to person.
+*/
+// let fullName = person.fullName.bind(person);
+// setTimeout(fullName, 3000); // Marthin Luter - in 3sec
+// ====================================================================
+
+// =====================Task 6 func params=============================
+// UА: Створіть функцію, яка буде підраховувати суму кожен раз із різною 
+//     кількістю отриманих параметрів. Результати виведіть в консоль.
+// EN: Create a function that will calculate the sum each time with a 
+//     different number of received parameters. Output the results to 
+//     the console.
+
+// solution via rest parameter (...) and for..of loop:
+/* The rest parameter (...) allows a function to treat an indefinite 
+number of arguments as an array. */
+// function sum(...args) {
+//   let sum = 0;
+//   for (let arg of args) sum += arg;
+//   return sum;
+// }
+
+// let x1 = sum(6, 15, 11);
+// let x2 = sum(-2, 4, 35, -25, 22, 74, -14);
+// let x3 = sum(4, 9, 16, 25, 29, 100, 66, 77);
+// let x4 = sum(0.16, 2.31, 12.4, 64.1,);
+// let x5 = sum(-0.31, 8.5, -7.2, 44.5, -0.12,);
+
+// console.log('results: ', x1, x2, x3, x4, x5);
+// results:  32 94 326 78.97 45.370000000000005
+// ====================================================================
+
+// =====================Task 4 func arguments Object===================
+// UА: Створіть функцію, яка отримає максимальне значення з отриманих
+//     аргументів. Результат виведіть в консоль.
+// EN: Create a function that will get the maximum value from the received
+//     arguments. Enter the result in the console.
+
+// solution via built-in arguments object and for-loop:
+/* JavaScript functions have a built-in object called the arguments object.
+   The argument object contains an array of the arguments used when the 
+   function was called (invoked). */
+// function findMax() {
+//   let max = -Infinity;
+//   for(let i = 0; i < arguments.length; i++) {
+//     if (arguments[i] > max) {
+//       max = arguments[i];
+//     }
+//   }
+//   return max;
+// }
+
+// console.log(findMax(244, 4, 5, 6, 22, 44)); // 44
+// console.log(findMax(-22, -4, -136, -6, -44)); // -4
+// console.log(findMax(-20, 4, -111, -16, 2)); // 4
+// ====================================================================
+
 // ============================Task 3 pureFunc=========================
 // UA: У нас є масив об’єктів. Кожен об'єкт символізує домашню тварину.
 //     В кожного об'єкта параметрами задані ім'я, вік та його вид.
-//     Підрахуйте вік усіх собак, причому у собачих роках.
+//     Підрахуйте вік усіх собак, причому у "собачих роках".
 //     Чи можете ви рішення показати створивши чисті функції?
 // EN: We have an array of objects. Each object represents a pet. The pets
-//     have a name, an age, and a type. Sum all of the dogs ages in dog years.
-//     Can you split yor solution to pure functions?
+//     have a name, an age, and a type. Sum all of the dogs ages in "dog 
+//     years". Can you split yor solution to pure functions?
 
 // data = [
 // 	{
@@ -1707,3 +1910,81 @@ coalescing operator (??) to return an empty array ([]) in such a case */
 // const result = str.match(/.{1,4}/g) ?? [];
 // console.log(result); // [ 'codi', 'ngbe', 'auty', 'dev' ]; // last item is less than 4 characters long
 // ======================================================================
+
+
+// =====================Task ?? curry====================================
+// UА: Створіть функцію "sum", яка просто буде додавати два числа "a" та 
+//     "b". Виклик sum(a, b), виведе суму цих чисел. Тепер створіть іншу 
+//     функцію, яка трансформує функцію "sum" через яку зможемо викликати
+//     її з аргументами разом так і окремо.
+// EN: We have a "person" object that has two methods: "fullName" and 
+
+function sum(a, b) {
+  return a + b;
+}
+// sum(2, 0); // 2
+// sum(0, 2); // 2
+
+// solution: 
+/* Каррування – просунута техніка для роботи з функціями. Вона використовується
+не лише у JavaScript, а й в інших мовах. Каррування – це трансформація функцій 
+в такий спосіб, що вони приймали аргументи як f(a, b), так і як f(a)(b). Карування 
+не викликає функції. Отже, створимо функцію sumTransformed(f), яка буде виконувати 
+карування функції sum. */
+
+// function sumTransformed(func) {
+//    return function (a) {
+//       return function (b) {
+//          return func (a, b);
+//       };
+//    };
+// }
+// let curriedSum = sumTransformed(sum);
+
+// // перевіримо карування:
+// console.log(curriedSum(2)(0)); // 2
+// console.log(curriedSum(0)(2)); // 2
+
+// /* проте звичайний виклик не працює і поверне другу функцію, отже 
+//    цей підхід не зовсім правельний .*/
+// console.log(curriedSum(2, 0)); // отримаємо нижче
+// console.log(curriedSum(0, 2)); // отримаємо нижче
+// ƒ (b) {
+   //   return func (a, b);
+   //}
+// the same result with this solution:
+// function sumTransformed(a) {
+//    return function (b) {
+//       return (a + b);
+//    };
+// }
+
+// спробуємо інший підхід
+// function sumTransformed(func) {
+//    return function (a, b) {
+//       /* By checking if b is undefined, the function can determine if it's being called
+//       with one or two arguments. 
+//       Determining Partial Application: If b is undefined, it indicates that the 
+//       function is being called in a partially applied form, where the first argument 
+//       a is already provided, and it's awaiting the second argument b.
+//       So: the sumTransformed function checks if the second argument b is undefined.
+//       If it is, it returns a function that takes the second argument b. Otherwise, 
+//       it directly invokes the func function with both a and b. 
+//       */
+//       if (typeof b === 'undefined') {
+//          return function (b) {
+//             return func(a, b);
+//          };
+//       }
+//       return func(a, b);
+//    };
+// }
+// let curriedSum = sumTransformed(sum);
+
+// // перевіримо карування:
+// console.log(curriedSum(2)(0)); // 2
+// console.log(curriedSum(0)(2)); // 2
+
+// console.log(curriedSum(2, 0)); // 2
+// console.log(curriedSum(0, 2)); // 2
+
