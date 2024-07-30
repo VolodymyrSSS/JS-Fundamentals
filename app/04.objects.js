@@ -1,7 +1,7 @@
 console.log('Topic: Objects');
 
 // ============================Task 01====================================
-// UA: Покажіть можливі методи як створити об'єкт в JavaScript? 
+// UA: Покажіть можливі методи як створити об'єкт в JavaScript?
 // EN: Show possible methods of creating an object in JavaScript?
 
 // solution via Object literal:
@@ -97,7 +97,7 @@ console.log('Topic: Objects');
 // const person = Object.create(personData);
 
 // // "age" is a property set on "person", but not on "personData" object
-// person.age = 41; 
+// person.age = 41;
 // console.log(person.showFullName()); // Mark Harris
 // console.log(person); // {age: 41, [[Prototype]: name: "Mark", showFullName: ƒ (),
 // //                      surname: "Harris", [[Prototype]]: Object}
@@ -105,10 +105,10 @@ console.log('Topic: Objects');
 
 // ============================Task 02====================================
 // UA: В нас є об'єкт 'myObj'. Виведіть властивості об'єкта в структурі
-//     типу: заголовок з назвою бренду авто, який включає модельний ряд, 
+//     типу: заголовок з назвою бренду авто, який включає модельний ряд,
 //     цього бренуд; один з прикладів надано нижче:
-// EN: We have an object 'myObj'. Display the properties of the object in 
-//     a structure of the type: a title with the name of the car brand, 
+// EN: We have an object 'myObj'. Display the properties of the object in
+//     a structure of the type: a title with the name of the car brand,
 //     which includes the model range of this car brend; one of еру example:
 // Ford -> -Fiesta, -Focus, -Mustang,
 // BMW -> -320, -X3, -X5,
@@ -140,7 +140,6 @@ console.log('Topic: Objects');
 
 // console.log(x);
 // =======================================================================
-
 
 // ============================Task 03====================================
 // UA: В нас є об'єкт 'person'. Як з'ясувати, чи існує ключ 'name' в цьому
@@ -1414,20 +1413,3 @@ we need to have a reference to 'obj' object. Here we lost context of 'this'. */
 // 	console.log(key + ' - ' + value);
 // }
 // =======================================================================
-
-function sum(a, b) {
-  return a + b;
-}
-
-function sumTransformed(a) {
-   return function (b) {
-      return (a + b);
-   };
-}
-
-// перевіримо карування:
-console.log(sumTransformed(2)(0)); // 2
-console.log(sumTransformed(0)(2)); // 2
-
-console.log(sumTransformed(2, 0)); // 2
-console.log(sumTransformed(0, 2)); // 2

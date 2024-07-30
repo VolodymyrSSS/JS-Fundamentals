@@ -1,18 +1,18 @@
 console.log('Topic: Functions');
 
-// =====================Task 1 call-apply and this=====================
+// =====================Task 1.1 call-apply and this=====================
 // UА: В нас є об'єкт "person" у якого визначено два методи: "fullName"
 //     та "place of borne". Можете:
 //     - застосувати (викликати) метод "fullName", який визначений в
-//     об'єкті "person" для об'єкта "person1" і для об'єкта "person2"?
+//     об'єкті "person" для об'єкта "person1" та для об'єкта "person2"?
 //     - застосувати (викликати) метод "plase of borne" із додатковими
 //     параметрами та отримати дані місця народження акторів?
-// EN: We have a "person" object that has two methods: "fullName" and 
+// EN: We have a "person" object that has two methods: "fullName" and
 //     "place of borne". Can you:
-//     - use (call) the "fullName" method that is defined in the person 
+//     - use (call) the "fullName" method that is defined in the person
 //     object on the "person1" object and on the "person2" object?
-//     - use (call) call the "place of borne" method with additional 
-//     parameters and get data for the actors?
+//     - use (call) the "place of borne" method with additional parameters
+//     and get data for the actors?
 
 // const person = {
 //   fullName: function() {
@@ -25,8 +25,8 @@ console.log('Topic: Functions');
 // const person1 = {
 //   firstName:"Matthew",
 //   lastName: "McConaughey"
-
 // }
+
 // const person2 = {
 //   firstName:"Angelina",
 //   lastName: "Jolie"
@@ -66,7 +66,7 @@ console.log('Topic: Functions');
    За допомогою методу apply() ви можете написати метод, який можна 
    використовувати для різних об’єктів. Метод apply() подібний до 
    методу call(), проте метод apply() приймає аргументи у вигляді 
-   масиву, а метод call() приймає аргументи окремо. Тому, застомуєм
+   масиву, а метод call() приймає аргументи окремо. Давайте, застомуєм
    метод apply() для отримання повного імені актора:
     
 */
@@ -77,22 +77,22 @@ console.log('Topic: Functions');
 // console.log(actor2); // Angelina Jolie
 
 /* Метод apply() дуже зручний, якщо ви хочете використовувати
-   масив замість списку аргументів. Це його відмінність від call і 
-   для другого завдання вирішити це так:
+   масив замість списку аргументів. Це його відмінність від  
+   "call()" і для другу частину завдання можна вирішити так:
 */
 // let actor1wasBorne = person["place of borne"].apply(person1, ["Uvalde", "USA (Texas)"]);
 // let actor2wasBorne = person["place of borne"].apply(person2, ["Los Angeles", "USA (California)"]);
 
 // console.log(actor1wasBorne); // McConaughey was born in Uvalde, USA (Texas)
 // console.log(actor2wasBorne); // Jolie was born in Los Angeles, USA (California)
-// ====================================================================
+// ======================================================================
 
-// =====================Task 2 call and this===========================
+// =====================Task 1.2 call and this===========================
 // UА: Маємо функцію "introduce", яка використовує спеціальне ключове
 //     слово "this" для передачі контенту "title", що визначений в обєктах
 //     "lecturer" та "student". Покажіть, як викликати цю функцію із цим
 //     контентом для різних аргументів використавши метод call()?
-//     Аргументи надано нижче:
+//     Аргументи для задачі надано нижче:
 // EN: We have the introduce function, which uses the special keyword
 //     'this' to transfer the title content defined in the lecturer
 //     and student objects. Show how to call this function with this
@@ -122,10 +122,10 @@ console.log('Topic: Functions');
 // introduce.call(lecturer, 'Derek', 'Asencheim'); // "Hello, I am Dr. Derek Asencheim."
 // introduce.call(student, 'Nike', 'Terner'); // "Hello, I am student Nike Terner."
 // introduce.call(student, 'Mark-Andre', 'Machony'); // "Hello, I am student Mark-Andre Machony."
-// ====================================================================
+// ======================================================================
 
-// =====================Task 3 apply and this==========================
-// UА: Оскільки масиви JavaScript не мають методу max(), замість нього 
+// =====================Task 1.3 apply and this==========================
+// UА: Оскільки масиви JavaScript не мають методу max(), замість нього
 //     можна застосувати метод Math.max(). Покажіть як це можна зробити?
 // EN: Since JavaScript arrays do not have a max() method, you can apply
 //     the Math.max() method instead. Show how it can be done?
@@ -141,9 +141,9 @@ console.log('Topic: Functions');
    не є об’єктом, він стає власником (об’єктом) викликаної функції. 
    У "нестрогому" режимі він стає глобальним об'єктом.
 */
-// ====================================================================
+// ======================================================================
 
-// =====================Task 4 apply and this==========================
+// =====================Task 1.4 apply and this==========================
 // UА: Маємо функцію "greet", яка використовує спеціальне ключове слово
 //     "this" для передачі контенту "title", що визначений в обєктi "agent".
 //     Покажіть, як викликати цю функцію із цим контентом для різних
@@ -166,26 +166,27 @@ console.log('Topic: Functions');
 // };
 
 // solution via apply method:
-// the apply() method of Function instances calls this function with a given
-// this value, and arguments provided as an array (or an array-like object)
+/* The apply() method of Function instances calls this function with a given
+ "this" value, and arguments provided as an array (or an array-like object)./
+
 // greet.apply(agent, ['Вітання!', 'Тарас']); // Вітання!, real-estate agent Тарас
 // greet.apply(agent, ['Greetings!', 'John']); // Greetings!, real-estate agent John
 // greet.apply(agent, ['Salutation!', 'Sharlise']); // Salutation!, real-estate agent Sharlise
 // greet.apply(agent, ['Gruß!', 'Fritz']); // Gruß!, real-estate agent Fritz
 // greet.apply(agent, ['Saludo!', 'Carlos']); // Saludo!, real-estate agent Carlos
 // greet.apply(agent, ['挨拶！', 'Saki']); // 挨拶!, real-estate agent Saki
-// ====================================================================
+// ======================================================================
 
-// =====================Task 5 bind and this===========================
+// =====================Task 1.5 bind and this===========================
 // UА: Маємо два об'єкти "person" та "member". В об'єкті "person" визначений
 //     метод "fullName".
 //     1) Можете використати цей метод для об'єкта "member"?
 //     2) А якщо використати метод як колбек функцію, ми отримуєм undefined.
 //        Як виправити це та отримати вірне значення? Поясніть?
 // EN: We have two objects person and member. The fullName method is defined
-//     in the person object. 
+//     in the person object.
 //     1) Can you use this method on the member object?
-//     2) And if we use the method as a callback function, we get undefined. 
+//     2) And if we use the method as a callback function, we get undefined.
 //        How to fix this and get the correct value? Explain.
 
 // const person = {
@@ -202,11 +203,12 @@ console.log('Topic: Functions');
 
 // for the 1st - solution via bind() method:
 /* The member object borrows the fullname method from person. */
-// let fullName = person.fullName.bind(member);
-// console.log(fullName()); // Hege Nilsen
+
+// let memberFullName = person.fullName.bind(member);
+// console.log(memberFullName()); // Hege Nilsen
 
 // for the 2nd - solution via bind() method:
-// when a function is used as a callback, "this" is lost. Look here:
+// when a function is used as a callback, the keyword "this" is lost. Look:
 // const person = {
 //   firstName:"Marthin",
 //   lastName: "Luter",
@@ -214,23 +216,23 @@ console.log('Topic: Functions');
 //    return console.log(this.firstName + " " + this.lastName);
 //   }
 // }
-// let fullName = person.fullName;
-// setTimeout(fullName, 3000); // undefined undefined - in 3sec
+// let personFullName = person.fullName;
+// setTimeout(personFullName, 3000); // undefined undefined - in 3sec
 /* The bind() method solves this problem. Here, the bind() method 
    is used to bind person.fullName to person.
 */
-// let fullName = person.fullName.bind(person);
-// setTimeout(fullName, 3000); // Marthin Luter - in 3sec
-// ====================================================================
+// let personFullName = person.fullName.bind(person);
+// setTimeout(personFullName, 3000); // Marthin Luter - in 3sec
+// ======================================================================
 
-// =====================Task 6 func params=============================
-// UА: Створіть функцію, яка буде підраховувати суму кожен раз із різною 
+// =====================Task 2.1 func params=============================
+// UА: Створіть функцію, яка буде підраховувати суму кожен раз із різною
 //     кількістю отриманих параметрів. Результати виведіть в консоль.
-// EN: Create a function that will calculate the sum each time with a 
-//     different number of received parameters. Output the results to 
+// EN: Create a function that will calculate the sum each time with a
+//     different number of received parameters. Output the results to
 //     the console.
 
-// solution via rest parameter (...) and for..of loop:
+// solution via rest(...) parameter and for..of loop:
 /* The rest parameter (...) allows a function to treat an indefinite 
 number of arguments as an array. */
 // function sum(...args) {
@@ -247,17 +249,17 @@ number of arguments as an array. */
 
 // console.log('results: ', x1, x2, x3, x4, x5);
 // results:  32 94 326 78.97 45.370000000000005
-// ====================================================================
+// ======================================================================
 
-// =====================Task 4 func arguments Object===================
+// =====================Task 2.2 func arguments Object===================
 // UА: Створіть функцію, яка отримає максимальне значення з отриманих
 //     аргументів. Результат виведіть в консоль.
 // EN: Create a function that will get the maximum value from the received
 //     arguments. Enter the result in the console.
 
 // solution via built-in arguments object and for-loop:
-/* JavaScript functions have a built-in object called the arguments object.
-   The argument object contains an array of the arguments used when the 
+/* JavaScript functions have a built-in object called the "arguments" object.
+   The "arguments" object contains an array of the arguments used when the 
    function was called (invoked). */
 // function findMax() {
 //   let max = -Infinity;
@@ -272,15 +274,15 @@ number of arguments as an array. */
 // console.log(findMax(244, 4, 5, 6, 22, 44)); // 44
 // console.log(findMax(-22, -4, -136, -6, -44)); // -4
 // console.log(findMax(-20, 4, -111, -16, 2)); // 4
-// ====================================================================
+// ======================================================================
 
-// ============================Task 3 pureFunc=========================
+// ============================Task 3.1 pureFunc=========================
 // UA: У нас є масив об’єктів. Кожен об'єкт символізує домашню тварину.
 //     В кожного об'єкта параметрами задані ім'я, вік та його вид.
 //     Підрахуйте вік усіх собак, причому у "собачих роках".
 //     Чи можете ви рішення показати створивши чисті функції?
 // EN: We have an array of objects. Each object represents a pet. The pets
-//     have a name, an age, and a type. Sum all of the dogs ages in "dog 
+//     have a name, an age, and a type. Sum all of the dogs ages in "dog
 //     years". Can you split yor solution to pure functions?
 
 // data = [
@@ -306,9 +308,9 @@ number of arguments as an array. */
 // 	},
 // ];
 
-// solution via for loop:
+// solution via for-loop:
 /* To translate dog ages into dog years, someone told that we have 
-   to multiply them by seven */
+   to "multiply dog's age or cat's age by seven". */
 // function getAges(data) {
 // 	let sum = 0;
 // 	for (let i = 0; i < data.length; i++) {
@@ -321,23 +323,23 @@ number of arguments as an array. */
 // }
 // console.log(getAges(data)); // 84
 
-// solution via chaining arrays methods like filter(), map(), reduce():
+// solution via chaining arrays methods: filter(), map(), reduce():
 // let ages = data
 // 	.filter((animal) => {
-// 		return animal.type === 'dog'; // return true on a an animal if its type is equal to dog
+// 		return animal.type === 'dog'; // return true if its type is equal to dog
 // 	})
 // 	.map((animal) => {
-// 		return animal.age * 7; // to convert the ages of the dogs by multiply by 7
+// 		return animal.age * 7; // to convert the ages of the dogs into dog's iears
 // 	})
 // 	.reduce((sum, animal) => {
-// 		return sum + animal.age; // to sum the ages of all of our dogs
+// 		return sum + animal.age; // to sum the ages of all dogs
 // 	});
 // console.log(ages); // 84
 
 // solution via creation of pure functions:
 /* pure function in JavaScript is one that given the same input, will always return
    the same output without side effects. Put simply, pure functions only depend on 
-   their input arguments */
+   their input arguments. */
 // First, we’ll create a function that checks if an element is a dog.
 // It takes our element as input and returns either true or false.
 // let isDog = (animal) => {
@@ -349,8 +351,8 @@ number of arguments as an array. */
 // 	return animal.age * 7;
 // };
 // Finally, we need a function that sums two numbers and returns the result:
-// let sum = (sum, animal) => {
-// 	return sum + animal;
+// let sum = (sum, animalsY) => {
+// 	return sum + animalsY;
 // };
 // Now that we have our three functions, we can use them with our map(),
 // filter(), and reduce() chain:
@@ -359,30 +361,31 @@ number of arguments as an array. */
 //   .map(dogYears)
 //   .reduce(sum);
 // console.log(ages); // 84
-// ====================================================================
+// ======================================================================
 
-// =====================Task 3 FDS closure ============================
-// UА: Що таке замикання (сlosure), і для чого його використовують в JavaScript?
-//     Покажіть сутність замикання на прикладax використавши для цього дані:
-//     для прикладу 1: function makeLogger(), function logMessage(),
+// =====================Task 4.1 closure ================================
+// UА: Що таке замикання (сlosure), і для чого його використовують в
+//     JavaScript? Покажіть сутність замикання на прикладax використавши
+//     для цього дані:
+//     приклад 1: function makeLogger(), function logMessage(),
 //     let message = 'Hello';
-//     для прикладу 2: function outerFunction(), function innerFunction(),
+//     приклад 2: function outerFunction(), function innerFunction(),
 //     const outerVariable = 'I am from outer function';
 // EN: What is a closure and what is 'closure' used for in JavaScript?
-//     Show the essence of the 'closure' with the examples using the following data:
-//     for example1: function makeLogger(), function logMessage(),
-//     let message = 'Hello';
-//     for example2: function outerFunction(){}, function innerFunction() {},
+//     Show the essence of the 'closure' with the examples using the
+//     following data: for example1: function makeLogger(),
+//     function logMessage(), let message = 'Hello';
+//     for example2: function outerFunction(), function innerFunction(),
 //     const outerVariable = 'I am from outer function';
 
-// solution via first example:
+// solution for first example:
 /* A closure in JavaScript is a way for a function to remember and access
    the variables from the environment where it was created. In JavaScript,
    closures are created every time a function is created, at function 
    creation time.
-   Here, we define a local variable message and an inner function 
-   logMessage. The inner function will preserve access to the variable
-   even after makeLogger the invocation, that is because makeLogger 
+   Here, we define a local variable "message" and an inner function 
+   "logMessage". The inner function will preserve access to the variable
+   even after "makeLogger" the invocation, that is because "makeLogger(" 
    forms a closure that contains the variable.
 */
 // function makeLogger() {
@@ -398,7 +401,7 @@ number of arguments as an array. */
 // const logMessage = makeLogger();
 // logMessage(); // "Hello"
 
-// solution via second example:
+// solution for second example:
 /* Closures are commonly used to create private variables and encapsulation
    in JavaScript. By defining variables within an outer function and returning
    an inner function that accesses and modifies those variables, you can
@@ -419,20 +422,17 @@ number of arguments as an array. */
 // closure(); // I am from outer function
 // ====================================================================
 
-// =====================Task 2 FDS===================================
-// Task 1. FDS
-// UА: Створіть функцію conc, яка повинна конкатенувати значення
+// =====================Task 5.1 FDS===================================
+// UА: Створіть функцію conc, яка повинна просто конкатенувати значення
 //     двух параметрів a і b та повертати рядок.
 //     Використовуйте Function Declaration Statement (FDS).
-//     Викликайте функцію до її створення.
-//     Тестові дані:
+//     Викликайте функцію до її створення. Тестові дані:
 //     a = '1', b = '1', result = '11'
 //     a = 1, b = 1, result = '11'
 // EN: Create a function conc, which should concatenate the values
 //     of two parameters a and b and return a string.
 //     Use Function Declaration Statement (FDS).
-//     Call a function before it declaration.
-//     Test data:
+//     Call a function before it declaration.Test data:
 //     a = '1', b = '1', result = '11'
 //     a = 1, b = 1, result = '11'
 
@@ -442,17 +442,17 @@ number of arguments as an array. */
 // let result2 = conc(1, 1);
 // console.log(result2); // 11
 
-// var1 - via глобальний об'єкт String()
+// solution via глобальний об'єкт String()
 // function conc(a, b) {
 // 	return String(a) + String(b);
 // }
 
-// var2 - via шаблонні строки (завжди повертають рядок символів)
+// solution2 via шаблонні строки (завжди повертають рядок символів)
 // function conc(a, b) {
 // 	return `${a}${b}`;
 // }
 
-// var3 - довільний варіант через об'єкт що повертає функцію
+// solution3 via object creation that returns function
 // function createSomeObj() {
 // 	return {
 // 		conc: conc,
@@ -464,20 +464,19 @@ number of arguments as an array. */
 // }
 
 // console.log(createSomeObj().conc(1, 1)); // 11
+// ====================================================================
 
-// Task 2. FDE
-// UА: Створіть функцію comp, яка повинна порівнювати значення
-//     двох параметрів a та b і повертати 1, якщо вони рівні та -1, якщо вони не рівні.
-//     Використовуйте Function Definition Expression (FDE).
-//     Викликайте функцію до її створення.
-//     Тестові дані:
+// =====================Task 5.2 FDS===================================
+// UА: Створіть функцію comp, яка повинна порівнювати значення двох
+//     параметрів "a" та "b" і повертати 1, якщо вони рівні та -1,
+//     якщо вони не рівні. Використовуйте Function Definition Expression
+//     (FDE). Викликайте функцію до її створення. Тестові дані:
 //     a = 'abc', b = 'abc', result = 1
 //     a = 'abC', b = 'abc', result = -1
 // EN: Create a function comp, which should compare the values
-//     of two parameters a and b, and return 1, when they equal and return -1,
-//     when they are not equal.
-//     Use Function Definition Expression (FDE).
-//     Call a function before it declaration.
+//     of two parameters "a" and "b", and return 1, when they equal and
+//     return -1, when they are not equal. Use Function Definition
+//     Expression (FDE). Call a function before it declaration.
 //     Test data:
 //     a = 'abc', b = 'abc', result = 1
 //     a = 'abC', b = 'abc', result = -1
@@ -488,7 +487,7 @@ number of arguments as an array. */
 // const result2 = comp('abC', 'abc');
 // console.log(result2); // -1
 
-// var 1 - via оператор if
+// solution1 via оператор if:
 // function comp(a, b) {
 // 	if (a === b) {
 // 		return 1;
@@ -496,53 +495,87 @@ number of arguments as an array. */
 // 	return -1;
 // }
 
-// var 2 -  via ternary оператор
+// solution2  via "ternary" оператор:
 // function comp(a, b) {
 // 	return a === b ? 1 : -1;
 // }
+// ====================================================================
 
-// =====================Task ? AF ====================================
+// =====================Task 5.3 FDS===================================
+// UA: Створіть масив з цілих чисел. Напишіть функцію, яка на основі
+//     створеного масиву, буде відображаи цей масив в бінарному, восьмирічному
+//     та шістнадцятирічному форматі. Виведіть ці масиви у консоль.
+// EN: Create an array of integers. Write a function that, based on the created
+//     array, will display this array in binary, octal and sixteenth format.
+//     Output these arrays to the console.
+
+// let arr = [24, 42, 254, 320, 4, 17];
+
+// // solution via toString() method, spred operator and map():
+// const convertToStrRadix = (number, radix) => number.toString(radix);
+// console.log(convertToStrRadix(6, 2)); // 110 - вірно, працює
+// console.log(convertToStrRadix(320, 8)); // 500 - вірно, працює
+// console.log(convertToStrRadix(42, 16)); // 2a - вірно, працює
+
+// let arrBinary = [...arr].map(function (item, i, arr) {
+// 	return convertToStrRadix(item, 2);
+// });
+// let arrX8 = [...arr].map(function (item, i, arr) {
+// 	return convertToStrRadix(item, 8);
+// });
+// let arrX16 = [...arr].map(function (item, i, arr) {
+// 	return convertToStrRadix(item, 16);
+// });
+// console.log(arrBinary);
+// // ['11000', '101010', '11111110', '101000000', '100', '10001']
+// console.log(arrX8); //  ['30', '52', '376', '500', '4', '21']
+// console.log(arrX16); // ['18', '2a', 'fe', '140', '4', '11']
+// ====================================================================
+
+// =====================Task 6.1 AF ===================================
 // UA: Створіть анонімну функцію, яка повинна вивести повідомлення
 //     'message in console' в конолі. Використовуйте її як обробник
-//     події click для кнопки. При цьому виведіть в консоль що показує
-//     ключове слово this?
+//     події "click" для кнопки. При цьому виведіть в консоль те, що
+//     показує ключове слово "this".
 // EN: Create an anonymous function, which should display message
 //     'message in console' in console. Use it as an event handler
-//     of event click of the button. At the same time, display
-//     the keyword this in the console.
+//     of event "click" of the button. At the same time, display
+//     the keyword "this" in the console.
 
-// const button = document.getElementById('btn-create-promise'); // define the button-node
+// To define the button-node, we have this line-code:
+// const button = document.getElementById('btn-create-promise');
 
-// var 1 - via function declaration
+// solution1 via function declaration:
 // const handler = function () {
 // 	console.log('message in console');
 // 	console.log(this); // <button id="btn-create-promise" type="button">Create Promise</button>
 // };
 // button.addEventListener('click', handler);
 
-// solution via arrow function:
+// solution2 via arrow function:
 // const handler = () => {
 // 	console.log('message in console');
 // 	console.log(this); // {} because the arrow function is used
 // };
 // button.addEventListener('click', handler);
 
-// solution via IIFE
+// solution3 via IIFE:
 // (function () {
 // 	const button = document.getElementById('btn-create-promise');
 // 	const handler = function () {
 // 		console.log('message in console');
-// 		console.log(this); // <button id="btn-create-promise" type="button">Create Promise</button>
+// 		console.log(this); // <button id="btn-create-prom...
 // 	};
 // 	button.addEventListener('click', handler);
 // })();
+// ====================================================================
 
-// =====================Task ? AF closure ==============================
-// UА: Вам потрібно написати функцію makeCounter. Вона повинна прийняти
-//     початкове значення лічильника та повернути об’єкт, який має методи:
-//     зменшити значення, збільшити значення та отримати значення. Покажіть
-//     в рішенні сутність використання замикання.
-// EN: You need to write makeCounter implementation. It should accept
+// =====================Task 6.2 AF closure ===========================
+// UА: Вам потрібно написати функцію "makeCounter". Вона повинна
+//     прийняти початкове значення лічильника та повернути об’єкт, який
+//     має методи: зменшити значення, збільшити значення та отримати
+//     значення. Покажіть в рішенні сутність використання замикання.
+// EN: You need to write "makeCounter" implementation. It should accept
 //     the initial value of the counter and return an object, which has
 //     methods: decrease, increase, and get. Show the essence of closure.
 
@@ -560,45 +593,21 @@ number of arguments as an array. */
 // const counter = makeCounter(10);
 // console.log(counter.increase()); // 11
 // console.log(counter.decrease()); // 10
-// console.log(counter.get()); // 10
+// console.log(counter.decrease()); // 9
+// console.log(counter.decrease()); // 8
+// console.log(counter.get()); // 8
 // ======================================================================
 
-// ============================Task 17===================================
-// UA: Створіть масив з цілих чисел. Напишіть функцію, яка на основі
-//     створеного масиву, буде відображаи цей масив в бінарному, восьмирічному
-//     та шістнадцятирічному виді. Виведіть ці масиви у консоль.
-// EN: Create an array of integers. Write a function that, based on the created
-//     array, will display this array in binary, octal and sixteenth format.
-//     Output these arrays to the console.
-
-// let arr = [24, 42, 254, 320, 4, 17];
-
-// const convertToStrRadix = (number, radix) => number.toString(radix);
-// console.log(convertToStrRadix(6, 2)); // 110 - вірно, працює
-
-// let arrBinary = [...arr].map(function (item, i, arr) {
-// 	return convertToStrRadix(item, 2);
-// });
-// let arrX8 = [...arr].map(function (item, i, arr) {
-// 	return convertToStrRadix(item, 8);
-// });
-// let arrX16 = [...arr].map(function (item, i, arr) {
-// 	return convertToStrRadix(item, 16);
-// });
-// console.log(arrBinary);
-// console.log(arrX8);
-// console.log(arrX16);
-
-// Task 4. NFE
-// UА: Створіть функцію fibo, яка повинна підраховувати числа Фібоначчі по формулі
-//     F0 = 0, F1 = 1, Fn = Fn-1 + Fn-2.
-//     Створіть функцію factorial, яка повинна обрахувати факторіал числа по формулі
-//     Fn = 1 * 2 *..*n.
+// ==============Task 7.1 Named Function Expression (NFE) ===============
+// UА: Створіть функцію fibo, яка повинна підраховувати числа Фібоначчі
+//     по формулі: F0 = 0, F1 = 1, Fn = Fn-1 + Fn-2.
+//     Створіть функцію factorial, яка повинна обрахувати факторіал числа
+//     по формулі: Fn = 1 * 2 *..*n.
 //     Використовуйте Named Function Expression (NFE).
-// EN: Create a function fibo should calculate Fibonacci numbers according to the formula
-//     F0 = 0, F1 = 1, Fn = Fn-1 + Fn-2.
-//     Create a function factorial which should calculate factorial of a number n
-//     according to the formula Fn = 1 * 2 *..*n.
+// EN: Create a function fibo should calculate Fibonacci numbers according
+//     to the formula: F0 = 0, F1 = 1, Fn = Fn-1 + Fn-2.
+//     Create a function factorial which should calculate factorial of a
+//     number according to the formula: Fn = 1 * 2 *..*n.
 //     Use Named Function Expression (NFE).
 
 // solution1 for fibo
@@ -614,7 +623,7 @@ number of arguments as an array. */
 
 // console.log(fibo(6)); // 8 (Fibonacci number at index 6)
 
-// // solution1 for factorial
+// solution2 for factorial
 // function factorial(n) {
 // 	if (n === 0 || n === 1) {
 // 		return 1;
@@ -624,17 +633,92 @@ number of arguments as an array. */
 // }
 
 // console.log(factorial(5)); // 120 (Factorial of 5)
+// ======================================================================
 
-// Task 5. FC
-// UA: Об'явіть дві змінні для рядкових символів: params і body та надайте їм такі значення,
-//     які  будуть представляти собою список параметрів та тіло майбутньої функції.
-//     Потім створіть функцію, яка використовує цю інформацію, за допомогою
-//     Function Constructor (FC).
-//     Викличте цю функцію.
-// EN: Declare two string variables: params and body and initialize them with string values,
-//     which represent the list of parameters and the body of future function.
-//     Create function using these variables with help of Function Constructor (FC).
-//     Call this function.
+// ==============Task 8.1 Function Constructor (FC) =====================
+// UA: Що таке функція-конструктор, які їх особливості? Приведіть приклад
+//     функції-конструктора, що вона повертає, розкрийте сутність її роботи?
+// EN: What is a constructor function, what are their features? Give an
+//     example of a constructor function, what it returns, reveal the
+//     essence of her work?
+
+// solution:
+/*The regular {...} syntax allows us to create one object. But often we 
+need to create many similar objects - for this, constructor functions are
+used. So, the main purpose of constructors – to implement reusable object 
+creation code.
+Constructor functions technically are regular functions. There are two 
+conventions though:
+1) they are named with capital letter first,
+2) they should be executed only with "new" operator.
+We can check whether it was called with "new" or without it, using a special 
+"new.target property". It is undefined for regular calls and equals the
+function if called with new.
+*/
+// function User(name) {
+// 	this.name = name;
+// 	this.isAdmin = false;
+
+// 	new.target;
+// }
+
+// let user = new User('Modest');
+
+// console.log(user.name); // Modest
+// console.log(user.isAdmin); // false
+
+// // call without "new" operator:
+// console.log(User()); // undefined
+
+/* When a function is executed with new, it does the following steps:
+A new empty object is created and assigned to "this". 
+The function body executes. Usually it modifies "this", adds new 
+properties to it. 
+The value of "this" is returned.
+So, let user = new User("Modest") gives the same result as:
+let user = {
+  name: "Modest",
+  isAdmin: false
+};
+*/
+// Of course, we can add not only properties to "this", but also methods:
+// function AnotherUser(name) {
+// 	this.name = name;
+
+// 	this.sayHi = function () {
+// 		console.log('My name: ' + this.name);
+// 	};
+// }
+
+// let peter = new AnotherUser('Peter');
+// peter.sayHi(); // My name: Peter
+
+/* Usually, constructors do not have a return statement. Constructors   
+task is to write all necessary stuff into "this", and it automatically  
+becomesthe result. But if there is a return statement, then the rule 
+is simple:
+If return is called with an object, then the object is returned
+instead of "this". If return is called with a primitive, it’s 
+ignored and "this" is returned.
+*/
+// function SomeUser() {
+// 	this.name = 'Simon';
+// 	return 'Bob'; // <-- повертає this
+// 	// чи так
+// 	// return; // <-- повертає this
+// }
+// console.log(new SomeUser().name); // Simon
+// ======================================================================
+
+// ==============Task 8.2 Function Constructor (FC) =====================
+// UA: Об'явіть дві змінні: "params" і "body" та надайте їм такі значення,
+//     які, будуть представляти собою список параметрів та тіло майбутньої
+//     функції. Потім створіть функцію, яка буде використовувати цi дані,
+//     за допомогою FC. Викличте цю функцію.
+// EN: Declare two string variables: params and body and initialize them
+//     with string values, which represent the list of parameters and the
+//     body of future function. Create function using these variables with
+//     the help of FC. Call this function.
 
 // const params = 'a, b';
 // const body = 'return a + b;';
@@ -642,13 +726,85 @@ number of arguments as an array. */
 // const myFunction = new Function(params, body);
 
 // const result = myFunction(2, 3);
-// console.log(result);
+// console.log(result); // 5
+// ======================================================================
 
-// Task 6. ArF
-// UA: Об'явіть масив arr = [1, 8, 3, 5, 12, 7, 9, 11].
-//     Використовуючи стрілкові функції створіть новий масив з елементів elem * elem,
-//     які меньше 100 та відсортуйте цей масив по збільшенню.
-//     Виведіть результат у консоль.
+// ==============Task 8.3 Function Constructor (FC) =====================
+// UA: Створіть функцію-конструктор Calculator, яка створює об'єкт із
+//     трьома методами:
+//     - read() запитує два значення за допомогою prompt та зберігає їх
+//       значення у властивостях об'єкта;
+//     - sum() повертає суму цих властивостей;
+//     - mul() повертає множину цих властивостей.
+// EN: Create a Calculator constructor function that creates objects with
+//     three methods:
+//     - read() requests two values ​​using prompt and stores their value in
+//       the properties of the object,
+//     - sum() returns the sum of these properties,
+//     - mul() returns the product of these properties.
+
+// solution via function-constructor creation:
+// function Calculator() {
+// 	this.read = function () {
+// 		this.a = +prompt('a?', 0);
+// 		this.b = +prompt('b?', 0);
+// 	};
+
+// 	this.sum = function () {
+// 		return this.a + this.b;
+// 	};
+// 	this.mul = function () {
+// 		return this.a * this.b;
+// 	};
+// }
+
+// let calculator = new Calculator(); // create an instanse
+// calculator.read(); // initialize method to get and read the values
+
+// console.log(calculator.sum()); // 1enter 6, 2enter 6, get 12
+// console.log(calculator.mul()); // 1enter 6, 2enter 6, get 36
+// ======================================================================
+
+// ==============Task 8.4 Function Constructor (FC) =====================
+// UA: Створіть функцію-конструктор Accumulator(startingValue). Об'єкт,
+//     який вона створює, має вміти таке:
+//     - Зберігати "поточне значення" як value. Початкове значення
+//       встановлюється в аргументі конструктора StartValue;
+//     - Метод read() повинен використовувати prompt для зчитування нового
+//       числа та додавання його до value.
+//     Іншими словами, властивість value є сумою всіх введених користувачем
+//     значень, з урахуванням початкового значення startingValue.
+// EN: Create a constructor function Accumulator(startingValue). The object
+//     it creates must be able to do the following:
+//     - store the “current value” in the value property. The starting value
+//       is set in the startingValue constructor argument,
+//     - the read() method must use prompt to read the new number and add it
+//       to value.
+//     In other words, the value property is the sum of all user-entered
+//     values, taking into account the startingValue.
+
+// solution via function-constructor creation:
+// function Accumulator(startingValue) {
+// 	this.value = startingValue;
+
+// 	this.read = function () {
+// 		return (this.value += +prompt('How many to add?', 0));
+// 	};
+// }
+
+// let accumulator = new Accumulator(1); // початкове значення 1
+
+// accumulator.read(); // додає введене користувачем значення до поточного значення
+// accumulator.read(); // додає введене користувачем значення до поточного значення
+
+// console.log(accumulator.value); // виведе суму цих значень
+// ======================================================================
+
+// =================Task 9.2 Arrow Function (ArF) =======================
+// UA: Об'явіть масив arr = [1, 8, 3, 5, 12, 7, 9, 11]. Використовуючи
+//     стрілкові функції створіть новий масив з елементів elem * elem,
+//     які меньше 100 та відсортуйте цей масив на збільшення. Виведіть
+//     результат у консоль.
 // EN: Declare an array arr = [1, 8, 3, 5, 12, 7, 9, 11]
 //     Using arrow functions create new array which contains elem * elem.
 //     These elements should be less than 100, sort it in ascending order.
@@ -662,8 +818,9 @@ number of arguments as an array. */
 // 	.sort((a, b) => a - b);
 
 // console.log(squaredArray); // [1, 9, 25, 49, 64, 81]
+// ======================================================================
 
-// =====================Task 07===================================
+// ================Task 10.1 Callback Function (ClbF) ===================
 // UA: Будь ласка, поясніть, як працює функція callback, і наведіть
 //     декілька прикладів.
 // EN: Please explain what a callback function is and give a few simple
@@ -672,8 +829,8 @@ number of arguments as an array. */
 // solution:
 /* A callback function is a function that is passed as an argument 
   to another function and executed after an operation completes. Below 
-  is a first example of a simple callback function that logs into the console
-  after performing a few operations:
+  is a first example of a simple callback function that logs into the 
+  console after performing a few operations:
 */
 // function modifyArray(arr, callback) {
 // 	arr.push(100);
@@ -701,20 +858,109 @@ number of arguments as an array. */
 // console.log(calculate(40, 2, divide)); // 20
 // ======================================================================
 
-// ============================Task ??===================================
-// UA: Поясніть на прикладі обчислення факторіалу що таке рекурсія? А потім
-//     вирішіть задачу: маємо масив із вкладеними підмасивами. Напишіть функцію
-//     яка перетворить його в однорідний масив (не має рівнів вкладеності)
-//     використавши для цього рекурсію.
-// EN: Explain what recursion is on the example of factorial calculation?
-//     And then solve the problem: you are given a nested array as input,
-//     and you need to write a function to convert it to a one-level array
-//     (with no subarrays in it) using recursion for this.
+// ================Task 11.1 Recursive Function (RcF) ===================
+// UA: Створіть функцію pow(x, n), яка підносить число "x" до натурального
+//     ступеня "n". Інакше кажучи, множить "x" на себе "n" разів. Поясніть
+//     на цьому прикладі обчислення степені числа, що таке рекурсія?
+// EN: Create a function pow(x, n) that raises the number "x" to the power
+//     of "n". Otherwise, apparently, multiply "x" by itself "n" times.
+//     Explain using this example of calculating the power of a number,
+//     what is recursion?
 
-// solution via theory:
-/* Що ж таке рекурсія в функції? По суті, це техніка, коли функція викликає
-   сама себе, доки не буде виконано певну умову, а відсутність цієї умови 
-   призводить до переповнення стеку та повного збою програми.
+// solution via recursion and condition if..else:
+/* Рекурсія - це прийом програмування, корисний у ситуаціях, коли завдання
+може бути природно розділена на кілька подібних, але більш простих 
+завдань. Або коли задача може бути спрощено до нескладних дій плюс простий
+варіант тієї самої задачі. У процесі виконання завдання у тілі функції 
+можуть бути викликані інші функції для виконання якихось підзавдань. 
+Окремий випадок такого виклику – коли функція викликає сама себе. Це якраз 
+і називається рекурсією.
+Отже, створимо функцію pow(x, n), виклик якої буде мати результатом: 
+pow(2, 2) = 4; pow(2, 3) = 8; pow(2, 4) = 16 тому спробуємо розділити
+цю задачу на якісь прості дії: нам треба множити число "x" на самого  
+себе "n" разів. Тут простою дією - "кроком рекурсії" (або гілкою) буде
+запис x * pow(x, n - 1). Як бачимо, таким записом ми зводимо до простої
+дії множчення на число "x" та подібного більш простішого завдання (pow із
+меньшим "n"). Але виникає питання: скільки кроків ми так будемо робити?
+Наступні кроки будуть спрощувати завдання більше і більше доки "n" не 
+досягне значення 1. І тут стає зрозуміло, що якщо n==1 то pow(x, 1) 
+дорівнює "x". Цю гілку називають "базою рекурсії" бо одразу стає очевидним 
+результат. Кажуть, що функція pow рекурсивно викликає саму себе до n == 1. 
+Ось давайте подивимось на прикладі, рекурсивного обчислення pow(2, 4) який 
+має такі кроки:
+pow(2, 4) = 2 * pow(2, 3)
+pow(2, 3) = 2 * pow(2, 2)
+pow(2, 2) = 2 * pow(2, 1)
+pow(2, 1) = 2
+Таким чином, рекурсію використовують, коли обчислення функцій можна звести до 
+її простого виклику, а його – до ще більш простого і так далі, доки значення 
+не стане очевидним. */
+// function pow(x, n) {
+// 	if (n == 1) {
+// 		return x;
+// 	} else {
+// 		return x * pow(x, n - 1);
+// 	}
+// }
+// console.log(pow(2, 2)); // 4
+// console.log(pow(2, 3)); // 8
+// console.log(pow(2, 4)); // 16
+
+// solution via recursion and ternary operator:
+// function pow(x, n) {
+// 	return n == 1 ? x : x * pow(x, n - 1);
+// }
+
+// solution via for loop:
+// function pow(x, n) {
+// 	let result = 1;
+// 	// множимо result на x n разів в циклі
+// 	for (let i = 0; i < n; i++) {
+// 		result *= x;
+// 	}
+// 	return result;
+// }
+// console.log(pow(2, 3)); // 8
+// console.log(pow(3, 3)); // 27
+// console.log(pow(4, 3)); // 64
+// ======================================================================
+
+// ================Task 11.2 Recursive Function (RcF) ===================
+// UA: Поясніть на прикладі обчислення факторіалу що таке рекурсія?
+// EN: Explain what recursion is on the example of factorial calculation?
+
+// solution via recursion and operator if:
+/* Давайте спочатку визначимо що таке факторіал. Факторіал натурального 
+числа – це число, помножене на "себе мінус один", потім на "себе мінус два", 
+і так далі до 1. Факторіал "n" позначається як "n!". Визначення факторіалу
+можне записати як n! = n * (n - 1) * (n - 2) * ... * 1
+Ось приклади деяких значень факторіалу та як вони отримані:
+1! = 1
+2! = 2 * 1 = 2
+3! = 3 * 2 * 1 = 6
+4! = 4 * 3 * 2 * 1 = 24
+5! = 5 * 4 * 3 * 2 * 1 = 120
+Отже, в нас стоїть задача – написати функцію factorial(n), яка повертає n!, 
+використовуючи рекурсію.
+   Що ж таке рекурсія в функції? По суті, це техніка, коли функція викликає
+сама себе, доки не буде виконано певну умову, а відсутність цієї умови 
+призводить до переповнення стеку та збою програми.
+   Як ми знаємо, рекурсивна функція складається з двох умов: рекурсивної
+та базової. Базова умова - це умова, яка завершує виконання функції в
+нескінченому ланцюгу викликів. Кожна рекурсивна функція повинна мати
+принаймні одну базову умову виходу, щоб не сталось переповнення стеку
+викликів. В нашому випадку - це умова, коли число факторіалу повертає 
+одиницю незважаючи не те що множиться на нуль, а на нуль, в математиці,
+множити не можна.
+   А рекурсивна умова - це умова, яка викликає цю саму функцію знову
+- саму себе. В нашому випадку - це результат добутку усіх чисел до 
+заданого числа факторіалу (не включаючи самого числа): x * (x - 1)
+та сума добутку попередніх чисел:
+5 * (5 - 1) = 20 + 
+4 * (4 - 1) = 12 +
+3 * (3 - 1) = 6 +
+2 * (2 - 1) = 2 +
+1 * (1 - 1) = 1 +
 */
 
 // function factorial(x) {
@@ -725,31 +971,58 @@ number of arguments as an array. */
 // 	return x * factorial(x - 1);
 // }
 
-/* Як бачимо, рекурсивна функція складається з двох умов: рекурсивної та 
-базової. Базова умова - це умова, яка завершує виконання функції в нескінченому
-ланцюгу викликів. Тому кожна рекурсивна функція повинна мати принаймні одну 
-базову умову виходу, щоб не сталось переповнення стеку викликів. 
-А рекурсивна умова - це умова, яка викликає цю саму функцію знову - саму себе. */
+// // verify result:
+// console.log(factorial(1)); // 1
+// console.log(factorial(2)); // 2
+// console.log(factorial(3)); // 6
+// console.log(factorial(4)); // 24
+// console.log(factorial(5)); // 120
+// ======================================================================
 
-// const input = [1, [2, 3, [4, 5]]];
+// ================Task 11.3 Recursive Function (RcF) ===================
+// UA: Маємо масив із вкладеними підмасивами. Напишіть функцію, яка
+//     перетворить його в однорідний масив (не має рівнів вкладеності)
+//     використавши для цього рекурсію.
+// EN: You are given a nested array as input, and you need to write
+//     a function to convert it to a one-level array (with no subarrays
+//     in it) using recursion for this.
 
-// // solution via recursion for second task:
+// let input = [25, 42, [14, 72, [64, 92]]];
+
+// solution via recursion and methods: reduce and Array.isArray:
+/* Ми знаємо, що рекурсію використовують, коли обчислення функції 
+можна звести до її простішому виклику, а його – до ще простішого і
+аж доки значення не стане очевидним.
+Тому очевидним є те, що нам треба конканувати кожен наступний 
+елемент масиву до попереднього щоб отримати однорідний масив - це 
+і буде базою рекурсії. Отже, база рекурсії - конкатенація елементів 
+у простий/однорідний масив, що і буде повертати ця функція.
+А рекурсивна умова тут буде перевірка елемента на його належність
+до масиву, і якщо - так, то конканувати елементи цього масиву до 
+попередніх елементів, що робить база рекурсії у цій самій функції.
+Отже треба викликати її знову, або викликати саму себе щоб звести  
+вирішення до бази рекурсії, яка власне і конкатенує елементи масиву. */
+
 // function flatArray(array) {
-// 	return array.reduce((accom, item) => {
+// 	return array.reduce((accum, item) => {
 // 		// recursive case
 // 		if (Array.isArray(item)) {
-// 			return accom.concat(flatArray(item));
+// 			return accum.concat(flatArray(item));
 // 		}
 
-// 		// base case
-// 		return accom.concat(item);
-
-// 		// or simply write it using ternary operators
-// 		// return accom.concat(Array.isArray(item) ? flatArray(item) : item);
+// 		// return base case
+// 		return accum.concat(item);
 // 	}, []);
 // }
 
-// console.log(flatArray(input));
+// solution via recursion, method reduce and ternary operator:
+// function flatArray(array) {
+// 	return array.reduce((accum, item) => {
+// 		return accum.concat(Array.isArray(item) ? flatArray(item) : item);
+// 	}, []);
+// }
+
+// console.log(flatArray(input)); // [25, 42, 14, 72, 64, 92]
 // ======================================================================
 
 // ==========================Task 08=====================================
@@ -776,12 +1049,13 @@ number of arguments as an array. */
 // // solution via regEx:
 // const findVowels = (str) => {
 // 	// to match vowels (case-insensitive)
-// 	const vowelCount = str.match(/[aeiou]/gi);
-// 	console.log(vowelCount); // ['A', 'a', 'a', 'O', 'a', 'o', 'a', 'a', 'O']
+// 	const foundVowels = str.match(/[aeiou]/gi);
+// 	console.log(foundVowels); // ['A', 'a', 'a', 'O', 'a', 'o', 'a', 'a', 'O']
 
 // 	// check if vowelCount is null (no matches found) or get its length
-// 	return vowelCount ? vowelCount.length : 0;
+// 	return foundVowels ? foundVowels.length : 0;
 // };
+
 // const vowelCount = findVowels(string);
 // console.log(vowelCount); // 9
 
@@ -1911,21 +2185,20 @@ coalescing operator (??) to return an empty array ([]) in such a case */
 // console.log(result); // [ 'codi', 'ngbe', 'auty', 'dev' ]; // last item is less than 4 characters long
 // ======================================================================
 
-
 // =====================Task ?? curry====================================
-// UА: Створіть функцію "sum", яка просто буде додавати два числа "a" та 
-//     "b". Виклик sum(a, b), виведе суму цих чисел. Тепер створіть іншу 
+// UА: Створіть функцію "sum", яка просто буде додавати два числа "a" та
+//     "b". Виклик sum(a, b), виведе суму цих чисел. Тепер створіть іншу
 //     функцію, яка трансформує функцію "sum" через яку зможемо викликати
 //     її з аргументами разом так і окремо.
-// EN: We have a "person" object that has two methods: "fullName" and 
+// EN: We have a "person" object that has two methods: "fullName" and
 
-function sum(a, b) {
-  return a + b;
-}
+// function sum(a, b) {
+//   return a + b;
+// }
 // sum(2, 0); // 2
 // sum(0, 2); // 2
 
-// solution: 
+// solution:
 /* Каррування – просунута техніка для роботи з функціями. Вона використовується
 не лише у JavaScript, а й в інших мовах. Каррування – це трансформація функцій 
 в такий спосіб, що вони приймали аргументи як f(a, b), так і як f(a)(b). Карування 
@@ -1945,13 +2218,13 @@ function sum(a, b) {
 // console.log(curriedSum(2)(0)); // 2
 // console.log(curriedSum(0)(2)); // 2
 
-// /* проте звичайний виклик не працює і поверне другу функцію, отже 
+// /* проте звичайний виклик не працює і поверне другу функцію, отже
 //    цей підхід не зовсім правельний .*/
 // console.log(curriedSum(2, 0)); // отримаємо нижче
 // console.log(curriedSum(0, 2)); // отримаємо нижче
 // ƒ (b) {
-   //   return func (a, b);
-   //}
+//   return func (a, b);
+//}
 // the same result with this solution:
 // function sumTransformed(a) {
 //    return function (b) {
@@ -1963,13 +2236,13 @@ function sum(a, b) {
 // function sumTransformed(func) {
 //    return function (a, b) {
 //       /* By checking if b is undefined, the function can determine if it's being called
-//       with one or two arguments. 
-//       Determining Partial Application: If b is undefined, it indicates that the 
-//       function is being called in a partially applied form, where the first argument 
+//       with one or two arguments.
+//       Determining Partial Application: If b is undefined, it indicates that the
+//       function is being called in a partially applied form, where the first argument
 //       a is already provided, and it's awaiting the second argument b.
 //       So: the sumTransformed function checks if the second argument b is undefined.
-//       If it is, it returns a function that takes the second argument b. Otherwise, 
-//       it directly invokes the func function with both a and b. 
+//       If it is, it returns a function that takes the second argument b. Otherwise,
+//       it directly invokes the func function with both a and b.
 //       */
 //       if (typeof b === 'undefined') {
 //          return function (b) {
@@ -1988,3 +2261,278 @@ function sum(a, b) {
 // console.log(curriedSum(2, 0)); // 2
 // console.log(curriedSum(0, 2)); // 2
 
+// =====================Task ?? cookies==============================
+// UА: Що таке cookies? Покажіть як можна отримати доступ до cookies
+//     безпосередньо з браузера? Виведіть наявні cookies в консоль.
+//     А тепер створіть функцію для отримання значення cookies за його
+//     ім'ям?
+// EN: What are cookies? Show how you can access cookies directly from
+//     the browser? Output existing cookies to the console. Now create
+//     a function to get the cookie value by its name?
+
+// solution via property document.cookie
+/* Cookies are small strings of data that are stored directly in 
+   the browser. They are part of the HTTP protocol. Cookies are 
+   typically set by the web server. The browser will then automatically 
+   add them to (almost) every request to the same domain using the 
+   Cookie header. One of the most common uses of cookies is for 
+   authentication.
+   The value of document.cookie consists of key=value pairs separated 
+   by ";". Each pair represents a separate cookie. So, lets see:
+*/
+// console.log(document.cookie);
+
+// solution to get value by it name via function creation
+/* To find a specific cookie, just split the string from document.cookie
+   by ";", and then find the desired key. To do this, we can use both 
+   regular expressions and functions to process arrays.
+   Зверніть увагу, значення cookie кодується, тому getCookie використовує 
+   вбудовану функцію decodeURIComponent для декодування.
+*/
+
+// const getCookie = (name) => {
+//   const nameString = name + "="
+//   const value = document.cookie.split(";").filter(item => {
+//     return item.includes(nameString)
+//   })
+//   console.log('value', value); // ['refresh_token=eyJhbGciO...5it-7lrDPaRt4']
+
+//   if (value.length) {
+//     return decodeURIComponent(value[0].split('=')[1])
+//   } else {
+//     return ""
+//   }
+// }
+// console.log(getCookie('refresh_token')) // eyJhbGciO...
+
+// solution to get value by it name via regular expresions:
+
+/* Узагалі, найкоротший спосіб отримати доступ до cookie – це використати 
+   регулярні вирази. Функція getCookie(name) повертає значення cookie по його 
+   назві. Тут new RegExp генерується динамічно, щоб знаходити "; name=<value>".
+*/
+// function getCookie(name) {
+//   let matches = document.cookie.match(new RegExp(
+//     "(?:^|; )" + name.replace(/([\.$?*|{}\(\)\[\]\\\/\+^])/g, '\\$1') + "=([^;]*)"
+//   ));
+//   return matches ? decodeURIComponent(matches[1]) : undefined;
+// }
+// console.log(getCookie("refresh_token")); // eyJhbGciO...
+// ======================================================================
+
+// ==================Task ## Map-collection Object.values() =============
+// UА: В нас є масив слів arr у якому містяться анаграми (групи анаграм).
+//     Напишіть функцію "aclean", яка повертає масив слів очищений від
+//     анаграм. В дійсності, з кожної групи анаграм повинно залишитись
+//     тільки одне слово (не важливо яке).
+// EN: We have an array of words, which has anagram (or anagram groups).
+//     Create the function "aclean", which returns the array of words,
+//     cleaned from anagrams. Actualy, should be remains only one word
+//     from the each group of anagram (doesn't matter which one).
+
+// let arr = ['nap', 'teachers', 'cheaters', 'PAN', 'ear', 'era', 'hectares'];
+
+// The anagrams - they are words, which have the same letters, the same
+// quantity of letters but the letters stays in different orders.
+// nap - pan; ear - are - era; cheaters - hectares - teachers
+
+// solution via Map-structure and method Array.from():
+/* The solution concept is to iterate over each word of the arr
+with for..of, divide each word to letters, sort them and
+convert back to word. Though, all anagrams will be the same form.
+After that, we can use that sorted anagrams as keys in Map-collection
+object in order to be able to reassign the different values to a one
+same key. We can say that different words/anagram groups would 
+have the one sorted form. So, if we meet again the word in sorted 
+form, this word will rewrite the value to the same key in the 
+Map-collection object. We can use Map-method set() to assign
+different words to the same key, or each word/anagram rewrite the new
+value to the same key in the Map-collection object. At the end, the
+method Array.from() pick up the values and returns them as array.*/
+
+// function aclean(arr) {
+// 	let map = new Map();
+
+// 	for (let word of arr) {
+// 		let sorted = word.toLowerCase().split('').sort().join('');
+// 		map.set(sorted, word);
+// 	}
+
+// 	return Array.from(map.values());
+// }
+
+// // check the result:
+// console.log(aclean(arr)); // ['PAN', 'hectares', 'era']
+
+// solution via Object creation and method Object.values(obj):
+/* As we can see the keys are the simple strings, therefore
+we can use a simple object insted of Map-collection. But the concept
+of solution remains the same. Here for iteration we can apply
+for-loop, and to take the values we can use the method for global
+Object to take the values - Object.values(obj). */
+
+// function aclean(arr) {
+// 	let obj = {};
+
+// 	for (let i = 0; i < arr.length; i++) {
+// 		let sorted = arr[i].toLowerCase().split('').sort().join('');
+// 		obj[sorted] = arr[i]; // assign the value to the same sorted key
+// 	}
+
+// 	return Object.values(obj);
+// }
+
+// // check the result:
+// console.log(aclean(arr)); // ['PAN', 'hectares', 'era']
+// ======================================================================
+
+// =================Task # Set-collection ===============================
+// UА: У кафе заходять різні відвідувачі, одні прийшли вперше, інші
+//     заходили декілька разів. Потрібно створити список відвідувачів при
+//     цьому цікавлять тільки відвідувачі а не кількість їх відвідувань,
+//     або імена відвідувачів не повинні повторятись.
+// EN: Many clients visit the cafe. Some of them visit cafe many times, but
+//     others visit it only ones. We need to create the visitor's list and
+//     not to take into account the quantity of their visits. Namely, the
+//     visitor's name doesn't appear more than one time.
+
+// let john = { name: 'John' };
+// let pete = { name: 'Pete' };
+// let mary = { name: 'Mary' };
+// let simon = { name: 'Simon' };
+// let ellis = { name: 'Ellis' };
+
+// // solution via Set-collection:
+// /* Object Set it is the special type of collection or multiplay set of values
+// (without the keys), where each value can appear only ones.
+// To create this multiplay set of values we use method new Set(iterable);
+// To add a new value to the set of values we can use set.add(value) and if the
+// value is in the set, nothing happens but returns the same Object set.
+// We can use set.size() method to check the quantity of values in the set. */
+
+// let set = new Set();
+
+// set.add(john);
+// set.add(pete);
+// set.add(mary);
+// set.add(ellis);
+// set.add(simon);
+// set.add(john);
+// set.add(mary);
+
+// for (let visitor of set) {
+//  console.log(visitor.name); // John, Pete, Mary, Ellis, Simon - each on a new line
+// }
+// // We also can iterate over set object with forEach method:
+// // set.forEach((visitor, visitorAgain, set) => {
+// //    console.log(visitor.name);
+// // });
+// // Here, visitor and visitorAgain values appear twice for the suit with Map.
+
+// // let's make another check:
+// console.log(set.size); // 5
+
+// // solution via arr.find() method and created array for visitors:
+// /* Here, rather than simply adding the visitor to the list, we run
+// a function that checks if the visitor is already in the list. If they
+// are not, we add them.
+// The Array.find() function will return the first element in the array
+// that satisfies the provided testing function; otherwise it will return
+// undefined.*/
+
+// let visitorsList = [];
+
+// function addVisitor(visitor) {
+// 	const alreadyVisited = visitorsList.find((v) => v.name === visitor.name);
+
+// 	if (!alreadyVisited) {
+// 		visitorsList.push(visitor);
+// 	}
+// }
+
+// addVisitor(john);
+// addVisitor(pete);
+// addVisitor(mary);
+// addVisitor(ellis);
+// addVisitor(simon);
+// addVisitor(john);
+// addVisitor(mary);
+
+// visitorsList.forEach((visitor) => console.log(visitor.name));
+// // John, Pete, Mary, Ellis, Simon - each on a new line
+
+// console.log('Total unique visitors:', visitorsList.length); // 5
+
+// /* Please note that the Array method has time complexity of O(n)
+// to find an element, making it less efficient than using a Set,
+// particularly when dealing with larger data sets.*/
+// ======================================================================
+
+// =================Task # Set-collection ===============================
+// UА: Створіть функцію "unique", яка буде повертати масив унікальних
+//     не повторюючих значень з масиву "values".
+// EN: Create a function "unique" which returns the array of unique values
+//     from the "values" array.
+
+// let values = [
+// 	'Hare',
+// 	'Krishna',
+// 	'Hare',
+// 	'Krishna',
+// 	'Krishna',
+// 	'Krishna',
+// 	'Hare',
+// 	'Hare',
+// 	':-O',
+// ];
+
+// // solution via Set-collection:
+// /* Object Set it is the special type of collection or multiplay set of values
+// (without the keys), where each value can appear only ones. It is an iterable
+// object.
+// To create this multiplay set of values we use method new Set(iterable) but as
+// we need to return the array, we can use the global method as Array.from, so: */
+
+// function unique(arr) {
+// 	return Array.from(new Set(arr));
+// }
+
+// // let's check:
+// console.log(unique(values)); // ['Hare', 'Krishna', ':-O']
+// ======================================================================
+
+// ==================Task ## Map-collection Array.from() =============
+// UА: Ми хотіли б мати масив ключів map.keys() в змінній і далі працювати
+//     з цим масивом, наприклад застосувати метод .push(). Але в нас це
+//     не виходить. Ось подивіться нижче:
+// EN: We would like to get an array of map.keys() keys into a variable
+//     and then work with them, for example, use the push() method. But this
+//     doesn't work, have a look:
+
+// let map = new Map(); // створили колекцію Мар
+
+// // Застосували метод map.set(key, value), який записує по ключу key значення value
+// map.set('john', 'John');
+// map.set('ellis', 'Ellis');
+// map.set('marry', 'Marry');
+// map.set('sofiya', 'Sofiya');
+
+// // Далі застосували метод map.keys(), який повертає ітеруємий об'єкт по ключам
+// // let keys = map.keys();
+
+// // Спробували додати новий ключ в масив
+// // keys.push('bob'); // Error: keys.push is not a function
+
+// //Why? What needs to be corrected in the code for the keys.push call to work?
+
+// // solution via method Array.from():
+// /*Проблема полягає в тому, що метод map.keys() повертає ітеруємий об'єкт а
+// не масив, а значить застосувати будь-який метод для масивів немає змоги.
+// Тому потрібно ітеруємий об'єкт перетворити на масив. Це можна за допомогою
+// глобального метода масивів Array.from() і тільки тоді зможемо отримати масив
+// і робити подальші дії з ним.*/
+// let keys = Array.from(map.keys());
+
+// keys.push('bob');
+// console.log(keys); // ['john', 'ellis', 'marry', 'sofiya', 'bob']
+// ======================================================================
