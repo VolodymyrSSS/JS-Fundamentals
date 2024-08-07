@@ -129,11 +129,13 @@ console.log('Topic: Functions');
 //     можна застосувати метод Math.max(). Покажіть як це можна зробити?
 // EN: Since JavaScript arrays do not have a max() method, you can apply
 //     the Math.max() method instead. Show how it can be done?
+
 // Math.max(14, 24, 347, 422); // 422
 
 // solution via apply() method:
 // const maxNum = Math.max.apply(null, [14, 24, 347, 422]); // 422
-// /* Перший аргумент (null) не має значення. Ці рішення дадуть той самий результат: */
+// /* Перший аргумент (null) не має значення. Ці рішення дадуть той
+//    самий результат: */
 // const maxNum2 = Math.max.apply(" ", [14, 24, 347, 422]); // 422
 // const maxNum3 = Math.max.apply(0, [14, 24, 347, 422]); // 422
 // const maxNum4 = Math.max.apply(Math, [14, 24, 347, 422]); // 422
@@ -827,10 +829,10 @@ ignored and "this" is returned.
 //     examples.
 
 // solution:
-/* A callback function is a function that is passed as an argument 
-  to another function and executed after an operation completes. Below 
-  is a first example of a simple callback function that logs into the 
-  console after performing a few operations:
+/* Функція зворотного виклику — це функція, яка передається як аргумент
+іншій функції та виконується після завершення якоїсь попередньої операції.
+Нижче наведено приклад простої функції зворотного виклику, яка виводить у
+консоль після виконання кількох операцій:
 */
 // function modifyArray(arr, callback) {
 // 	arr.push(100);
@@ -2185,81 +2187,199 @@ coalescing operator (??) to return an empty array ([]) in such a case */
 // console.log(result); // [ 'codi', 'ngbe', 'auty', 'dev' ]; // last item is less than 4 characters long
 // ======================================================================
 
-// =====================Task ?? curry====================================
-// UА: Створіть функцію "sum", яка просто буде додавати два числа "a" та
-//     "b". Виклик sum(a, b), виведе суму цих чисел. Тепер створіть іншу
-//     функцію, яка трансформує функцію "sum" через яку зможемо викликати
-//     її з аргументами разом так і окремо.
-// EN: We have a "person" object that has two methods: "fullName" and
+// =====================Task ?? currying ================================
+// UА: Ми маємо функцію "sum", яка просто додає два числа "a" та "b".
+//     Виклик sum(a, b), виведе суму цих чисел. Проте, потрібно створити
+//     іншу функцію, яка буде трансформувати функцію "sum": тобто ми
+//     зможемо викликати функцію з аргументами як разом так і окремо. В
+//     програмуванні це відомо під словом "карування".
+// EN: We have a "sum" function that simply adds two numbers "a" and "b".
+//     Calling sum(a, b) will output the sum of these numbers. However, it
+//     is necessary to create another function that will transform the
+//     "sum" function: namely, we can select a function with arguments both
+//     together and individually. In programming this is known as "currying".
 
 // function sum(a, b) {
-//   return a + b;
+// 	return a + b;
 // }
 // sum(2, 0); // 2
 // sum(0, 2); // 2
 
-// solution:
+// solution via currying:
 /* Каррування – просунута техніка для роботи з функціями. Вона використовується
 не лише у JavaScript, а й в інших мовах. Каррування – це трансформація функцій 
-в такий спосіб, що вони приймали аргументи як f(a, b), так і як f(a)(b). Карування 
-не викликає функції. Отже, створимо функцію sumTransformed(f), яка буде виконувати 
-карування функції sum. */
+в такий спосіб, що вони приймали аргументи разом як f(a, b), так і окремо як 
+f(a)(b). Карування не викликає функції, воно її тільки трансформує. По суті, 
+каррінг бере функцію з кількома аргументами та перетворює її на послідовність 
+функцій, кожна з яких має один аргумент. 
+Отже, мета полягає в тому, щоб створити таку функцію, яку можна викликати з  
+одним аргументом замість такої, яка буде викликатись з усіма аргументами 
+одночасно. Давайте назвемо її sumTransformed(f) і вона буде отримувати 
+параметром функцію, яку потрібно трансформувати в функцію, що викликаються 
+тільки з одним аргументом; або ряд таких послідовних функцій. Іншими словами, 
+ця функція повертає функцію з одним аргументом. У разі якщо є два аргументи,  
+то повертає спочатку одну функцію з першим аргументом, потім повертає другу 
+функцію з другим аргументом, ну і потрібно також передбачити повернення функції
+з усіма аргументами одночасно, отже маємо: */
 
 // function sumTransformed(func) {
-//    return function (a) {
-//       return function (b) {
-//          return func (a, b);
-//       };
-//    };
+// 	return function (a) {
+// 		return function (b) {
+// 			return func(a, b);
+// 		};
+// 	};
 // }
 // let curriedSum = sumTransformed(sum);
 
-// // перевіримо карування:
+// перевіримо роботу створеної функції:
 // console.log(curriedSum(2)(0)); // 2
 // console.log(curriedSum(0)(2)); // 2
+// console.log(curriedSum(0, 2)); // ƒ (b) {return func(a, b) }
+// console.log(curriedSum(2, 0)); // ƒ (b) {return func(a, b) }
 
-// /* проте звичайний виклик не працює і поверне другу функцію, отже
-//    цей підхід не зовсім правельний .*/
-// console.log(curriedSum(2, 0)); // отримаємо нижче
-// console.log(curriedSum(0, 2)); // отримаємо нижче
-// ƒ (b) {
-//   return func (a, b);
-//}
-// the same result with this solution:
-// function sumTransformed(a) {
-//    return function (b) {
-//       return (a + b);
-//    };
-// }
+/* Хоча виклик фунції по одному аргументу працює, але звичайний 
+виклик одночасно з усіма аргументми тут не працює бо у подібних
+випадках ми отримаємо ось це:
+  ƒ (b) {
+	   return func(a, b);
+  }, це означає, що другий аргумент "b" не визначиний і повертається тіло
+функції. Тобто потрібно мати випадок коли другий аргумент невизначений.
 
-// спробуємо інший підхід
+Вирішення може бути таким: коли спочатку повертати функцію яка має 
+два аргументи, а далі повертати функції, що мають один аргумен при цьому
+спочатку робити перевірку чи функція отримала два аргументи чи тільки один.
+Якщо функція отримала два аргументи, то повертати ту саму функцію з двума
+аргументами, а якщо функція отримала тільки один аргумент, то повернути
+функцію з одним аргументом яка повертає одразу ту саму функцію з двома
+аргументами. 
+Отже, перевіряючи чи b == undefined, функція може визначити, чи вона 
+викликається з одним чи двума. Тут є технологія Partial Application.
+В нашому випадку, якщо "b" не визначено, то функція викликається в 
+частково застосованій формі, де перший аргумент "a" вже надано, і вона 
+очікує на другий аргумент "b". Ця технологія дозволяє викликати функцію
+з другим аргументом пізніше і повертати знову функцію з двума аргументами.
+Ось саме тут і впроваджується технологія "карування".
+Тому рішення буде таким: */
+
 // function sumTransformed(func) {
-//    return function (a, b) {
-//       /* By checking if b is undefined, the function can determine if it's being called
-//       with one or two arguments.
-//       Determining Partial Application: If b is undefined, it indicates that the
-//       function is being called in a partially applied form, where the first argument
-//       a is already provided, and it's awaiting the second argument b.
-//       So: the sumTransformed function checks if the second argument b is undefined.
-//       If it is, it returns a function that takes the second argument b. Otherwise,
-//       it directly invokes the func function with both a and b.
-//       */
-//       if (typeof b === 'undefined') {
-//          return function (b) {
-//             return func(a, b);
-//          };
-//       }
-//       return func(a, b);
-//    };
+// 	return function (a, b) {
+// 		if (typeof b === 'undefined') {
+// 			return function (b) {
+// 				return func(a, b);
+// 			};
+// 		}
+// 		return func(a, b);
+// 	};
 // }
 // let curriedSum = sumTransformed(sum);
 
-// // перевіримо карування:
+// перевіримо роботу функції карування:
 // console.log(curriedSum(2)(0)); // 2
 // console.log(curriedSum(0)(2)); // 2
 
 // console.log(curriedSum(2, 0)); // 2
 // console.log(curriedSum(0, 2)); // 2
+// ======================================================================
+
+// =====================Task ?? currying ================================
+// UА: Ми маємо функцію sum, яка додає три числа "a", "b" та "с".
+//     Створіть функцію sumTransformed, яка буде карувати функцію sum.
+// EN: We have a "sum" function that simply adds two numbers "a" and "b".
+//     Calling sum(a, b) will output the sum of these numbers. However, it
+//     is necessary to create another function that will transform the
+//     "sum" function: namely, we can select a function with arguments both
+//     together and individually. In programming this is known as "currying".
+
+// function sum(a, b, c) {
+// 	return a + b + c;
+// }
+
+// function sumTransformed(func) {
+// 	// ваш код ...
+// }
+
+// let curriedSum = sumTransformed(sum);
+
+// curriedSum(1)(2)(3); // 6
+// curriedSum(1, 2)(3); // 6
+// curriedSum(1)(2, 3); // 6
+// curriedSum(1, 2, 3); // 6
+
+// solution via currying:
+/* Спочатку давайте визначимо як можна визначити загальну кількість
+параметрів які отримує функція. Для цього в JS існує властивість length
+і визначається як func.length що і покаже їх загальну кількість.
+Вирішення задачі можна почати з останнього випадку, коли функція отримує
+усі аргументи одразу і повертає їх суму. 
+
+function sumTransformed(func) {
+   return (...args) => {
+      return func(...args);
+   }
+}
+
+А тепер повернемо результат карування у випадку передачі спочатку двох 
+аргументів та потім одного, чи спочатку одного, а потім двох. Для цього
+потрібно перевірити, якщо кількість аргументів заданих для функції більша
+від кількості аргументів які отримала функція, то повертаємо функцію з 
+цією іншою кількістю аргументів, причому початкова функція повертається
+із розподіленою іншою кількістю аргументів як було задано при її виклику
+(спочатку з двома аргументами та потім одним аргументом, або навпаки. Це
+можна показати так:
+
+function sumTransformed(func) {
+	return (...args) => {
+		if (args.length < func.length) {
+			return (...otherArgs) => {
+				return func(...args, ...otherArgs);
+			};
+		}
+		return func(...args);
+	};
+}
+
+Проте якщо розглядати останній кейс, коли функція здійснює карування 
+в результаті якого можна передавати аргументи по одному, тоді потрібно
+застосувати рекурсію, коли функція викликає сама себе. У цьому випадку
+базою рекурсії можна вважати випадок, коли аргументи передаються усі
+разом і повертається така сама кількість аргументів типу:
+ return func(...args);
+А гілку рекурсії будемо визначати коли ми розглянули попередній кейс
+коли кількість аргументів отриманих функцією менша за кількість, яка
+була визначена на початку. При цьому рекурсивні виклики будуть зменшуватись
+до бази рекурсії на число, яке визначається як length - args.length, і
+гілка рекурсії буде мати вид:
+ return sumTransformed (
+	(...otherArgs) => func(...args, ...otherArgs),
+	length - args.length
+);
+Тобто, тут передаючи також довжину, ми каруємо функцію на один аргумент
+менше. Або так, кожен раз коли ми викликаємо sumTransformed ми вказуємо
+скільки аргументів залишилось. Але треба пам'ятати одну річ, коли ми 
+використовуємо спред-оператор, то початкова length = 0 і тому потрібно
+обовязково передавати дефолтну кількість параметрів як 
+sumTransformed(func, length = func.lengts).
+Таким чином, рішення буде:
+*/
+
+// function sumTransformed(func, length = func.length) {
+// 	return (...args) => {
+// 		if (args.length < length) {
+// 			return sumTransformed(
+// 				(...otherArgs) => func(...args, ...otherArgs),
+// 				length - args.length
+// 			);
+// 		}
+// 		return func(...args);
+// 	};
+// }
+
+// let curriedSum = sumTransformed(sum);
+
+// console.log(curriedSum(1)(2)(3)); // 6
+// console.log(curriedSum(1, 2)(3)); // 6
+// console.log(curriedSum(1)(2, 3)); // 6
+// console.log(curriedSum(1, 2, 3)); // 6
 
 // =====================Task ?? cookies==============================
 // UА: Що таке cookies? Покажіть як можна отримати доступ до cookies
@@ -2536,3 +2656,29 @@ Object to take the values - Object.values(obj). */
 // keys.push('bob');
 // console.log(keys); // ['john', 'ellis', 'marry', 'sofiya', 'bob']
 // ======================================================================
+
+const p1 = new Promise((resolve) => {
+	setTimeout(() => {
+		resolve({
+			name: 'Anna',
+		});
+	}, 2000);
+});
+
+const p2 = new Promise((reject) => {
+	setTimeout(() => {
+		reject('Promise Error');
+	}, 3000);
+});
+
+Promise.allSettled([p1, p2])
+	.then((res) => {
+		console.log(res);
+		const arr = res.filter((o) => o.status === 'fulfilled');
+		console.log(arr[0].value); // {name: 'Anna'}
+		return res;
+	})
+	.then(([o1, o2]) => {
+		console.log({ ...o1, ...o2 }); // {status: 'fulfilled', value: 'Promise Error'}
+	})
+	.catch((err) => console.log(`Unexpected err ${err}`));
