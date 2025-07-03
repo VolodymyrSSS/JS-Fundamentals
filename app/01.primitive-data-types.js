@@ -1,6 +1,6 @@
 console.log('Topic: Primitive Data Types');
 
-// ===========================Task 01===================================
+// ===========================Task 01======================================================
 // UA: Оголосіть дві змінні: admin та name. Надайте значення змінній name
 //     ваше ім'я. Скопіюйте це значення змінній admin та виведіть його в консоль.
 // EN: Declare two variables: admin and name. Set the variable name to your
@@ -10,35 +10,43 @@ console.log('Topic: Primitive Data Types');
 // let name = 'Volodymyr';
 // let admin = name;
 // console.log(admin); // Volodymyr
-// =====================================================================
+// ==========================================================================================
 
-// ===========================Task 02===================================
+// ===========================Task 02========================================================
 // UA: Призначте по загальнопринятим правилам створення констант: константі
 //     червоного кольору значення "#F00", константі зеленого кольору
 //     значення "#0F0", константі синього колору значення "#00F" і константі
-//     оранжевого кольору значення "#FF7F00". Потім створіть змінну color та
-//     задайте їй значення оранжевого кольору. Виведіть його в консоль.
+//     оранжевого кольору значення "#FF7F00".
+//     Створіть змінну "color" та динамічно задавайте їй різні значення, 
+//     виводячи їх кожного разу в консоль. Так, першим значенням задайте 
+//     значення оранжевого кольору. Потім присвойте значення зеленого
+//     кольору і також виведіть його в консоль.
 // EN: According to the generally accepted rules for creating constants, assign
 //     the value "#F00" to the red color constant, the value "#0F0" to the green
 //     color constant, the value "#00F" to the blue color constant, and the value
-//     "#FF7F00" to the orange color constant. Then create a color variable and
-//     set it to orange. Output it to the console.
+//     "#FF7F00" to the orange color constant. 
+//     Create a variable "color" and dynamically assign different values ​​to it,
+//     printing them to the console each time. So, set the first value to orange.
+//     Then assign a value to green and print that to the console as well.
 
 // solution via const:
 // const RED_COLOR = '#F00';
 // const GREEN_COLOR = '#0F0';
 // const BLUE_COLOR = '#00F';
-// const ORANGE_COLOR = '#FF7F00';
+// const ORANGE_COLOR = '#FF7F00
 
+// solution via let:
 // let color = ORANGE_COLOR;
-// console.log(color);
-// =====================================================================
+// console.log(color); // '#FF7F00'
+// color = GREEN_COLOR;
+// console.log(color); // '#0F0'
+// ==========================================================================================
 
-// ===========================Task 03===================================
+// ===========================Task 03========================================================
 // UA: Із загального курсу математики відомо, що ділити на нуль неможна.
 //     Проте в JS це можна зробити і в результаті ми отримаємо значення
 //     Infinity. В JS oкрім звичайних чисел, існують так звані «спеціальні
-//     числові значення», які такожн алежать до цього типу даних до яких крім
+//     числові значення», які такожн належать до цього типу даних до яких крім
 //     Infinity, належить -Infinity та NaN. Напишіть, як можна отримати
 //     значення -Infinity, покажіть декілька способів як отримати NaN. Ви
 //     знаєте виключення для NaN? Усі результати виведіть в консоль.
@@ -62,14 +70,14 @@ console.log('Topic: Primitive Data Types');
 // console.log(res1, res2); // Infinity, -Infinity
 // console.log(res3, res4, res5); // NaN, NaN, NaN
 // console.log(`exeption for NaN is NaN**0 = ${res6}`); // exeption for NaN is NaN**0 = 1
-// =====================================================================
+// ==========================================================================================
 
-// ===========================Task 04===================================
+// ===========================Task 04========================================================
 // UA: В JS існують 8 типів даних. Сім з них належать до примітивного типу.
-//     Яка є особливість для одного примітивного типу, ви знаєте її?
+//     Яка є особливість для примітивного типу "null", ви знаєте її?
 //     Використовуючи оператор typeof виведіть в консоль усі примітивні типи.
 // EN: There are 8 basic data types in JavaScript. Seven primitive data type.
-//     What is the peculiarity of one primitive type, you know it?
+//     What is the peculiarity of the null primitive type, you know it?
 //     Using the typeof operator, output all primitive types to the console.
 
 // solution:
@@ -85,9 +93,9 @@ console.log('Topic: Primitive Data Types');
    Definitely, null is not an object. It is a special value with a separate type of
    its own. The behavior of typeof is wrong here.
 */
-// =====================================================================
+// ==========================================================================================
 
-// ===========================Task 05===================================
+// ===========================Task 05========================================================
 // UA: Існують випадки, коли потрібно конвертувати один тип даних в інший.
 //     1.Покажіть, як явно конвертувати булеве значення в текстовий рядок?
 //     2.Покажіть, як явно конвертувати текстовий рядок в число?
@@ -104,7 +112,7 @@ console.log('Topic: Primitive Data Types');
 // we can also call the String(value) function to explicitly convert a value to a string:
 // let value = true;
 // console.log(typeof value); // boolean
-// value = String(value); // a string "true"
+// value = String(value); // explicitly convert value to a string "true"
 // console.log(typeof value); // string
 
 // Numeric conversion in mathematical functions and expressions
@@ -114,8 +122,8 @@ console.log('Topic: Primitive Data Types');
 // use the Number(value) function to explicitly convert a value to a number:
 // let str = '123';
 // console.log(typeof str); // string
-// let num = Number(str);
-// console.log(typeof num); // number -becomes a number 123
+// let num = Number(str); // explicitly convert value to a number 123
+// console.log(typeof num); // number
 
 // Boolean conversion happens in logical operations.
 // Values that are intuitively 'empty', like 0, an empty string,
@@ -130,9 +138,9 @@ console.log('Topic: Primitive Data Types');
 // but:
 // console.log(Boolean('0')); // true - any non-empty string in JS is true
 // console.log(Boolean(' ')); // true - any non-empty string in JS is true
-// =====================================================================
+// ==========================================================================================
 
-// ===========================Task 06===================================
+// ===========================Task 06========================================================
 // UA: Оголосіть три змінні: a, b, c. Надайте їм такі значення: 10, 2, 5.
 //     Оголосіть змінну result1 та обчисліть суму значень змінних a, b, c.
 //     Оголосіть змінну min та обчисліть мінімальне значення змінних a, b, c.
@@ -149,14 +157,14 @@ console.log('Topic: Primitive Data Types');
 // let result1 = a + b + c;
 // let min = Math.min(a, b, c);
 
-// console.log('Sum of a, b, and c: ', result1);
-// console.log('Minimum value among a, b, and c is ', min);
-// =====================================================================
+// console.log('Sum of a, b, and c: ', result1); // Sum of a, b, and c: 17
+// console.log('Minimum value among a, b, and c is ', min); // Minimum value among a, b, and c is 2
+// ==========================================================================================
 
-// ===========================Task 07===================================
+// ===========================Task 07========================================================
 // UA: Оголосіть дві змінні, які містять вартість товарів: перший
 //     товар – 0.10 USD, другий – 0.20 USD. Обчисліть суму та виведіть
-//     у консоль. У рішенні, використайте метод toFixed().
+//     у консоль. У рішенні, використайте метод округлення toFixed().
 // EN: Declare two variables that contain the cost of goods: first
 //     item - 0.10 USD, second item - 0.20 USD. Calculate the sum
 //     and output to the console. Consider to use the toFixed() method.
@@ -166,13 +174,13 @@ console.log('Topic: Primitive Data Types');
 // let item2 = 0.2;
 
 // let total = item1 + item2; // 0.30000000000000004
-// console.log(total.toFixed(2)); // 0.30 - but typeof total is string!
+// console.log(total.toFixed(2)); // "0.30" - but typeof total is string!
 /* The toFixed() method converts a number to a string. The toFixed() 
    method rounds the string to a specified number of decimals. If the 
    number of decimals are higher than in the number, zeros are added.
 */
 
-// // solution if item's value is string:
+// solution if item's value is string:
 // let firstItemCost = '0.10 USD';
 // let secondItemCost = '0.20 USD';
 
@@ -185,18 +193,18 @@ console.log('Topic: Primitive Data Types');
 // let firstCostNum = parseFloat(firstItemCost); // 0.1 -> typeof it - number
 // let secondCostNum = parseFloat(secondItemCost); // 0.2 -> typeof it - number
 // let totalCost = firstCostNum + secondCostNum; // 0.30000000000000004
-// console.log('Total cost:', totalCost.toFixed(2) + ' USD'); // Total cost: 0.30 USD
-// =====================================================================
+// console.log('Total cost: ', totalCost.toFixed(2) + ' USD'); // Total cost: 0.30 USD
+// ==========================================================================================
 
-// ===========================Task 08===================================
-// UA: Об'явітьь змінну 'a'. Якщо значення змінної дорівнює 0, виведіть у
+// ===========================Task 08========================================================
+// UA: Об'явіть змінну 'a'. Якщо значення змінної дорівнює 0, виведіть у
 //     консоль "true", інакше "false". Перевірте, що буде виведено в консолі
 //     для значень 1, 0, -3.
 // EN: Declare a variable 'a'. If the value of the variable is 0, print "true"
 //     to the console, otherwise "false". Check what will appear in the console
 //     for the values 1, 0, -3.
 
-// // solution via if-block
+// solution via if-block
 // let a = -3;
 // if (a === 0) {
 // 	console.log('true');
@@ -206,7 +214,7 @@ console.log('Topic: Primitive Data Types');
 // 	console.log('false');
 // }
 
-// // solution via switch
+// solution via switch
 // let a;
 // switch (a) {
 // 	case 0:
@@ -221,9 +229,9 @@ console.log('Topic: Primitive Data Types');
 // 	default:
 // 		console.log('False');
 // }
-// =====================================================================
+// ==========================================================================================
 
-// ===========================Task 09===================================
+// ===========================Task 09========================================================
 // UA: Сторіть дві змінні: a, b. Обчисліть їх суму та призначте її
 //     змінній result. Якщо результат більше 5, виведіть його в консоль,
 //     інакше помножте на 10 і виведіть в консоль.
@@ -231,29 +239,35 @@ console.log('Topic: Primitive Data Types');
 // EN: Declare two variables: a, b. Calculate their sum and assign to the
 //     variable result. If the result is greater than 5, print it to the
 //     console, otherwise multiply it by 10 and print it to the console.
-//     Data for testing: 2.5 and 3.1.
+//     Data for testing: 2, 5 and 3, 1.
+
+// solution via if-block:
+// let a = 2;
+// let b = 5;
 
 // let a = 3;
 // let b = 1;
+
 // let result = a + b;
+
 // if (result > 5) {
 // 	console.log(result);
 // } else {
 // 	console.log(result * 10);
 // }
-// =====================================================================
+// ==========================================================================================
 
-// ===========================Task 10===================================
+// ===========================Task 10========================================================
 // UA: Запитайте у користувача ввести будь-яке ціле значення і виведіть
-//     його в консоль.
-// EN: Ask the user for some integer value and print it to the console.
+//     його в консоль як число.
+// EN: Ask the user for some integer value and print it to the console as number type.
 
-// // solution via built-in function prompt():
+// solution via built-in function prompt() and + operator:
 // let num = +prompt('Enter the integer number', '42');
 // console.log('You entered number > ', num);
-// =====================================================================
+// ==========================================================================================
 
-// ===========================Task 11===================================
+// ===========================Task 11========================================================
 // UA: Створіть скрипт, який запропонує відвідувачу ввести два числа, а
 //     потім покаже їх суму.
 // EN: Create a script that prompts the visitor to enter two numbers and
@@ -263,9 +277,9 @@ console.log('Topic: Primitive Data Types');
 // let a = +prompt('The first number?', '');
 // let b = +prompt('The second number?', '');
 // alert(a + b);
-// =====================================================================
+// ==========================================================================================
 
-// ===========================Task 12===================================
+// ===========================Task 12========================================================
 // UA: В нас є вирази у яких застосовано логічні оператори (АБО)-||, (TA)-&&
 //     та (НЕ)-! Дайте відповідь на усі вирази: що буде виведено в консоль?
 // EN: We have expressions in which the logical operators (OR)-||, (AND)-&&
@@ -275,15 +289,15 @@ console.log('Topic: Primitive Data Types');
 // console.log(null || 2 || undefined); // 2 - first truthy value
 // console.log(null || 0 || 1); // 1 - the first truthy value
 // console.log(undefined || null || 0); // 0 - all falsy, returns the last value
-// console.log(alert(1) || 2 || alert(3)); // 1 - shows in alert, but return undefine,
+// console.log(alert(1) || 2 || alert(3)); // 1 - shows in alert, but return undefine, 
 // // then return 2 - first truthy value
 
 // console.log(1 && 2 && null && 3); // null - first falsy value
 // console.log(1 && 2 && 3); // 3, - all truthy, returns the last value
-// console.log(alert(1) && alert(2)); // 1 - call to alert returns undefined, because ,
-// // undefined is a falsy value and && looks for a falsy value and returns it, so it’s done
+// console.log(alert(1) && alert(2)); // 1, call to alert returns undefined, because undefined
+// // is a falsy value and && looks for a first falsy value and returns it, so it’s done.
 // console.log(null || (2 && 3) || 4); // 3 - the precedence of && is higher than ||, so it
-// // executes first; the result of 2 && 3 = 3 - last truthy value;
+// // executes first; the result of 2 && 3 = 3, than 3 || 4 = 3 - first truthy value;
 
 // console.log(!true); // false
 // console.log(!0); // true
@@ -294,9 +308,9 @@ console.log('Topic: Primitive Data Types');
 // if (-1 || 0) console.log('OK'); // OK -> -1 || 0 = -1, truthy
 // if (-1 && 0) console.log('OK'); // doesn't run -> -1 && 0 = 0, falsy
 // if (null || -1 && 1) console.log('OK'); // OK -> null || -1 && 1 = null || 1 = 1, truthy
-// =====================================================================
+// ==========================================================================================
 
-// ===========================Task 13===================================
+// ===========================Task 13========================================================
 // UA: Напишіть дві умови для if:
 //     перша - щоб переконатися, що вік становить від 14 до 90 включно.
 //     'Включно' означає, що вік може сягати 14 або 90 років.
@@ -310,15 +324,15 @@ console.log('Topic: Primitive Data Types');
 //     the first one using (NOT)!, the second one – without it.
 
 // solution for first if:
-// if (age >= 14 && age <= 90) console.log('age is self reliable');
+// if (age >= 14 && age <= 90) console.log('the age is self reliable');
 
 // solution for second if variant1:
-// if (!(age >= 14 && age <= 90)) console.log('age requires help');
+// if (!(age >= 14 && age <= 90)) console.log('the age requires help');
 // solution for second if variant2:
-// if (age < 14 || age > 90) console.log('OK');
-// =====================================================================
+// if (age < 14 || age > 90) console.log('the age requires help');
+// ==========================================================================================
 
-// ===========================Task 14===================================
+// ===========================Task 14========================================================
 // UA: Перепишіть if використавши тернарний операторю
 // EN: Rewrite if using the ternary operator
 // if (a + b < 4) {
@@ -330,9 +344,9 @@ console.log('Topic: Primitive Data Types');
 // // solution:
 // const result = (a + b < 4) ? 'Not enough' : 'Too many';
 // console.log(result);
-// =====================================================================
+// ==========================================================================================
 
-// ===========================Task 15===================================
+// ===========================Task 15========================================================
 // UA: Перепишіть if..else, використовуючи кілька тернарних операторів:
 // EN: Rewrite if..else using multiple ternary operators:
 // var message;
@@ -355,32 +369,28 @@ console.log('Topic: Primitive Data Types');
 // 		: login == ''
 // 		? 'login was not provided!'
 // 		: '';
-// =====================================================================
+// ==========================================================================================
 
-// ===========================Task 16===================================
+// ===========================Task 16========================================================
 // UA: Які остаточні значення всіх змінних a, b, c і d після наведеного
-//     нижче коду?
+//     нижче коду? Поясніть.
 // EN: What are the final values of all variables a, b, c and d after
-//     the code below?
+//     the code below? Explain it.
 // let a = 1,
 // 	b = 1;
 // let c = ++a;
 // let d = b++;
 
-// Solution: if the result of increment/decrement is not used:
-/* there is no difference in which form to use it */
+// Expllanation: 
+// If the result of increment/decrement is not used immediately there is no difference in which form to use it:
 // let counter = 0;
 // counter++;
 // ++counter;
-// console.log('counter > ', counter); // counter > 2, the lines above did the same
-
-// solution if we’d like to increase a value and immediately use the result:
-/* we need the prefix form */
+// console.log('counter > ', counter); // counter > 2
+// if we’d like to increase a value and immediately use the result, we need the prefix form:
 // let counter1 = 3;
 // console.log('counter1 > ', ++counter1); // counter1 > 4
-
-// solution if we’d like to increment a value but use its previous value:
-/* we need the postfix form */
+// If we’d like to increment a value but use its previous value we need the postfix form:
 // let counter2 = 3;
 // console.log('counter2 > ', counter2++); // counter2 > 3
 
@@ -389,9 +399,9 @@ console.log('Topic: Primitive Data Types');
 // console.log('b > ', b); // 2 incremented once
 // console.log('с > ', c); // 2 - prefix form returns the new value
 // console.log('d > ', d); // 1 - postfix form returns the old value
-// =====================================================================
+// ==========================================================================================
 
-// ===========================Task 17===================================
+// ===========================Task 17========================================================
 // UA: В нас є два цикла while, які використовують: один - префіксну (++і),
 //     інший - постфіксну (і++) форми для наступної ітерації.
 //     Дайте відповідь, які значення будуть виведені в консоль кожним циклом?
@@ -420,11 +430,12 @@ console.log('Topic: Primitive Data Types');
 // increment and the comparison. So it gets the current i = 1. Then follow 2, 3, 4…
 // Let’s stop on i = 4. The prefix form ++i would increment it and use 5 in the comparison.
 // But here we have the postfix form i++. So it increments i to 5, but returns the old
-// value. Hence the comparison is actually while(4 < 5) – true, and the control goes on to alert.
-// The value i = 5 is the last one, because on the next step while(5 < 5) is false.
-// =====================================================================
+// value. Hence the comparison is actually while(4 < 5) – true, and the control goes 
+// on to alert.The value i = 5 is the last one, because on the next step while(5 < 5) is 
+// false.
+// ==========================================================================================
 
-// ===========================Task 18===================================
+// ===========================Task 18========================================================
 // UA: Давайте припустимо, що у нас є дані користувача в змінних firstName,
 //     lastName та nickName. Якісь з них можуть бути не визначені, а якісь ні,
 //     якщо користувач вирішив не заповнювати усі значення.
@@ -447,28 +458,28 @@ console.log('Topic: Primitive Data Types');
 // console.log(firstName || lastName || nickName || 'Anonymous'); // IT dude -first truthy value
 
 // solution via Nullish coalescing operator ??:
-/* The nullish coalescing operator treats null and undefined similarly.
-   For brevity, we’ll say that a value is “defined” when it’s neither null
-   nor undefined. The result of a ?? b is: 
-   - if a is defined, then a,
-   - if a isn’t defined, then b.
-   In other words, ?? returns the first argument if it’s not null/undefined.
-   Otherwise, the second one.  It’s just a nice syntax to get the first
-   “defined” value of the two.
-   The common use case for ?? is to provide a default value.
-
-   For example, here we show user if its value isn’t null/undefined, otherwise Anonymous:
+/* Оператор об’єднання з null ?? сприймає значення null і undefined одинаково.
+   Давайте припустимо, що значення буде мати значення “визначено” коли воно не є null
+   та undefined. Результатом виразу a ?? b є: 
+   - а якщо a є визначене,
+   - b якщо а не є визначене.
+   Іншими словами, оператор ?? повертає перший аргумент якщо значення не дорівнює null/undefined,
+   в інакшому разі - повертається другий аргумент. Це просто зручний синтаксис отримати 
+   перше "визначене" значення з двох наявних.
+   Основним застосуванням оператора ?? є визначення дефолтного значення. Для прикладу,
+   тут ми показуємо ім"я користувача якщо його значення не є null/undefined, а в інакшому
+   разі користувач буде називатись "Anonymous":
    let user;
-   console.log(user ?? 'Anonymous'); // Anonymous (user is undefined)
+   console.log(user ?? 'Anonymous'); // Anonymous (бо тут user має значення undefined)
 */
 
 // let firstName = null;
 // let lastName = null;
 // let nickName = 'IT dude';
 // console.log(firstName ?? lastName ?? nickName ?? 'Anonymous'); // IT dude-the first defined value
-// =====================================================================
+// ==========================================================================================
 
-// ===========================Task 19===================================
+// ===========================Task 19========================================================
 // UA: Виведіть у консоль усі числа від 1 до 10.
 // EN: Print all numbers from 1 to 10 to the console.
 
@@ -514,6 +525,7 @@ console.log('Topic: Primitive Data Types');
 // printNumbersRecursive(1);
 
 // solution via for..in-loop:
+// Як відомо, такий цикл використовують для виведення усіх властивостей об'єкта
 // const numbers = {
 // 	1: true,
 // 	2: true,
@@ -531,10 +543,27 @@ console.log('Topic: Primitive Data Types');
 // }
 
 // solution via Array.from-method:
+/*Статичний метод Array.from() створює справжній Array з ітерованого об’єкту або псевдомасиву obj, 
+і тоді ми можемо використовувати на ньому методи масиву. Необов’язкові аргументи mapFn таthisArg 
+дозволяють нам застосовувати функції до кожного елемента. 
+Нагадаємо, що ітеровані об'єкти це ті, які можна використовуватися у for..of, або це об’єкти, які 
+реалізують метод Symbol.iterator. Псевдомасиви - це такі, які мають індексовані властивості та length.
+Його синтаксис може бути: 
+Array.from(items), або Array.from(items, mapFn), або Array.from(items, mapFn, thisArg). 
+Array.from також дозволяє нам надати додаткову функцію “трансформації” - mapFn. Ось приклади:
+Array.from("foo") // ["f", "o", "o"]
+Array.from([1, 2, 3], (x) => x + x) // [2, 4, 6]
+let str = '𝒳😂';
+// розіб’ємо рядок на масив символів
+let chars = Array.from(str);
+console.log(chars[1]); // 😂
+console.log(chars.length); // 2
+*/
+
 // const numbers = Array.from({ length: 10 }, (_, index) => index + 1);
 // console.log(numbers.join('\n'));
 
-// // solution via custom iterator function along with the Symbol.iterator:
+// solution via custom iterator function along with the Symbol.iterator:
 // const numbersIterable = {
 // 	[Symbol.iterator]: function* () {
 // 		let current = 1;
@@ -546,9 +575,9 @@ console.log('Topic: Primitive Data Types');
 // for (const num of numbersIterable) {
 // 	console.log(num);
 // }
-// =====================================================================
+// ==========================================================================================
 
-// ===========================Task 20===================================
+// ===========================Task 20========================================================
 // UA: Виведіть у консоль усі парні числа від 1 до 15.
 // EN: Print to the console all even numbers from 1 to 15.
 
@@ -562,9 +591,12 @@ console.log('Topic: Primitive Data Types');
 
 // solution via use  the continue statement to skip odd numbers in a for-loop:
 // for (let i = 1; i <= 15; i++) {
+//    // if the result of i % 2 is not 0, it means that i is odd, and 
+//    // we leave it and continue to the next loop
 // 	if (i % 2 !== 0) {
 // 		continue;
 // 	}
+//    // we print i to the console
 // 	console.log(i);
 // }
 
@@ -577,9 +609,9 @@ This ensures that we only consider even numbers */
 // 	console.log(i);
 // 	i += 2;
 // }
-// =====================================================================
+// ==========================================================================================
 
-// ===========================Task 21===================================
+// ===========================Task 21========================================================
 // UA: Замініть for на while без зміни поведінки циклу.
 // EN: Replace for with while without changing the behavior of the loop.
 
@@ -587,18 +619,19 @@ This ensures that we only consider even numbers */
 //   console.log( "number " + i + "!" );
 // }
 
-// solution via while-loop:
+// solution via while-loop and increment:
 // var i = 0;
 // while (i < 3) {
 // 	console.log('number ' + i + '!');
 // 	i++; // if i++ was missing, the loop would repeat (in theory) forever
 // }
-// or using decrement
-// a shorter way to write while (i != 0) is while (i)
-// when i becomes 0, the condition becomes falsy, and the loop stops
+
+// solution via while-loop and decrement:
+/* a shorter way to write while (i != 0) is while (i); when i 
+   becomes 0, the condition becomes falsy, and the loop stops */
 // let i = 3;
 // while (i) {
-// 	alert(i);
+// 	console.log('number ' + i + '!');
 // 	i--;
 // }
 
@@ -608,9 +641,9 @@ This ensures that we only consider even numbers */
 // 	console.log('number ' + i + '!');
 // 	i++;
 // } while (i < 3);
-// =====================================================================
+// ==========================================================================================
 
-// ===========================Task 22===================================
+// ===========================Task 22========================================================
 // UA: Напишіть цикл, який пропонує prompt ввести число більше 100.
 //     Якщо користувач ввів інше число – попросити ввести ще раз, і так далі.
 //     Цикл повинен запитувати число доки відвідувач не введе число,
@@ -624,33 +657,33 @@ This ensures that we only consider even numbers */
 //     strings in this task.
 
 // solution via using while-loop with the prompt() function:
-/* the while loop runs indefinitely using while (true) until
-   the user enters a number greater than 100 or cancels the prompt */
+/* цикл while з аргументом true буде працювати безкінечно до тих пір
+   доки user введе число більше 100 чи клікне cancels в функції prompt */
 // let userInput;
 // while (true) {
 // 	userInput = prompt('Enter a number greater than 100:');
 
-// 	// check if user pressed the Cancel button or ESC key
+// 	// перевірка чи user клікнув на Cancel чи ESC
 // 	if (userInput === null) {
 // 		console.log('Canceled');
 // 		break;
 // 	}
 
-// 	// user entered a number greater than 100
-// 	const number = Number(userInput); // convert it to a number
+// 	// перевірка чи user ввів число більше за 100
+// 	const number = Number(userInput); // конвертуємо в number
 // 	if (number > 100) {
 // 		console.log('User entered a number greater than 100: ', number);
-// 		break; // should break out of the loop if the number is more than or equal to 100
+// 		break; // виходимо з циклу якщо число більше 100 чи дорівнює 100
 // 	}
 // }
 
-// solution via recursion:
+// solution via recursion function:
 // function askForNumberGreaterThan100() {
 // 	const userInput = prompt('Enter a number greater than 100:');
 // 	if (userInput === null) {
 // 		console.log('Canceled');
 // 	} else {
-// 		const number = Number(userInput); // convert it to a number
+// 		const number = Number(userInput); // конвертуємо в number
 // 		if (number > 100) {
 // 			console.log('User entered a number greater than 100: ', number);
 // 		} else {
@@ -675,9 +708,8 @@ the parameter to a number, so non-numbers always return false.*/
 // 			return;
 // 		}
 // 		const number = Number(userInput);
-// 		// check if the conversion is successful and
-// 		// if the resulting number is greater than 100
-// 		// using Number.isNaN(number) and number > 100, respectively
+// 		/* перевірка чи конвертація успішна і чи 
+// 		   значення числа більше за 100 */
 // 		if (!Number.isNaN(number) && number > 100) {
 // 			console.log('User entered a number greater than 100: ', number);
 // 			return;
@@ -687,9 +719,9 @@ the parameter to a number, so non-numbers always return false.*/
 // }
 
 // askForNumberGreaterThan100();
-// =====================================================================
+// ==========================================================================================
 
-// ===========================Task 23===================================
+// ===========================Task 23========================================================
 // UA: Переписати наступний код за допомогою switch.
 // EN: Rewrite the following code using switch.
 
@@ -721,9 +753,9 @@ the parameter to a number, so non-numbers always return false.*/
 // 		// If none of the cases match, this block is executed
 // 		break;
 // }
-// =====================================================================
+// ==========================================================================================
 
-// ===========================Task 24===================================
+// ===========================Task 24========================================================
 // UA: Напишіть код за допомогою if..else, який відповідатиме заданому
 //     варіанту switch. Зауважте: тут було згруповано кілька варіантів
 //     case, які мають однаковий код.
@@ -765,9 +797,9 @@ the parameter to a number, so non-numbers always return false.*/
 // } else {
 // 	console.log('We hope that this page looks ok!');
 // }
-// =====================================================================
+// ==========================================================================================
 
-// ===========================Task 25===================================
+// ===========================Task 25========================================================
 // UA: Ціле число, більше 1, називається простим, якщо воно не може бути
 //     розділене без залишку ні на що, крім 1 і самого себе. Іншими словами,
 //     n > 1 є простим числом, якщо його не можна поділити ні на що, крім 1 і n.
@@ -806,9 +838,9 @@ the parameter to a number, so non-numbers always return false.*/
 // 	}
 // 	console.log(i); // a prime
 // }
-// =====================================================================
+// ==========================================================================================
 
-// ===========================Task 26===================================
+// ===========================Task 26========================================================
 // UA: Створіть функцію randomInteger(min, max), яка генерує випадкове ціле
 //     число від min до max, включаючи min і max як можливі значення.
 //     Будь-яке число з інтервалу min..max має з’являтися з однаковою ймовірністю.
@@ -817,10 +849,10 @@ the parameter to a number, so non-numbers always return false.*/
 //     Any number from the interval min..max must appear with the same probability.
 
 // solution via Math.random() method along with Math.floor() to round down the resul:
-// The formula Math.floor(Math.random() * (max - min + 1))
-// generates a random floating-point number between 0 (inclusive) and (max - min + 1) (exclusive).
-// The Math.floor() function then rounds down this number to the nearest integer.
-// By adding min to the result, we shift the range from [0, (max - min + 1)] to [min, max]
+/*The formula Math.floor(Math.random() * (max - min + 1))
+generates a random floating-point number between 0 (inclusive) and (max - min + 1) (exclusive).
+The Math.floor() function then rounds down this number to the nearest integer.
+By adding min to the result, we shift the range from [0, (max - min + 1)] to [min, max]*/
 
 // function randomInteger(min, max) {
 // 	return Math.floor(Math.random() * (max - min + 1)) + min;
@@ -858,9 +890,9 @@ the parameter to a number, so non-numbers always return false.*/
 // 	return Math.floor(rand);
 // }
 // console.log(randomInteger(1, 3));
-// =====================================================================
+// ==========================================================================================
 
-// ===========================Task 27===================================
+// ===========================Task 27========================================================
 // UA: Як перевірити, що число це ціле число?
 // EN: How to check that a number is an integer?
 
@@ -880,7 +912,7 @@ the parameter to a number, so non-numbers always return false.*/
 /* Ця частина Number(num) === num перевіряє, що num є 
    лише числом, а інша частина перевіряє що після ділення
    на 1 ми не маємо ніякого залишку і число є цілим, а 
-   число 42.34 має залишок 43 - то це є не ціле число */
+   число 42.34 має залишок 34 - то це не ціле число */
 // console.log(Number(num1) === num1 && num1 % 1 === 0); // true
 // console.log(Number(num2) === num2 && num2 % 1 === 0); // false
 
@@ -911,4 +943,4 @@ the parameter to a number, so non-numbers always return false.*/
 
 // console.log(Number.isInteger(num1)); // true
 // console.log(Number.isInteger(num2)); // false
-// =====================================================================
+// ==========================================================================================
