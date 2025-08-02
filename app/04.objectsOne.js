@@ -43,7 +43,7 @@ console.log(invalidStreet); // Output: undefined
 
 // ============================Task 02================================================
 // UA: В нас є об'єкт person. Як з'ясувати, чи існує ключ name в цьому об'єкті? Покажіть
-//     щонайменше три варіанта рішення.
+//     щонайменше три варіанти рішення.
 // EN: We have an object person. How to find out if the key name exists in this object?
 //     Show at least three possible solutions.
 
@@ -103,16 +103,245 @@ console.log(myObjKeys.length); // 2
 // ===================================================================================
 
 // ============================Task 04================================================
-// UA: Розширити прототип об'єкта String методом exclaim(), звичайно, якщо його немає в прототипі.
-//     Метод повинен додавати знак оклику в рядок символів скільки потрібно раз та виводити результат у консоль.
-// EN: Extend the prototype of object String with the method exclaim(), if it doesn't exist.
-//     Method should add exclaimation mark to the string and display it in the console.
+// UA: В нас є масив об'єктів. Кожен об'єкт має поле name та age. Потрібно відсортувати
+// 		 об'єкти по полю age на збільшення. Потім, відсортуйте об'єкти по полю name. А що
+//     буде, якщо перший символ рядка поля name буде починатись з маленької букви?
+// EN: We have an array of objects. Each object has a name and age field. You need to 
+//     sort the objects by the age field in ascending order. Then, sort the objects
+//     by the name field. What if the first character of the name field string starts 
+//     with a lowercase letter?
+
+const usersArr = [
+	{ name: 'Modest', age: 42 },
+	{ name: 'Alex', age: 34 },
+	{ name: 'Ellis', age: 29 },
+	{ name: 'Christina', age: 35 },
+];
+
+// solution for sorting by field age using sort method
+/* Для сортування за віком використаєм метод sort та числове порівняння значень 
+  властивостей user1.age та user2.age. Але якщо застосувати прияо метод sort то
+  він змінює оригінальний/початковий масив по його місцю. Це означає, що коли ви
+  сортуєте масив знову (наприклад, за полем name після цього), ви ненавмисно 
+  сортуєте вже змінений масив. Тому ось так не вийде відсортувати:
+  let ageSortedArr = usersArr.sort((user1, user2) => user1.age - user2.age);
+  console.log(ageSortedArr); // [{.., age: 34},{.., age: 35},{.., age: 29},{.., age: 42}]
+  І якщо ви очікуєте, що ageSortedArr та nameSortedArr мають бути незалежними 
+  відсортованими масивами, то не можна покладатися на сортування по місцю. Щоб 
+  уникнути зміни оригінального масиву, потрібно створити його копію і вже потім 
+  сортувати, наприклад використавши spred-оператор. 
+*/
+let ageSortedArr = [...usersArr].sort((user1, user2) => user1.age - user2.age);
+console.log(ageSortedArr); // [{..., age: 29},{..., age: 34},{..., age: 35},{..., age: 42}]
+
+// solution for sorting by field name using sort and toLowerCase methods
+/* Порівняння рядків JavaScript за замовчуванням чутливе до регістру, що означає: великі 
+   літери (наприклад, «Modest») йдуть перед усіма малими літерами (наприклад, «alex», 
+   «modest») у лексикографічному порядку. Якщо імена починаються з комбінації великих 
+   та малих літер, сортування не забезпечить правильний порядок. Тому для правельного
+   сортування потрібно привести усі рядки до єдиного регістру.*/
+let nameSortedArrOne = [...usersArr].sort((user1, user2) => {
+  let name1 = user1.name.toLowerCase(); // конвертуємо рядок до нижнього регістру
+  let name2 = user2.name.toLowerCase(); // конвертуємо рядок до нижнього регістру
+  if (name1 < name2) return -1;
+  if (name1 > name2) return 1;
+  return 0; // одинакові рядки залишаються незмінними
+});
+console.log(nameSortedArrOne); // [{name:'Alex',...},{name:'Christina',...},{name:'Ellis',...},{name: 'Modest',...}]
+
+// solution for sorting by field name using sort method with own algorithm
+let nameSortedArrTwo = [...usersArr].sort((user1, user2) => {
+	if (user1.name < user2.name) return -1;
+	if (user1.name == user2.name) return 0;
+	if (user1.name > user2.name) return 1;
+});
+console.log(nameSortedArrTwo); // [{name:'Alex',...},{name:'Christina',...},{name:'Ellis',...},{name: 'Modest',...}]
+
+// solution for sorting by field name using str1.localeCompare(str2) method
+/* Щоб врахувати регістр, нам також потрібно врахувати алфавіт. Але алфавіти різні 
+  для різних мов. Тому браузеру потрібно знати мову для порівняння. Сучасні браузери 
+  підтримують стандарт інтернаціоналізації ECMA-402, який надає спеціальний метод 
+  для порівняння рядків різними мовами, а саме str1.localeCompare(str2) 
+  повертає ціле число, яке вказує, чи str1 менше, дорівнює чи більше за str2. 
+*/
+let nameSortedArrThree = usersArr.sort((user1, user2) => {
+	return user1.name.localeCompare(user2.name);
+});
+console.log(nameSortedArrThree); // [{name:'Alex',...},{name:'Christina',...},{name:'Ellis',...},{name: 'Modest',...}]
+// ===================================================================================
+
+// ============================Task 05================================================
+// UA: Маємо два об'єкти, кожен із двома властивостями. У другий об'єкт додайте ще одну
+//     властивість. Потім абороніть розширення обидвох об'єктів і покажіть це. А чи можна
+//     видаляти властивості у об'єкта у якого заборонено розширення властивостей?
+//     Якщо так то видаліть Видаліть ту додану властивість. Як перевірити що об'єкт є
+//     нерозширюваний?
+// EN: We have two objects, each with two properties. Add another property to the second 
+//     object. Then protect the extension of both objects and show it. Is it possible to 
+//     remove properties from an object that does not allow property extension? If so, 
+//     then remove it. Remove the added property. How to check if an object is non-extendable?
+
+const criminalOne = {
+	name: 'Bonnie',
+	lastName: 'Parker',
+};
+
+const criminalTwo = {
+	name: 'Clyde',
+	lastName: 'Barrow',
+};
+
+// solution via Object.preventExtensions method
+/* Об'єкт є розширюваним, якщо до нього можна додавати нові властивості. 
+  Object.preventExtensions позначає об'єкт як такий, що більше не розширюється,
+  таким чином, він ніколи не матиме властивостей, окрім тих, які він мав на 
+  момент позначення як нерозширюваний. Тобто, метод Object.preventExtensions 
+  запобігає додаванню нових властивостей до об'єкта (запобігає майбутнім 
+  розширенням об'єкта). Цей метод також запобігає перепризначенню прототипу 
+  об'єкта але властивості можна додавати саме до прототипу об'єкта. Хоча 
+  зауважте, що властивості нерозширюваного об'єкта, загалом, все ще можуть 
+  бути видалені.
+*/
+try {
+  Object.defineProperty(criminalTwo, "age", {
+    value: 20,
+  });
+} catch (e) {
+  console.log(e);
+}
+console.log(criminalTwo); // {name: 'Clyde', lastName: 'Barrow', age: 20}
+
+Object.preventExtensions(criminalOne);
+Object.preventExtensions(criminalTwo);
+
+criminalOne.age = 19; // намагаємось додати властивість age
+console.log(criminalOne); // {name: 'Bonnie', lastName: 'Parker'} - не вдалось
+
+delete criminalTwo.lastName;
+console.log(criminalTwo); // {name: 'Clyde', age: 20}
+
+/* Для перевірки чи об'єкт є нерозширюваним існує метод Object.isExtensible(obj),
+який повертає false у разі якщо об'єкт є нерозширюваним, інакше - true */
+console.log(Object.isExtensible(criminalOne)); // false
+console.log(Object.isExtensible(criminalTwo)); // false
+// ===================================================================================
+
+// ============================Task 06================================================
+// UA: Створіть об'єкт "consumer", який має метод get отримання властивості 
+//     name, метод set - встановлення значення властивості і для перевірки властивості
+//     name (назва має містити щонайменше 3 символи). Якщо вона занадто коротка, виведіть
+//     запис "Name is too short, need at least 3 characters" та забороніть оновлення 
+//     значення. Використовуйте внутрішню властивість _name для зберігання назви.
+// EN: Create an object called consumer that has a getter for retrieving the name property,
+//     a setter for validating the name property, the name must be at least 3 characters 
+//     long. If it's too short, log "Name is too short, need at least 3 characters" and 
+//     prevent updating the value. Use the internal property _name to store the name.
+
+// solution via accessor properties setter and getter
+/* Властивість-аксесорx- це, по суті, функції, які виконуються при отриманні та встановленні 
+   значення, але для зовнішнього коду виглядають як звичайні властивості. Властивості 
+   аксессора представлені методами «getter» та «setter». У літералі об'єкта вони позначаються
+   методами get та set. Ззовні властивість-аксесор виглядає як звичайна. У цьому і полягає 
+   ідея властивостей-аксесорів.
+*/
+let consumer = {
+  get name() {
+    return this._name;
+  },
+
+  set name(value) {
+    if (value.length < 3) {
+      console.log("Name is too short, need at least 3 characters");
+      return;
+    }
+    this._name = value;
+  }
+};
+
+/*При перевірці роботи, деякі інструменти браузера (наприклад, консолі розробки 
+  браузера) демонструють асинхронну поведінку виведення результату в Log 
+  (console.log(...)) та отриманням властивості (get name()). А тому: */
+
+consumer.name = "Pete"; // Sets the name to Pete
+console.log(consumer.name); // Outputs: Pete
+
+consumer.name = ""; // Logs: "Name is too short, need at least 3 characters"
+console.log(consumer.name); // Outputs Pete бо _name не змінена, а тому getter бере останнє валідне значення
+
+consumer.name = "Leo"; // Sets the name to "Leo"
+console.log(consumer.name); // Outputs: "Leo"
+
+consumer.name = "Li"; // Logs: "Name is too short, need at least 3 characters"
+console.log(consumer.name); // Outputs: Leo бо _name не змінена, а тому getter бере останнє валідне значення
+// ===================================================================================
+
+// ============================Task 07================================================
+// UA: Маємо функцію-конструктор для створення інстансів об'єктів employee із двома 
+//     властивостями name та age. Але згодом, почали використовувати більш точні
+//     дані з властивістю birthday. Як нам сумістити використання усіх властивостей?  
+// EN: We have a constructor function to create instances of worker objects with two 
+//     properties, name and age. But later, we started using more precise data with the 
+//     birthday property. How do we combine the use of all the properties?
+
+// function Employee(name, age) {
+//   this.name = name;
+//   this.age = age;
+// }
+// let michael = new Employee("Michael", 41);
+// let christy = new Employee("Christy", 33);
+// console.log(michael.name); // Michael
+// console.log(christy.age); // 35
+// later started to use this function
+// function Employee(name, birthday) {
+//   this.name = name;
+//   this.birthday = birthday;
+// }
+// let michael = new Employee("Michael", new Date(1984, 9, 1));
+// let christy = new Employee("Christy", new Date(1992, 6, 6));
+// console.log(michael.name); // Michael
+// console.log(christy.birthday); // Mon Jul 06 1992 00:00:00 GMT+0300 (за східноєвропейським літнім часом)
+
+// solution via accessor properties setter and getter
+/* Одним із чудових застосувань аксессорів є те, що вони дозволяють підмінити 
+   "звичайні" властивості об'єктів на геттери та сеттери і налаштувати їх під
+   необхідну поведінку. Тому рішшенням буде просто додати властивість age через
+   getter (бо нам треба отримати вік який буде вираховуватись по теперішній даті
+   та заданим датам у властивості birthday).
+*/
+function Employee(name, birthday) {
+  this.name = name;
+  this.birthday = birthday;
+  Object.defineProperty(this, "age", {
+    get() {
+      let todayYear = new Date().getFullYear();
+      return todayYear - this.birthday.getFullYear();
+    }
+  })
+}
+let michael = new Employee("Michael", new Date(1984, 9, 1));
+let christy = new Employee("Christy", new Date(1992, 6, 6));
+console.log(michael.name); // Michael
+console.log(michael.birthday); // Mon Oct 01 1984 00:00:00 GMT+0300 (за східноєвропейським стандартним часом)
+console.log(michael.age); // 41
+console.log(christy.name); // Christy
+console.log(christy.birthday); // Mon Jul 06 1992 00:00:00 GMT+0300 (за східноєвропейським літнім часом)
+console.log(christy.age); // 33
+// ===================================================================================
+
+// ============================Task 15================================================
+// UA: Розширити прототип об'єкта String методом exclaim, звичайно, якщо його немає в 
+//     прототипі. Крім того, метод повинен додавати знак оклику в рядок символів та
+//     виводити результат у консоль.
+// EN: Extend the prototype of object String with the method exclaim, if it doesn't 
+//     exist. As well, method should add exclaimation mark to the string and display it 
+//     in the console.
 
 // // Попередження, у разі якщо ми переписуємо існуючий метод
 // if (String.prototype.exclaim) {
 // 	console.warn(
 // 		'Overriding existing Array.prototype.exclaim. ' +
-// 			"Possible causes: New API defines the method, there's a framework conflict or you've got double inclusions in your code."
+// 		"Possible causes: New API defines the method, there's a framework conflict or 
+//     you've got double inclusions in your code."
 // 	);
 // }
 // // додаємо .exclaim-метод до прототипу Strings щоб можна було його викликати з будь-яким рядком символів
@@ -134,88 +363,6 @@ console.log(myObjKeys.length); // 2
 // str.exclaim(3);
 // ====================================================================
 
-// =====================Task ??===================================
-// UA: Поясніть концептуальне поняття 'прототип' і 'успадкованість'
-//     у JavaScript використовуючи лише функціональний підхід (не класовий).
-//     Отже, у нас є дві функції-конструктори: Animal і Dog. Функція-конструктор
-//     Animal приймає параметр name і призначає його властивості name
-//     новоствореного об’єкта за допомогою this.name. Ми додаємо метод greet
-//     до Animal.prototype, який буде спільний для всіх екземплярів, створених
-//     за допомогою функції конструктора Animal. Функція конструктора Dog
-//     розширює функцію конструктора Animal за допомогою Animal.call(this, name)
-//     для успадкування властивостей від конструктора Animal.
-//     Вашe завдання:
-//     - встановити прототипний ланцюг для Dog;
-//     - додати метод bark до прототипу дочірнього елемента, вивести в консолі
-//     вираз 'Гав, гав..';
-//     - створити екземпляри Animal і Dog: const animal, const dog;
-//     - використати успадкований метод для animal і dog:
-//     екземпляр animal використовує метод greet, успадкований від Animal.prototype;
-//     екземпляр dog використовує як метод greet, успадкований від Animal.prototype,
-//     так і метод bark, визначений у Dog.prototype (спеціальний метод для дочірнього).
-// EN: Explain what is the Prototypes and Prototypal Inheritance concepts
-//     in JavaScript using only functional approach (not Class). So,
-//     we have two constructor functions: Animal and Dog. The Animal constructor
-//     function takes a name parameter and assigns it to the name property
-//     of the newly created object using this.name. We add a greet method
-//     to the Animal.prototype, which will be shared by all instances created
-//     from the Animal constructor function. The Dog constructor function extends
-//     the Animal constructor function using Animal.call(this, name) to inherit
-//     properties from the Animal constructor.
-//     Your tasks are:
-//     - establish the prototype chain for the Dog;
-//     - add method bark to the child's prototype - in console: 'Woof, woof..';
-//     - create instances of Animal and Dog: const animal, const dog;
-//     - use inherited method for animal and dog:
-//       the animal instance uses the greet method inherited from Animal.prototype;
-//       the dog instance uses both the greet method inherited from Animal.prototype
-//       and the bark method defined in Dog.prototype (specific method for the child)
-
-// parent constructor function
-// function Animal(name) {
-// 	this.name = name;
-// }
-// adding a methods to the perent's prototype
-// Animal.prototype.greet = function () {
-// 	console.log(`Hello, my name is ${this.name}`);
-// };
-// child constructor function
-// function Dog(name, breed) {
-// 	Animal.call(this, name);
-// 	this.breed = breed;
-// }
-
-// solution:
-/* A prototype is an object from which other objects inherit properties
-   and methods. When a property or method is accessed on an object,
-   JavaScript first checks if the object itself has that property. If not,
-   it looks up the prototype chain by checking the object’s prototype,
-   then the prototype’s prototype, and so on until it finds the property
-   or reaches the end of the chain.
-   So, first we establish the prototype chain by creating a new object and
-   assigning it to Dog.prototype. This links the prototype of Dog instances
-   to Animal.prototype, enabling inheritance: 
-*/
-// establishing the prototype chain
-// Dog.prototype = Object.create(Animal.prototype);
-// Dog.prototype.constructor = Dog;
-// adding a methods to the childs's prototype
-// Dog.prototype.bark = function () {
-// 	console.log('Woof, woof..');
-// };
-// create instances
-// const animal = new Animal('Max');
-// const dog = new Dog('Buddy', 'Labrador');
-// // using the inherited methods
-// animal.greet(); // Hello, my name is Max
-// dog.greet(); // Hello, my name is Buddy
-// using the specific method for the child
-// dog.bark(); // Woof, woof..
-/* Prototypes and prototypal inheritance are fundamental concepts 
-   in JavaScript. They allow objects to inherit properties and methods  
-   from other objects, enabling code reuse and establishing relationships 
-  between objects.
-*/
 // ====================================================================
 
 // Task 04
@@ -379,47 +526,6 @@ console.log(myObjKeys.length); // 2
 // console.log(book3.getFullBookName());
 // console.log(book3.getBookData());
 
-// =====================Task 05===================================
-// UA: В нас є масив об'єктів. Кожен об'єкт має поле name та age.
-// 		 Відсортуйте об'єкти на збільшення по полю age.
-// 		 А тепер відсортуйте об'єкти по полю name. А що буде, якщо перший
-// 		 символ рядка поля name буде починатись з маленької букви?
-// EN: We have an array of objects. Each object has a name and age
-// 		 field. Sort the objects in ascending order by the age field.
-//		 And now sort the objects by the name field. And what will happen
-//		 if the first character of the name field string starts with a small letter?
-
-// const usersArr = [
-// 	{ name: 'Modest', age: 42 },
-// 	{ name: 'Alex', age: 34 },
-// 	{ name: 'Ellis', age: 29 },
-// 	{ name: 'Christina', age: 35 },
-// ];
-
-// solution for sorting by field age:
-// let ageSortedArr = usersArr.sort((user1, user2) => user1.age - user2.age);
-// console.log(ageSortedArr); // [{ name: 'Ellis', age: 29 },{ name: 'Alex', age: 34 },...]
-
-// solution for sorting by field name using own algorithm:
-// let nameSortedArr = usersArr.sort((user1, user2) => {
-// 	if (user1.name < user2.name) return -1;
-// 	if (user1.name == user2.name) return 0;
-// 	if (user1.name > user2.name) return 1;
-// });
-
-// solution for sorting by field name using str.localeCompare(str2)-method:
-// To consider the register we need to take into accoult as well an alphabet. But
-// alphabets are different for different languages. So, the browser needs to know
-// the language to compare. Modern browsers support the internationalization
-// standard ECMA-402 which provides a special method to compare strings in
-// different languages that is str.localeCompare(str2) returns an integer indicating
-// whether str is less, equal or greater than str2.
-// let nameSortedArr = usersArr.sort((user1, user2) => {
-// 	return user1.name.localeCompare(user2.name);
-// });
-
-// console.log(nameSortedArr); // [{name: 'Alex', age: 34}, {name: 'Christina', age: 35},...]
-
 // Task 05
 // UА: Створіть клас Shape із статичною властивістю count.
 //     Ініціалізуйте цій властивості 0.
@@ -581,20 +687,6 @@ console.log(myObjKeys.length); // 2
 // for (const field in data) {
 // 	console.log(field);
 // }
-
-// Task 08
-// UA: Створіть літерал об'єкта із двома властивостями. Забороніть розширення об'єкту.
-// EN: Create object literal with two properties. Deny extend the object.
-
-// const person = {
-// 	name: 'John',
-// 	lastName: 'Doe',
-// };
-// console.log(person);
-// Object.preventExtensions(person);
-
-// person.age = 50;
-// console.log(person);
 
 // ============================Task ??===================================
 // UA: В нас є клас Car, в конструкторі якого задано властивості для
