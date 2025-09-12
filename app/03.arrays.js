@@ -673,19 +673,19 @@ console.log('Topic: Arrays');
 // const str = 'codingbeautydev';
 
 // solution via for loop:
-// const arr = []; // define result array
-// let n = 4; // define the n characters long
-// // to iterate over the string in increments of n
+// const arr = []; // визначаємо результуючий масив
+// let n = 4; // визначаємо n - кількість символів в підрядку
+// // перебираємо рядок з кроком n
 // for (let i = 0; i < str.length; i += n) {
-// 	// to get a substring between index i and index i + n exclusive in the string
-// 	arr.push(str.substring(i, i + n)); // add the substring to the resulting array
+// 	// отримати підрядок між індексом i та індексом i + n, виключаючи його з загального рядка
+// 	arr.push(str.substring(i, i + n)); // додавання підрядка до результуючого масиву
 // }
 // console.log(arr); // ['codi', 'ngbe', 'auty', 'dev']
 
 // solution via reduce method:
-// it’s significantly (over 30 times) slower than the previous method
-// let copiedStr = [...str]; // convert to an array of chars
-// let n = 4; // define the n characters long
+// Необхідно зауважити, що цей метод у 30 разів повільніший ніж попередній
+// let copiedStr = [...str]; // конвертуємо в масив символів convert
+// let n = 4; // визначаємо n - кількість символів в підрядку
 // console.log(copiedStr); // ['c', 'o', 'd', 'i', 'n', 'g', 'b', 'e', 'a', 'u', 't', 'y', 'd', 'e', 'v']
 // let result = copiedStr.reduce((substrings, char) => {
 // 	(substrings.at(-1)?.length ?? n) < n
@@ -711,3 +711,52 @@ console.log('Topic: Arrays');
 // solution via JSON.stringify() method:
 // console.log(JSON.stringify(arr1) == JSON.stringify(arr2)); // true
 // ======================================================================
+
+// ============================Task 22===================================
+// UA: Маємо одне рішення, що створює масив з п'яти елементів по заданій 
+//     довжині і далі ланцюговим методом перетворює масив помноживши кожен 
+//     елемент на 2. Вдоскональте метод і для цього використайте другий 
+//     параметер Array.from. А можете використати цей параметер для 
+//     створення матриці з трьох рядів? Покажіть рішення.
+// EN: We have one solution that creates an array of five elements of a 
+//     given length and then chain-transforms the array by multiplying each 
+//     element by 2. Improve the method and use the second parameter of 
+//     Array.from for this. Can you use this parameter to create a matrix 
+//     with three rows? Show the solution.
+
+// const range = Array.from({length: 5}).map((_, i) => i * 2); 
+// // Result: [0, 2, 4, 6, 8]
+
+// solution via Array.from() method using second parameter:
+/* Відомо, існує універсальний метод Array.from, який приймає ітероване або 
+   масивоподібне значення та створює з нього "справжній" масив. Синтаксис 
+   Array.from(obj[, mapFn, thisArg]) створює справжній масив (Array) з 
+   ітерованого або масивоподібного об'єкта obj, і ми можемо використовувати 
+   для нього методи масивів. Необов'язковий другий аргумент mapFn може бути 
+   функцією, яка буде застосована до кожного елемента перед додаванням його 
+   до масиву, а thisArg дозволяє нам встановити для нього це значення. 
+   Хоча більшість розробників знають Array.from() для перетворення масивоподібних 
+   об'єктів, його другий параметр — це потужня річ, яка поєднує створення та 
+   перетворення в один крок. Рішення з використанням другого параметру будe:
+*/
+// const range = Array.from({length: 5}, (_, i) => i * 2);
+// console.log(range); // [0, 2, 4, 6, 8]
+
+/* Для матриці спочатку потрібно сформувати ряд у якому будуть три елементи
+   а кожен елемент представляє собою колону - тобто кожен ряд має три колони
+   і таких рядів має бути три.
+*/
+// const matrix = Array.from({length: 3}, (_, row) => 
+//    Array.from({length: 3}, (_, col) => col * 3 + row)
+// );
+// console.log(matrix); // [[0,1,2], [3,4,5], [6,7,8]]
+
+// Ось ще подібний приклад із застосуванням другого параметра метода 
+// Array.from - це генерація 10 значень унікальних id:
+// const uniqueIds = Array.from({length: 10}, () => 
+//   Math.random().toString(36).substring(2, 9)
+// );
+// console.log(uniqueIds); // ["1vtlq36","z9h4p0y","bz7782o","ksm4bg5","vjgzdqh","i8u43t2","r2rek8s","v8e2h7w","7263k7q","zdz6tsd"]
+// ======================================================================
+
+

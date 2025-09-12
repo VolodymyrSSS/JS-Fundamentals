@@ -174,8 +174,7 @@ console.log(nameSortedArrThree); // [{name:'Alex',...},{name:'Christina',...},{n
 // UA: Маємо два об'єкти, кожен із двома властивостями. У другий об'єкт додайте ще одну
 //     властивість. Потім абороніть розширення обидвох об'єктів і покажіть це. А чи можна
 //     видаляти властивості у об'єкта у якого заборонено розширення властивостей?
-//     Якщо так то видаліть Видаліть ту додану властивість. Як перевірити що об'єкт є
-//     нерозширюваний?
+//     Якщо так то видаліть ту додану властивість. Як перевірити що об'єкт є нерозширюваний?
 // EN: We have two objects, each with two properties. Add another property to the second 
 //     object. Then protect the extension of both objects and show it. Is it possible to 
 //     remove properties from an object that does not allow property extension? If so, 
@@ -290,7 +289,7 @@ console.log(consumer.name); // Outputs: Leo бо _name не змінена, а �
 // let michael = new Employee("Michael", 41);
 // let christy = new Employee("Christy", 33);
 // console.log(michael.name); // Michael
-// console.log(christy.age); // 35
+// console.log(christy.age); // 33
 // later started to use this function
 // function Employee(name, birthday) {
 //   this.name = name;
