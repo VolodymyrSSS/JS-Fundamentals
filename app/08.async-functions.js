@@ -1,42 +1,36 @@
-console.log('Topic: Async Functions');
+console.log("Topic: Async Functions");
 
-// Task 01
-// UA: У якій послідовності будуть виведені значення? Поясніть результат.
+// ======================= Task 01 ===================================
+// UA: Поясніть для чого застосовують спеціальний синтаксис async/await?
+//     Наведіть простий приклад застосування цього ситнаксису.
 // EN: In which sequence the result will be outputted? Explain the result.
 
-// console.log(1);
-// setTimeout(() => console.log(2), 10);
-// const promise = new Promise((_resolve, reject) => {
-//     console.log(3);
-//     reject();
-// })
-//     .then(() => {
-//         console.log(4);
-//         console.log(5);
-//     })
-//     .then(() => console.log(6))
-//     .catch(() => console.log(7))
-// setTimeout(() => console.log(8), 0);
-// console.log(9);
-// promise.then(() => console.log(10));
-
-// solution - output will be:
-// 1, 3, 9, 7, 10, 8, 2
-
-/* Виконання коду здійснюється в стеку виконання послідовно, рядок за рядком.
-    Тобто перше буде виведення в консоль 1, далі йде макротаска із setTimeout
-    яка має затримку в 10мс - ця такска переміститься в стек для макротасок.
-    Потім в стеку виконання йде проміс - це мікротаска, яка буде виконана
-    перед макротаскою і буде виведено 3 в консоль. Потім буде відхилення
-    промісу і відповідно метод then із виведенням 4 та 5 і метод then із 
-    виведенням 6, в консоль не будуть виведені, але через наявність в методі
-    catch console.log буде виведено 7. Після цього йде знову макротаска із 
-    setTimeout, яка буде переміщена в стек макротасок але перед попередньою
-    задачею бо має нульову затримку. В стеку виконання буде виведено 9 і 
-    далі резолвиться проміс який виведе в консоль 10. Як тільки стек для 
-    виконання очиститься, туда буде переміщено задачі зі стеку макротасок.
-    Першим буде виведено 8 і через 10мс виведеться 2.
+// answer:
+/* Існує спеціальний синтаксис для більш зручної роботи з промісами,
+   який називається “async/await”. Слово async перед функцією означає одну
+   просту річ: функція завжди повертає проміс. Інші значення автоматично
+   загортаються в успішно виконаний проміс.
+   Ключове слово await змушує JavaScript чекати, поки проміс не виконається,
+   та повертає його результат. await, працює лише всередині async-функцій. 
+   await буквально призупиняє виконання функції до тих пір, поки проміс 
+   не виконається, а потім відновлює її з результатом проміса. Це не вимагає
+   жодних ресурсів ЦП, тому що рушій JavaScript може тим часом робити інші
+   завдання: виконувати інші скрипти, обробляти події тощо. Ось простий
+   приклад з промісом, який виконується за 3 секунди:
 */
+async function f() {
+  let promise = new Promise((resolve, reject) => {
+    setTimeout(() => resolve("готово!"), 3000);
+  });
+
+  let result = await promise; // чекатиме, поки проміс не виконається
+
+  console.log(result); // "готово!"
+}
+f();
+/* Не можна використовувати await у звичайних функціях. Якщо ми спробуємо
+використати await у не-асинхронній функції, виникне синтаксична помилка. */
+// ===================================================================
 
 // Task 01
 // UA: Створіть асинхронну функцію f1, використовуючи FDS (Function Declaration Statement).
@@ -315,3 +309,195 @@ console.log('Topic: Async Functions');
 // 	}
 // }
 // f9();
+
+// ======================= Task 09 ===================================
+// UA: Можете показати як правельно використовувати fetch з промісами,
+//     щоб передбачити обробку основних помилок статусу?
+// EN: Can you show how to correctly use fetch with promises to predict
+//     the handling of basic status errors?
+
+// solution via if-condition and switch directive:
+/* При цьому завжди потрібно пам’ятати: fetch відхиляє лише помилки мережі
+ (наприклад, відсутність інтернету або збій DNS). Він не відхиляє помилки 
+ HTTP — саме тому потрібно перевірити властивість res.ok. 
+*/
+fetch("/user")
+  .then((res) => {
+    if (!res.ok) {
+      switch (res.status) {
+        case 400:
+          /* 400 – Неправильний запит. Це означає, що клієнт (ваш код) надіслав
+           запит, який сервер не зміг зрозуміти. Приклад: неправильно сформований
+           JSON у тілі запиту, відсутні обов'язкові параметри запиту або недійсний
+           синтаксис у запиті. При цьому клієнту можна показати повідомлення типу
+          */
+          console.log(
+            "Bad Request: Your request was invalid. Please check the input.",
+          );
+          break;
+        case 401:
+          /* 401 – Неавторизовано. Запит вимагає автентифікації, але або облікові
+           дані не були надані, або вони були недійсними. Приклад: виклик API без
+           дійсного токена або з обліковими даними, термін дії яких минув. Для
+           обробки можна перенаправити на сторінку входу, оновити токен або запитати
+           користувача на повторну автентифікацію.
+          */
+          console.log(
+            "Unauthorized: Authentication required or invalid credentials.",
+          );
+          break;
+        case 403:
+          /* 403 Заборонено. Ви автентифіковані, але сервер відмовляє в доступі.
+           Приклад: спроба доступу до кінцевої точки лише для адміністратора зі
+           звичайним обліковим записом користувача. Обробка: Показати що доступ
+           заборонено або перенаправити на безпечну сторінку.
+          */
+          console.log("Forbidden: Access denied.");
+          break;
+        case 404:
+          /* 404 – Не знайдено. Сервер не зміг знайти запитуваний вами ресурс.
+           Приклад: запит, коли кінцева точка не існує, або запит ідентифікатора
+           користувача, якого немає в базі даних. Обробка: Відображення повідомлення
+           "Не знайдено" або коректне погіршення інтерфейсу користувача (наприклад, 
+           приховування недоступного контенту).
+          */
+          console.log("Not Found: I cannot find the source of your request.");
+          break;
+        case 429:
+          /* 429 Забагато запитів. Клієнт надіслав забагато запитів за короткий 
+           період. Приклад: повторне звернення до кінцевої точки API без дотримання
+           обмежень швидкості. Обробка: Реалізуйте логіку повторних спроб з експоненціальним
+           відкладенням або повідомте користувача про необхідність зачекати.
+          */
+          console.log("Forbidden: Access denied.");
+          break;
+        case 500:
+          /* 500 – Внутрішня помилка сервера. На стороні сервера сталася помилка.
+           Це не ваша вина як клієнта. Приклад: помилка в коді серверної частини,
+           збій підключення до бази даних або неочікуваний виняток. Для обробки
+           можна показати клієнту загальне повідомлення про помилку та розглянути 
+           можливість реєстрації/повідомлення про проблему.
+          */
+          console.log(
+            "Server Error: An error occurred on server side. Please try again later.",
+          );
+          break;
+      }
+    }
+    return res.json();
+  })
+  .catch((error) => {
+    console.error(error);
+  });
+
+// solution via function creation in centralize helper file:
+/* В реалії, для продакшн-коду краще централізувати обробку помилок у 
+  допоміжній функції, щоб не повторювати switch в кожному запиті fetch.*/
+// Centralized response handler
+function handleResponse(res) {
+  if (!res.ok) {
+    switch (res.status) {
+      case 400:
+        throw new Error(
+          "Bad Request: The server could not understand the request.",
+        );
+      case 401:
+        throw new Error(
+          "Unauthorized: Authentication required or invalid credentials.",
+        );
+      case 403:
+        throw new Error(
+          "Forbidden: You are authenticated but not allowed to access this resource.",
+        );
+      case 404:
+        throw new Error("Not Found: The requested resource does not exist.");
+      case 429:
+        throw new Error(
+          "Too Many Requests: You have sent too many requests in a given time. Rate limiting applies.",
+        );
+      case 500:
+        throw new Error(
+          "Internal Server Error: Something went wrong on the server.",
+        );
+      default:
+        throw new Error(`Unexpected status: ${res.status}`);
+    }
+  }
+  return res.json(); // Only runs if res.ok === true
+}
+// приклад використання
+fetch("/user")
+  .then(handleResponse)
+  .then((data) => {
+    console.log("User data:", data);
+  })
+  .catch((err) => {
+    console.error("Fetch error:", err.message);
+  });
+
+// solution via created API
+// Якщо часто викликaється API, тоді це все можна обгорнути в утиліту типу:
+// async function apiFetch(url, options = {}) {
+//   const res = await fetch(url, options);
+//   return handleResponse(res);
+// } або навіть краще
+// Створена обгортка навколо fetch яка відловлює ще і помилки мережі
+async function apiFetch(url, options = {}) {
+  try {
+    const res = await fetch(url, options);
+    return await handleResponse(res);
+  } catch (err) {
+    // Distinguish between network errors and HTTP status errors
+    if (err instanceof TypeError) {
+      // fetch throws TypeError on network failures
+      throw new Error(
+        "Network Error: Unable to reach the server or you are offline.",
+      );
+    }
+    throw err; // rethrow HTTP status errors
+  }
+}
+// приклад використання
+apiFetch("/user")
+  .then((data) => console.log("User data:", data))
+  .catch((err) => console.error("API error:", err.message));
+
+// ======================================================================
+
+// ========================== Task 01 ===================================
+// UA: Маєм рішення отримання списку імен користувачів із використанням
+//     методу для запиту на сервер fetch та обробки даних promise. Перепишіть
+//     рішення з використанням async/await.
+// EN: I have a solution to get a list of usernames using a fetch method
+//     to query the server and a promise to process the data. Rewrite
+//     the solution using async/await.
+
+//     The sample solution:
+//     let promiseUsersList = fetch("https://jsonplaceholder.typicode.com/users");
+// promiseUsersList
+//   .then((data) => data.json())
+//   .then((allData) => {
+//     console.log("All data ", allData); // (10) [{…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}])
+//     return allData.map((user) => user.name);
+//   })
+//   .then((names) => console.log("Names: ", names)) // (10) ['Leanne Graham', 'Ervin Howell',..., 'Clementina DuBuque']
+//   .catch((err) => {
+//     console.error("Error: ", err.message);
+//   });
+
+// solution via async/await:
+async function getUsers() {
+  try {
+    const res = await fetch("https://jsonplaceholder.typicode.com/users");
+    const allUsersData = await res.json();
+
+    console.log("All users data:", allUsersData);
+
+    const userNames = allUsersData.map((user) => user.name);
+    console.log("Names list:", userNames);
+  } catch (err) {
+    console.error("Error:", err.message);
+  }
+}
+getUsers();
+// ======================================================================
