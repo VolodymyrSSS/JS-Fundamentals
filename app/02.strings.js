@@ -1,4 +1,4 @@
-console.log('Topic: Strings-Numbers');
+console.log("Topic: Strings-Numbers");
 
 // ===========================Task 01===================================
 // UA: Як відомо в JS не існує окремого типу для одного символу. Але як
@@ -955,7 +955,7 @@ console.log('Topic: Strings-Numbers');
 // console.log(dashedStr); // 255-255-78
 // =====================================================================
 
-// ============================Task ??==================================
+// ============================Task 23==================================
 
 // Task 05. Template literal
 // RU: Создать строку: "ten times two totally is 20"
@@ -978,3 +978,37 @@ console.log('Topic: Strings-Numbers');
 //     Compare 2 strings:
 //     var str1 = '\u006d\u0061\u00f1';
 //     var str2 = '\u006d\u0061\u006e\u0303';
+
+// ============================Task 24================================================
+// UA: Замініть багатослівні оператори if/else для простих умов одним рядком.
+// EN: Replace verbose if/else statements for simple conditions with a single line.
+
+let age = 18;
+// let canVote;
+// if (age >= 18) {
+//   canVote = "Yes";
+// } else {
+//   canVote = "No";
+// }
+
+// solution via ternary operator
+let canVote = age >= 18 ? "Yes" : "No";
+console.log("You can vote : " + canVote); // You can vote : Yes
+// ===================================================================================
+
+// ============================Task 25================================================
+// UA: Замініть умову для виконання з оператором if одним рядком.
+// EN: Replace the condition for execution with an if statement in one line.
+
+let isAdmin = true;
+// if (isAdmin) {
+//   console.log("Admin privileges granted.");
+// }
+
+// solution via && operator
+/*We can use the logical AND operator to execute code only if a condition is true.*/
+isAdmin && console.log("Admin privileges granted."); // Output: Admin privileges granted.
+
+let isGuest = false;
+isGuest && console.log("Guest access."); // No output
+// ===================================================================================

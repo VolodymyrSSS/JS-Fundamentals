@@ -1,4 +1,96 @@
-console.log('Topic: Functions');
+console.log("Topic: Functions, part 1");
+
+// ==================== Task 1 keywords this ========================
+// UA: Що таке ключове слово "this"? Як воно визначається?
+// EN: What is the keyword "this"? How is it defined?
+
+/* У більшості випадків ключове слово this визначається тим як функція
+   була викликана. Воно не може бути визначено під час виконання функції
+   та може мати різні значення кожен раз коли функція викликається. 
+   Можна змінити значення this використавши .call(), .apply() та .bind()
+   методи. Tакож, значення this еквівалентне значенню об'єкта, що викликав
+   цю функцію. Ключовому слову this не призначається значення до тих
+   пір доки об'єкт не викличе функцію де this є визначено.
+
+   1. Ключове слово this на глобальному рівні (global scope):
+   When functions are executed in the global scope, value of this is 
+   window object. This is because when we call a function in global scope
+   by default they are invoked on the Window object. In strict mode, value
+   of this in the global context will be undefined.
+   var myFunciton = function(){
+      console.log(this);
+      console.log(this=== window);
+   }
+   myFunction();// Output: Window object. In strict mode value will be undefined
+   myFunction() is equivalent to window.myFuntion()
+
+   2.When a function is called as a method of an object, it’s this is set to
+   the object the method is called on.
+      var val = 37;
+      var myObj = {
+         val : 10,
+         someFunction : function(){
+            console.log(this.val); //Output: 10 since tha value of this is equal to myObj
+            console.log(window.val); //Output: 37
+            console.log(this === myObj); // true
+            console.log(this); //Output: myObj object
+         }
+      }
+      myObj.someFunction();
+
+   3.When a function is used as a constructor (with the new keyword), its this
+   is bound to the new object being constructed.
+      function ConstructorFunc(value){
+         this.someValue = value;
+      }
+      var obj1 = new ConstructorFunction(20);
+      console.log(obj1.someValue)//Output: 20
+
+   4. ‘this’ in Immediately Invoked Function expression (IIFE)
+   In IIFE, value of this is always equal to Window object. Let’s see an example:
+   // IIFE outside any function 
+   (function() {
+   console.log(this); // Output: Window object
+   })()
+   // IIFE inside an object function
+   var obj = {};
+   var someFunc = function() {
+   console.log("Functions this");
+   console.log(this === obj);
+   console.log('++++++++++++++++++++++++++');
+   // IIFE 
+   (function() {
+      console.log("IIFE this");
+      console.log(this); // Output: Window object
+      console.log("IIFE");
+      })()
+   };
+   obj.func = someFunc;
+   obj.func();
+   This is because, value of this inside a function is equal to the object 
+   on which it is called. someFunc is called on obj, hence value of this 
+   inside someFunc is obj. But, IIFE is self-invoked, it has not been called 
+   by any object. Hence, the value of this inside IIFE is Window object.
+
+   5. Inside event handler, value of this is equal to the element on which
+   the event is fired. Let’s see this with an example of click event.
+   <body>
+      <div id="divId">
+         Hello
+      </div>
+      <script type="text/javascript">
+         var id = document.getElementById('divId').addEventListener('click', clickMe, false);
+
+         function clickMe(event) {
+            console.log(event.currentTarget);
+            console.log("CLick Me");
+            console.log(this);
+         }
+	   </script>
+   </body>
+   When we click on the div, from the above console output we can see that value
+   of this is equal to the div element which we clicked.
+*/
 
 // =====================Task 1 FDS===================================
 // UА: Маємо функцію introduce, яка використовує спеціальне ключове
@@ -39,14 +131,14 @@ console.log('Topic: Functions');
 // UА: Маємо функцію greet, яка використовує спеціальне ключове слово 'this'
 //     для передачі контенту title, що визначений в обєктi agent.
 //     Покажіть, як викликати цю функцію із цим контентом для різних аргументів
-//     використавши метод apply? 
+//     використавши метод apply?
 // EN: We have the introduce function, which uses the special keyword 'this'
 //     to transfer the title content defined in the lecturer and student objects.
 //     Show how to call this function with this content for different arguments using
-//     the apply method? 
-// 
+//     the apply method?
+//
 // Arguments:
-//     salutation = 'Вітання!', name = 'Тарас', 
+//     salutation = 'Вітання!', name = 'Тарас',
 //     salutation = 'Greetings!', name = 'John',
 //     salutation = 'Salutation!', name = 'Sharlise', salutation = 'Gruß!', name = 'Fritz',
 //     salutation = 'Saludo!', name = 'Carlos', salutation = '挨拶!', name = 'Saki',
@@ -470,6 +562,62 @@ console.log('Topic: Functions');
 
 // via ...rest
 
+// ============================Task 08================================================
+// UA: Вкажіть значення за замовчуванням для параметрів функції, якщо вони не визначені
+//     або не надані.
+// EN: Provide default values for function parameters if they are undefined or not
+//     provided.
+
+// function greet(name, greeting) {
+//   name = name || "Guest";
+//   greeting = greeting || "Hello";
+//   console.log(`${greeting}, ${name}!`);
+// }
+// greet();       // Output: Hello, Guest!
+// greet("Eve");  // Output: Hello, Eve!
+
+// solution via assigning default values in the parameters
+function greet(name = "Guest", greeting = "Hello") {
+  console.log(`${greeting}, ${name}!`);
+}
+console.log(greet()); // Output: Hello, Guest!
+console.log(greet("Frank")); // Output: Hello, Frank!
+console.log(greet("Grace", "Hi")); // Output: Hi, Grace!
+// ===================================================================================
+
+// ============================Task 01================================================
+// UA: В нас є функція greet(), яка повертає дефолтне значення у разі, якщо
+//     не було отримано аргумент.
+//     Перепишіть її в іншому варіанті використавши оператор АБО (||)?
+// EN: We have a greet() function that returns a default value if no argument
+//     is received. Rewrite it in another way using the OR operator (||)?
+
+function greet1(name) {
+  let displayName;
+  if (name === null || name === undefined || name === "") {
+    displayName = "Guest";
+  } else {
+    displayName = name;
+  }
+  console.log(`Hello, ${displayName}!`);
+}
+greet1("Alice"); // Output: Hello, Alice!
+greet1(null); // Output: Hello, Guest!
+
+// solution via || operator
+/*We can use the logical OR operator to assign a default value if the first operand 
+is falsy (null, undefined, 0, "", false).*/
+
+function greet2(name) {
+  let displayName = name || "Guest";
+  console.log(`Hello, ${displayName}!`);
+}
+
+greet2("Ellis"); // Output: Hello, Ellis!
+greet2(null); // Output: Hello, Guest!
+greet2(""); // Output: Hello, Guest!
+// ===================================================================================
+
 // ============================Task ??===================================
 // UA: Напишіть функцію яка перевіряє чи рядок містить цифри? А як зміниться
 //     функція якщо перевіряти чи містяться в рядку тільки цифри?
@@ -763,6 +911,46 @@ value by 1*/
 // splitToWords('My very long text msg', toAlert);
 // console.log(splitToWords('My very long text msg'));
 
+// ============================Task 07================================================
+// UA: Залишкові параметри: збір Arguments. В нас є функція sumAll яка збирає невизначену
+//     кількість аргументів у масив та підсумовує їх. Потрібно оптимізувати рішення з
+//     використанням синтаксису ES6.
+// EN: Rest Parameters: Collect Arguments. We have a function sumAll that collects an
+//     indefinite number of arguments into an array and sums them. We need to optimize
+//     the solution using ES6 syntax.
+
+// function sumAll() {
+//   let total = 0;
+//   for (let i = 0; i < arguments.length; i++) {
+//     total += arguments[i];
+//   }
+//   return total;
+// }
+// sumAll(1, 2, 3, 4); // Output: 10
+
+// solution via rest parameters and array method reduce
+/*We can use for better redability and ES6 syntax for..of loop like
+function sumAll(...numbers) {
+  let total = 0;
+  for (let num of numbers) {
+    total += num; // Add each number to the total
+  }
+  return total;
+} but let's take rest parameters and reduce method which
+ are more efficient and concise */
+function sumAll(...numbers) {
+  return numbers.reduce((total, num) => total + num, 0);
+}
+console.log(sumAll(1, 2, 3, 4, 5)); // Output: 15
+/*If you want to add a default argument so that the function works even if no 
+arguments are passed like:
+function sumAll(...numbers) {
+  return numbers.length === 0 ? 0 : numbers.reduce((total, num) => total + num, 0);
+}
+console.log(sumAll()); // Output: 0
+console.log(sumAll(10, 20, 30)); // Output: 60*/
+// ===================================================================================
+
 // Task 12. Function as a Result
 // RU: Создайте функцию copyright, которая должна возвращать другую функцию с
 //     одним параметром. Возращаемая функция должна прибавлять знак © ('\u00A9')
@@ -989,7 +1177,7 @@ value by 1*/
 //                  ' ### '
 //                  '#####'
 
-// solution via two for loops:
+// solution via nested for-loop:
 // function pyramid(levels) {
 // 	for (let i = 0; i < levels; i++) {
 // 		let line = '';
@@ -1357,34 +1545,19 @@ value by 1*/
 // console.log(getDayNum('Неділя')); // 7
 // ======================================================================
 
-// ============================Task ??===================================
-// UA: В нас є функція greet(), яка повертає дефолтне значення у разі, якщо
-//     не було отримано аргумент.
-//     Перепишіть її в іншому варіанті використавши оператор АБО (||)?
-// EN: We have a greet() function that returns a default value if no argument 
-// is received. Rewrite it in another way using the OR operator (||)?
+// ============================Task 04================================================
+// UA: У нас є функція doubled. Можете більш лаконічним способом переписати
+// функціональний вираз?
+// EN: We have the "doubled" function. Can you rewrite the function expression
+// in a more concise way?
 
-// function greet(name) {
-//   let displayName;
-//   if (name === null || name === undefined || name === "") {
-//     displayName = "Guest";
-//   } else {
-//     displayName = name;
-//   }
-//   console.log(`Hello, ${displayName}!`);
-// }
-// greet("Alice"); // Output: Hello, Alice!
-// greet(null);    // Output: Hello, Guest!
+const numbers = [1, 2, 3];
+// const doubled = numbers.map(function(num) {
+//   return num * 2;
+// });
+// console.log(doubled); // Output: [2, 4, 6]
 
-// solution via || operator
-/*We can use the logical OR operator to assign a default value if the first operand 
-is falsy (null, undefined, 0, "", false).*/
-
-function greet(name) {
-   let displayName = name || "Guest";
-   console.log(`Hello, ${displayName}!`);
-}
-
-greet("Alice"); // Output: Hello, Alice!
-greet(null);    // Output: Hello, Guest!
-greet("");      // Output: Hello, Guest!
+// solution via arrow function
+const doubled = numbers.map((num) => num * 2);
+console.log(doubled); // Output: [2, 4, 6]
+// ===================================================================================
