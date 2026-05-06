@@ -1,61 +1,281 @@
-console.log('Topic: Objects Two');
+console.log("Topic: Objects Two");
 
+// ================================= 01 ================================
+/*
+  You're given a calculator object that already has add() and subtract()
+  methods. Your task is to add multiply and divide methods that return this
+  to enable chaining.
+*/
+// Solution:
+/*
+  Method chaining is a programming pattern that allows you to call multiple
+  methods on the same object in a single statement. Each method returns 
+  the object itself (this), enabling you to call the next method on the 
+  same line.
+*/
+const calculator = {
+  value: 0,
+
+  add(n) {
+    this.value += n;
+    return this;
+  },
+
+  subtract(n) {
+    this.value -= n;
+    return this;
+  },
+
+  // TODO: Add multiply method here
+  multiply(n) {
+    this.value *= n;
+    return this;
+  },
+
+  // TODO: Add divide method here
+  divide(n) {
+    this.value /= n;
+    return this;
+  },
+
+  getValue() {
+    return this.value;
+  },
+};
+
+// Test
+const result1 = calculator.add(10).multiply(2).getValue();
+console.log(result1); // 20
+// Reset for second test
+calculator.value = 0;
+const result2 = calculator.add(20).divide(4).subtract(1).getValue();
+console.log(result2); // 4
+
+// ================================= 02 ================================
+/*
+  We have a basic object user with public properties. Anyone can directly
+  access and modify these properties. 
+  const user = {
+    name: "John",
+    email: "john@example.com",
+  };
+  Use more encapsulated approach like closures to hide the data.
+*/
+// Solution:
+/*
+  Encapsulation is a process of combining data inside a class within one unit.
+  This helps to put restrictions on accessing class data directly, eventually
+  helping us to prevent any accidental modification of data.
+*/
+
+function createUser(name, email) {
+  // These variables are private (encapsulated)
+  let userName = name;
+  let userEmail = email;
+
+  // Return an object with methods to interact with the private data
+  return {
+    getName: function () {
+      return userName;
+    },
+    getEmail: function () {
+      return userEmail;
+    },
+    setName: function (newName) {
+      userName = newName;
+    },
+  };
+}
+const encapsulatedUser = createUser("John", "john@example.com");
+// Test
+console.log(encapsulatedUser.getName()); // "John"
+encapsulatedUser.setName("Jane");
+console.log(encapsulatedUser.getName()); // "Jane"
+// Cannot directly access the data:
+// console.log(encapsulatedUser.userName); // undefined
 
 // ============================Task 01================================================
+// UA: 1. Створіть функцію-конструктор з іменем Book, яка приймає три аргументи:
+//		- title (String), - author (String), - pages (Number)
+// 		Функція повинна встановити ці значення як властивості створеного об'єкта.
+//		2. Додайте метод getSummary, який повертає рядок з деякою інформацією про
+// 		книгу: this.title + " була написана " + this.author + " і має " + this.pages
+// 		+ " сторінок";
+// EN: 1. Create a constructor function named Book that takes three arguments:
+//		- title (String),  - author (String),  - pages (Number)
+// 		The function should set these as properties on the object created.
+// 	   2. Add a method called getSummary that returns a string with some information
+// 	   about the book: this.title + " was written by " + this.author + " and has " +
+// 	   this.pages + " pages";
+
+// Solution via function-constructor
+/* 
+	Функції-конструктори — це спеціальні функції в JavaScript, які дозволяють створювати
+	кілька об'єктів з однаковою структурою та поведінкою. Ось приклад такої функції
+	function Person(name, age) {
+		this.name = name;
+		this.age = age;
+		this.greet = function() {
+			return "Hello, my name is " + this.name;
+		};
+	}
+    А тепер можемо сторювати подібні об'єкти використовуючи функцію-конструктор:
+	const john = new Person("John", 30);
+	const tyler = new Person("Tyler", 35);
+	Усередині функції-конструктора "this" посилається на новий об'єкт, що 
+	створюється. Tепер можемо мати доступ до властивостей нових обєктів:
+	console.log(john.name); // John
+	console.log(john.greet()); // Hello, my name is John
+*/
+function Book(title, author, pages) {
+  this.title = title;
+  this.author = author;
+  this.pages = pages;
+
+  this.getSummary = function () {
+    return (
+      this.title +
+      " was written by " +
+      this.author +
+      " and has " +
+      this.pages +
+      " pages"
+    );
+  };
+}
+
+// А це метод береться з прототипу але його додають окремо після функц-констр:
+/*
+Book.prototype.getSummary = function() {
+  return this.title + " was written by " + this.author + " and has " + this.pages + " pages";
+};
+*/
+
+// Example input array
+const inp = ["Harry Potter", "Rowling", "500"];
+
+const inputTitle = inp[0]; // First line: book title
+const inputAuthor = inp[1]; // Second line: author
+const inputPages = parseInt(inp[2]); // Third line: number of pages
+
+const book = new Book(inputTitle, inputAuthor, inputPages);
+console.log(book.getSummary()); // Harry Potter was written by Rowling and has 500 pages
+
+// ============================Task 02================================================
 // UA: Створити функцію-конструктор Tune(title, artist) для створення об'єктів з приватними
-//     властивостями title, artist та публічним методом concat. Метод повинен повертати 
+//     властивостями title, artist та публічним методом concat. Метод повинен повертати
 //     конкатенацію значень властивостей title та artist. Створити кілька об'єктів. Викликати
-//     їх метод concat.
-// EN: Create a constructor function Tune(title, artist) to create objects with private 
-//     properties title, artist and a public method concat. The method should return a 
-//     concatenation of the values of the properties title and artist. Create several objects. 
+//     їх методом concat.
+// EN: Create a constructor function Tune(title, artist) to create objects with private
+//     properties title, artist and a public method concat. The method should return a
+//     concatenation of the values of the properties title and artist. Create several objects.
 //     Call their concat method.
 
 // solution via creating new instances and concat method
 function Tune(title, artist) {
-	this.title = title;
-	this.artist = artist;
+  this.title = title;
+  this.artist = artist;
 
-	this.concat = function () {
-		return this.title + this.artist;
-	};
+  this.concat = function () {
+    return this.title + " " + this.artist;
+  };
 }
-      
-let assassin = new Tune('Leon', 'Killer');
-let sister = new Tune('Sister', 'Carry');
-let tammi = new Tune('Tam', 'Tadam');
+/* Ключове слово new у JavaScript використовується для створення екземплярів 
+	функцій-конструкторів, які діють як шаблони для створення об'єктів. Без 
+	ключового слова new, this посилатиметься на глобальний об'єкт (або undefined
+	у строгому режимі), а не на новий екземпляр. Отже використаємо ключове 
+	слово new для створення екземплярів об'єкту Tune:
+*/
 
-console.log(assassin.concat()); // LeonKiller
-console.log(sister.concat()); // SisterCarry
-console.log(tammi.concat()); // TamTadam
+let assassin = new Tune("Leon", "Killer");
+let sister = new Tune("Sister", "Carry");
+let tammi = new Tune("Tam", "Tadam");
 
-// solution via WeakMap and set/get
-// const Tune = (function () {
-// 	// constructor
-// 	const priv = new WeakMap();
+console.log(assassin.concat()); // Leon Killer
+console.log(sister.concat()); // Sister Carry
+console.log(tammi.concat()); // Tam Tadam
 
-// 	function Tune(title, artist) {
-// 		const privateMemebers = { title, artist };
+/* Проте, якщо Якщо ви хочете зробити метод спільним для всіх екземплярів Tune
+   (замість того, щоб кожен екземпляр мав свою власну копію), то можна перенести
+   concat до прототипу. І функція-конструктор буде без метода, типу
+   function Tune(title, artist) {
+	  this.title = title;
+	  this.artist = artist;
+	}
+	Tune.prototype.concat = function() {
+	  return this.title + " " + this.artist;
+	}
+	Таким чином, кожен об'єкт Tune використовує ту саму функцію concat, що 
+	ефективніше використовує пам'ять.
+*/
 
-// 		priv.set(this, privateMemebers);
-// 	}
+// solution via advanced approach: WeakMap and set/get methods
+const Tune1 = (function () {
+  // constructor
+  const priv = new WeakMap();
 
-// 	// method
+  function Tune2(title, artist) {
+    const privateMemebers = { title, artist };
 
-// 	Tune.prototype.concat = function () {
-// 		return `${priv.get(this).title} ${priv.get(this).artist}`;
-// 	};
+    priv.set(this, privateMemebers);
+  }
 
-// 	return Tune;
-// })();
+  // method
+  Tune2.prototype.concat = function () {
+    return `${priv.get(this).title} ${priv.get(this).artist}`;
+  };
+
+  return Tune2;
+})();
 // ===================================================================================
-      
-// ============================Task 02================================================
-// UA: Поясніть концептуальне поняття 'прототип' і 'успадкованість' у JavaScript за 
+
+// ============================Task 03================================================
+// EN: 1. Create a constructor function called Thermostat that takes a room parameter
+// 		  Inside the constructor, set these properties using this:
+// 		  - room (from the parameter); - temperature (set to 22); -isOn (set to true);
+// 	   2. Add these methods inside the constructor using this:
+//		  - increaseTemp() - increases temperature by 1 degree;
+// 		  - decreaseTemp() - decreases temperature by 1 degree;
+// 		  - getStatus() - returns: "[room] thermostat: [temperature]°C";
+// 	   3. Test your code.
+
+// Solution via function-constructor
+function Thermostat(room) {
+  this.room = room;
+  this.temperature = 22;
+  this.isOn = true;
+
+  this.increaseTemp = function () {
+    this.temperature += 1;
+  };
+
+  this.decreaseTemp = function () {
+    this.temperature -= 1;
+  };
+
+  this.getStatus = function () {
+    return `${this.room} thermostat: ${this.temperature}°C`;
+  };
+}
+
+// Test
+const livingRoom = new Thermostat("Living Room");
+livingRoom.increaseTemp();
+livingRoom.increaseTemp();
+console.log(livingRoom.getStatus()); // Living Room thermostat: 24°C
+
+const bedroom = new Thermostat("Bedroom");
+bedroom.decreaseTemp();
+bedroom.decreaseTemp();
+console.log(bedroom.getStatus()); // Bedroom thermostat: 20°C
+// ===================================================================================
+
+// ============================Task 04================================================
+// UA: Поясніть концептуальне поняття 'прототип' і 'успадкованість' у JavaScript за
 //     допомогою лише функціонального підходу (не класового).
-//     Є дві функції-конструктори: Animal і Dog. Функція-конструктор Animal отримує 
-//     параметр name. Ми додаємо метод greet до Animal.prototype, який буде загальним 
-//     для всіх екземплярів, створених за допомогою функції конструктора Animal. Функція 
+//     Є дві функції-конструктори: Animal і Dog. Функція-конструктор Animal отримує
+//     параметр name. Ми додаємо метод greet до Animal.prototype, який буде загальним
+//     для всіх екземплярів, створених за допомогою функції конструктора Animal. Функція
 //     конструктор Dog розширює функцію конструктора Animal.
 //     Ваше завдання:
 //     - встановити прототипний ланцюг для Dog;
@@ -64,11 +284,11 @@ console.log(tammi.concat()); // TamTadam
 //     - створити екземпляри Animal і Dog;
 //     - використати успадкований метод greet для animal і dog;
 //     - використати спеціальний метод bark для dog.
-// EN: Explain the conceptual notion of 'prototype' and 'inheritance' in JavaScript using 
+// EN: Explain the conceptual notion of 'prototype' and 'inheritance' in JavaScript using
 //     only a functional approach (not a class approach).
-//     There are two constructor functions: Animal and Dog. The constructor function Animal 
-//     takes a name parameter. We add a greet method to Animal.prototype, which will be common 
-//     to all instances created using the Animal constructor function. The Dog constructor 
+//     There are two constructor functions: Animal and Dog. The constructor function Animal
+//     takes a name parameter. We add a greet method to Animal.prototype, which will be common
+//     to all instances created using the Animal constructor function. The Dog constructor
 //     function extends the Animal constructor function.
 //     Your task:
 //     - establish the prototype chain for the Dog;
@@ -78,17 +298,17 @@ console.log(tammi.concat()); // TamTadam
 //     - use the special bark method for dog.
 
 function Animal(name) {
-	this.name = name;
+  this.name = name;
 }
 
 function Dog(name, breed) {
-	Animal.call(this, name);
-	this.breed = breed;
+  Animal.call(this, name);
+  this.breed = breed;
 }
 
 // додавання методу в батьківьский прототип
 Animal.prototype.greet = function () {
-	console.log(`Hello, my name is ${this.name}`);
+  console.log(`Hello, my name is ${this.name}`);
 };
 
 // solution via Object.create
@@ -109,12 +329,12 @@ Dog.prototype.constructor = Dog;
 
 // додавання cпеціального методу в дочірний прототип
 Dog.prototype.bark = function () {
-	console.log('Woof, woof..');
+  console.log("Woof, woof..");
 };
 
 // створюємо зразки об'єктів
-const animal = new Animal('Max');
-const dog = new Dog('Buddy', 'Labrador');
+const animal = new Animal("Max");
+const dog = new Dog("Buddy", "Labrador");
 // успадкування методу з батьківського прототипу
 animal.greet(); // Hello, my name is Max
 dog.greet(); // Hello, my name is Buddy
@@ -124,70 +344,70 @@ dog.bark(); // Woof, woof..
 // ===================================================================================
 
 // ============================Task 03================================================
-// UA: Створіть функцію-конструктор Book(title, author). Додайте методи: getTitle, 
+// UA: Створіть функцію-конструктор Book(title, author). Додайте методи: getTitle,
 //     getAuthor, getFullBookName та спробуйте додати статичний метод getGreeting.
 //     Створіть функцію-конструктор BookData(title, author, category, publishingHouse).
-//     Передайте значення title, author функції-конструктору Book. Додайте три методи: 
-//     getCategory, getPublishingHouse та метод getBookData, що повертає рядок символів, 
-//     які є значеннями усіх отриманих параметрів. Для реалізації успадкованості, 
+//     Передайте значення title, author функції-конструктору Book. Додайте три методи:
+//     getCategory, getPublishingHouse та метод getBookData, що повертає рядок символів,
+//     які є значеннями усіх отриманих параметрів. Для реалізації успадкованості,
 //     використовуйте:
 //     1. Object.create() або Object.setPrototypeOf()
 //     2. Class
 // EN: Create function-constructor Book(title, author).
-//     Add methods: getTitle, getAuthor, getFullBookName and try to add static method 
-//     getGreeting. Create function-constructor BookData(title, author, category, 
+//     Add methods: getTitle, getAuthor, getFullBookName and try to add static method
+//     getGreeting. Create function-constructor BookData(title, author, category,
 //     publishingHouse). Pass the value of title, author to the function-constructor Book.
-//     Add three methods: getCategory, getPublishingHouse and method getBookData - returns 
+//     Add three methods: getCategory, getPublishingHouse and method getBookData - returns
 //     the string with values of all parameters. Implement inheritance using:
 //     1. Object.create() or Object.setPrototypeOf()
 //     2. Class
 
 const Book = (function () {
-	// constructor
-	function Book(title, author) {
-		this.title = title;
-		this.author = author;
-	}
-	// methods
-	Book.prototype.getTitle = function () {
-		return this.title;
-	};
-	Book.prototype.getAuthor = function () {
-		return this.author;
-	};
-	Book.prototype.getFullBookName = function () {
-		return this.title + ' автор: ' + this.author;
-	};
-	Book.getGreeting = function () {
-		return 'Статичний метод не викликається на екземплярі класу, а тільки на імені самого класу';
-	};
-	return Book;
+  // constructor
+  function Book(title, author) {
+    this.title = title;
+    this.author = author;
+  }
+  // methods
+  Book.prototype.getTitle = function () {
+    return this.title;
+  };
+  Book.prototype.getAuthor = function () {
+    return this.author;
+  };
+  Book.prototype.getFullBookName = function () {
+    return this.title + " автор: " + this.author;
+  };
+  Book.getGreeting = function () {
+    return "Статичний метод не викликається на екземплярі класу, а тільки на імені самого класу";
+  };
+  return Book;
 })();
 
 // варіант-1.1 коли 'зашили' що Book буде прототипом
 const BookData = (function () {
-	// constructor
-	function BookData(title, author, category, publishingHouse) {
-		Book.call(this, title, author); // тут зашили що Book буде прототипом
-		this.category = category;
-		this.publishingHouse = publishingHouse;
-	}
-	// встановлюємо потрібний прототип щоб отримати методи від нього:
-	// BookData.prototype = Object.create(Book.prototype); // тут зашили що Book буде прототипом
-	// або так:
-	Object.setPrototypeOf(BookData.prototype, Book.prototype); // тут зашили що Book буде прототипом
+  // constructor
+  function BookData(title, author, category, publishingHouse) {
+    Book.call(this, title, author); // тут зашили що Book буде прототипом
+    this.category = category;
+    this.publishingHouse = publishingHouse;
+  }
+  // встановлюємо потрібний прототип щоб отримати методи від нього:
+  // BookData.prototype = Object.create(Book.prototype); // тут зашили що Book буде прототипом
+  // або так:
+  Object.setPrototypeOf(BookData.prototype, Book.prototype); // тут зашили що Book буде прототипом
 
-	// own methods
-	BookData.prototype.getCategory = function () {
-		return this.category;
-	};
-	BookData.prototype.getPublishingHouse = function () {
-		return this.publishingHouse;
-	};
-	BookData.prototype.getBookData = function () {
-		return `${this.title} від автора ${this.author} (категорія: ${this.category}), видавництва ${this.publishingHouse};`;
-	};
-	return BookData;
+  // own methods
+  BookData.prototype.getCategory = function () {
+    return this.category;
+  };
+  BookData.prototype.getPublishingHouse = function () {
+    return this.publishingHouse;
+  };
+  BookData.prototype.getBookData = function () {
+    return `${this.title} від автора ${this.author} (категорія: ${this.category}), видавництва ${this.publishingHouse};`;
+  };
+  return BookData;
 })();
 
 // // варіант-1.2 коли можна змінювати прототип
@@ -236,8 +456,8 @@ const BookData = (function () {
 // }
 
 // перевірка роботи
-const book1 = new Book('Green Mile', 'Steven King');
-const book2 = new Book('The Mysterious Island', 'Jules Verne');
+const book1 = new Book("Green Mile", "Steven King");
+const book2 = new Book("The Mysterious Island", "Jules Verne");
 console.log(book1);
 console.log(book2);
 
@@ -272,10 +492,10 @@ console.log(book2.constructor.getGreeting());
 
 // перевірка роботи
 const book3 = new BookData(
-	'Headhunters',
-	'Jo Nesbo',
-	'Thriller/Mystery',
-	'Свічадо'
+  "Headhunters",
+  "Jo Nesbo",
+  "Thriller/Mystery",
+  "Свічадо",
 );
 console.log(book3);
 console.log(book3.getTitle());
@@ -288,22 +508,22 @@ console.log(book3.getBookData());
 
 // ============================Task 04================================================
 // UА: Створіть клас Shape із статичною властивістю count. Ініціалізуйте цій властивості 0.
-//     В конструкторі класу збільшуйте count на 1. Створіть похідний клас Rectangle. 
-//     Додайте метод для обчислення площі прямокутника. Результат обчислення повинен 
-//     мати не більше ніж 2 знаки після коми. Створіть декілька об'єктів. Виведіть в 
+//     В конструкторі класу збільшуйте count на 1. Створіть похідний клас Rectangle.
+//     Додайте метод для обчислення площі прямокутника. Результат обчислення повинен
+//     мати не більше ніж 2 знаки після коми. Створіть декілька об'єктів. Виведіть в
 //     консоль число створених об'єктів.
 // EN: Create class Shape with static property count. Initialize the property count with 0.
-//     Increment the value of count by 1 in the constructor. Create derived class Rectangle. 
-//     Add method to calculate area. The result of calculation must have no more than 2 
-//     digits after the decimal point. Create a few objects. Display the number of created 
+//     Increment the value of count by 1 in the constructor. Create derived class Rectangle.
+//     Add method to calculate area. The result of calculation must have no more than 2
+//     digits after the decimal point. Create a few objects. Display the number of created
 //     objects in the console.
 
 class Shape {
-	static count = 0;
+  static count = 0;
 
-	constructor() {
-		Shape.count++;
-	}
+  constructor() {
+    Shape.count++;
+  }
 }
 
 const s1 = new Shape();
@@ -311,15 +531,15 @@ const s2 = new Shape();
 console.log(Shape.count);
 
 class Rectangle extends Shape {
-	constructor(width, height) {
-		super();
-		this.width = width;
-		this.height = height;
-	}
+  constructor(width, height) {
+    super();
+    this.width = width;
+    this.height = height;
+  }
 
-	calculateArea() {
-		return +(this.width * this.height).toFixed(2);
-	}
+  calculateArea() {
+    return +(this.width * this.height).toFixed(2);
+  }
 }
 
 // перевірка роботи
@@ -335,45 +555,45 @@ console.log(Shape.count);
 // ===================================================================================
 
 // ============================Task 05================================================
-// UA: Створити функцію-конструктор Person() для створення нових об'єктів. Додайте два 
-//     методи: setFirstName() та setLastName(). Методи повинні викликатись в ланцюгу, 
+// UA: Створити функцію-конструктор Person() для створення нових об'єктів. Додайте два
+//     методи: setFirstName() та setLastName(). Методи повинні викликатись в ланцюгу,
 //     наприклад obj.setFirstName(...).setLastName(...) Зробіть це саме за допомогою класів.
-// EN: Create function-constructor Person() for creating objects. Add two methods: 
-//     setFirstName() and setLastName(). These methods should be called in chain like this 
+// EN: Create function-constructor Person() for creating objects. Add two methods:
+//     setFirstName() and setLastName(). These methods should be called in chain like this
 //     obj.setFirstName(...).setLastName(...) Do exactly that with the help of classes.
 
 // using function-constructor
 function Person() {}
 
 Person.prototype.setFirstName = function (firstName) {
-	this.firstName = firstName;
-	return this;
+  this.firstName = firstName;
+  return this;
 };
 
 Person.prototype.setLastName = function (lastName) {
-	this.lastName = lastName;
-	return this;
+  this.lastName = lastName;
+  return this;
 };
 
 // using class
 class Person {
-	setFirstName(firstName) {
-		this.firstName = firstName;
-		return this;
-	}
-	setLastName(lastName) {
-		this.lastName = lastName;
-		return this;
-	}
+  setFirstName(firstName) {
+    this.firstName = firstName;
+    return this;
+  }
+  setLastName(lastName) {
+    this.lastName = lastName;
+    return this;
+  }
 }
 
 const person1 = new Person();
-console.log(person1.setFirstName('John').setLastName('Doe'));
+console.log(person1.setFirstName("John").setLastName("Doe"));
 console.log(person1.firstName);
 console.log(person1.lastName);
 
 const person2 = new Person();
-console.log(person2.setFirstName('Modest').setLastName('Opakhan'));
+console.log(person2.setFirstName("Modest").setLastName("Opakhan"));
 console.log(person2.firstName);
 console.log(person2.lastName);
 // ===================================================================================
@@ -382,7 +602,7 @@ console.log(person2.lastName);
 // UA: Створіть об'єкт data та потім задати конфігурацію його властивостей:
 //     1. id: значення = 1, можна змінювати,
 //     2. type: значення = 'primary', можливе для перерахування,
-//     3. category: getter повертає значення поля _category, setter встановлює значення 
+//     3. category: getter повертає значення поля _category, setter встановлює значення
 //     поля _category, можливе для перерахування, можливе для конфігурування полів.
 //     Використовуючи for...in виведіть властивості у консоль
 // EN: Create an object data and configure its properties:

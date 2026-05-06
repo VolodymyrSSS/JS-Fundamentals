@@ -160,6 +160,30 @@ console.log("Topic: Functions, part 1");
 // greet.apply(agent, ['Saludo!', 'Carlos']); // Saludo!, real-estate agent Carlos
 // greet.apply(agent, ['挨拶！', 'Saki']); // 挨拶!, real-estate agent Saki
 // ==================================================================
+// ==================== Task 2 this =================================
+/* Add a method called getStatus to the player object that returns a 
+   string with the player's name and health using the this keyword.
+   Expected Output Format: "Knight has 70 health". */
+// Solution:
+/* Ключове слово "this" у JavaScript посилається на об'єкт, який наразі
+   виконує код. Воно дозволяє отримати доступ до властивостей та методів
+   поточного об'єктy.*/
+const player = {
+  name: "Knight",
+  health: 100,
+
+  takeDamage: function (damage) {
+    this.health -= damage;
+  },
+
+  getStatus: function () {
+    return this.name + " has " + this.health + " health";
+  },
+};
+
+// Test
+player.takeDamage(30);
+console.log(player.getStatus()); // Knight has 70 health
 
 // =====================Task 3 FDS===================================
 // UА: Для чого використовують 'сlosure' (замикання) в JavaScript? Покажіть
