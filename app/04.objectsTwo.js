@@ -3,16 +3,14 @@ console.log("Topic: Objects Two");
 // ================================= 01 ================================
 /*
   You're given a calculator object that already has add() and subtract()
-  methods. Your task is to add multiply and divide methods that return this
-  to enable chaining.
+  methods. Your task is to add multiply and divide methods that return 
+  this to enable chaining.
 */
-// Solution:
-/*
-  Method chaining is a programming pattern that allows you to call multiple
-  methods on the same object in a single statement. Each method returns 
-  the object itself (this), enabling you to call the next method on the 
-  same line.
-*/
+/* Solution:
+   Method chaining is a programming pattern that allows you to call multiple
+   methods on the same object in a single statement. Each method returns 
+   the object itself (this), enabling you to call the next method on the 
+   same line. */
 const calculator = {
   value: 0,
 
@@ -26,13 +24,13 @@ const calculator = {
     return this;
   },
 
-  // TODO: Add multiply method here
+  // Add multiply method here
   multiply(n) {
     this.value *= n;
     return this;
   },
 
-  // TODO: Add divide method here
+  // Add divide method here
   divide(n) {
     this.value /= n;
     return this;
@@ -43,7 +41,7 @@ const calculator = {
   },
 };
 
-// Test
+// Tests
 const result1 = calculator.add(10).multiply(2).getValue();
 console.log(result1); // 20
 // Reset for second test
@@ -61,8 +59,7 @@ console.log(result2); // 4
   };
   Use more encapsulated approach like closures to hide the data.
 */
-// Solution:
-/*
+/* Solution:
   Encapsulation is a process of combining data inside a class within one unit.
   This helps to put restrictions on accessing class data directly, eventually
   helping us to prevent any accidental modification of data.
@@ -87,7 +84,7 @@ function createUser(name, email) {
   };
 }
 const encapsulatedUser = createUser("John", "john@example.com");
-// Test
+// Tests
 console.log(encapsulatedUser.getName()); // "John"
 encapsulatedUser.setName("Jane");
 console.log(encapsulatedUser.getName()); // "Jane"
@@ -596,7 +593,6 @@ const person2 = new Person();
 console.log(person2.setFirstName("Modest").setLastName("Opakhan"));
 console.log(person2.firstName);
 console.log(person2.lastName);
-// ===================================================================================
 
 // ============================Task 06================================================
 // UA: Створіть об'єкт data та потім задати конфігурацію його властивостей:

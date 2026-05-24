@@ -67,3 +67,89 @@ function flatArr(arr) {
   return result;
 }
 console.log(flatArr(nestedArr)); // [1, 2, 3, 4, 5]
+
+// ============================Task 03===================================
+/*
+  Create a function named collectShells that receives shells and commands 
+  as its parameters. This function aims to simulate collecting shells on 
+  a beach based on the given commands.
+  The shells parameter represents the shells you have collected so far,
+  where each integer represents a unique type of shell. The commands parameter
+  represents a sequence of actions to perform. A negative number in commands
+  indicates discarding the last collected shell of the corresponding type (if
+  it exists), while a positive number indicates collecting a new shell of that 
+  type.
+  Process each command in the order they appear, modifying the shells array
+  accordingly:
+  - If the command is negative and a shell of that type was the last one collected,
+  remove it from shells using the continue statement.
+  - If the command is positive, add it to the end of the shells array.
+  - After processing all the commands, return the modified shells array.
+
+  Parameters:
+  - shells (array): An array of positive integers representing the types of 
+  shells collected so far.
+  - commands (array): An array of integers representing the commands to perform.
+  Negative numbers indicate discarding a shell, while positive numbers indicate
+  collecting a new shell.
+  The function returns an array of integers representing the types of shells 
+  collected after processing all the commands.
+*/
+// Solution:
+function collectShells(shells, commands) {
+  // Handle the empty case
+  if (shells.length === 0 && commands.length === 0) {
+    return [NaN];
+  }
+
+  // Process commands one by one by looping through commands
+  /*
+    Commands are integers: positive means “collect”, negative means “discard”.
+    When discarding, we need the shell type (e.g., -2 means discard type 2).
+    So the variable type was just the positive shell type.
+    We can use something like const type = Math.abs(cmd) which converts -2 → 2 
+    or Instead of storing type, we can directly compare like here:
+  */
+  for (const cmd of commands) {
+    if (cmd > 0) {
+      shells.push(cmd);
+    } else if (shells[shells.length - 1] === -cmd) {
+      // here -cmd flips the negative back to positive like Ex: cmd = -2 → -cmd = 2.
+      shells.pop();
+      continue;
+    }
+  }
+
+  return shells;
+}
+
+// Tests:
+console.log(collectShells([], [])); // [NaN]
+console.log(collectShells([], [1, 2, 3])); // [NaN, 1, 2, 3]
+console.log(collectShells([1, 2], [3, -1, 4, -2])); // [1, 2, 3, 4]
+console.log(collectShells([1, 2, 3], [1, -1, 2, -2, 3, -3])); // [1, 2, 3]
+
+// Solution 2: instead of mutating the shells array directly, we build up the new array
+function collectShells2(shells, commands) {
+  if (shells.length === 0 && commands.length === 0) {
+    return [NaN];
+  }
+
+  /*
+    We’ll run commands.reduce(...) starting from the initial shells array.
+    Inside the reducer:
+    - If cmd > 0 → return a new array with cmd appended.
+    - If cmd < 0 and the last element matches -cmd → return a new array with the last element removed.
+    - Otherwise → return the array unchanged.
+  */
+  return commands.reduce((acc, cmd) => {
+    if (cmd > 0) {
+      return [...acc, cmd];
+    } else if (acc[acc.length - 1] === -cmd) {
+      return acc.slice(0, -1);
+    }
+    return acc;
+  }, shells);
+}
+// Test:
+console.log(collectShells2([1, 2, 3], [-3, 3, -3])); // [1, 2]

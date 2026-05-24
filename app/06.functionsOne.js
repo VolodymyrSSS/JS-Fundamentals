@@ -22,7 +22,7 @@ console.log("Topic: Functions, part 1");
       console.log(this=== window);
    }
    myFunction();// Output: Window object. In strict mode value will be undefined
-   myFunction() is equivalent to window.myFuntion()
+   // myFunction() is equivalent to window.myFuntion()
 
    2.When a function is called as a method of an object, it’s this is set to
    the object the method is called on.
@@ -44,20 +44,25 @@ console.log("Topic: Functions, part 1");
          this.someValue = value;
       }
       var obj1 = new ConstructorFunction(20);
-      console.log(obj1.someValue)//Output: 20
+      console.log(obj1.someValue); // Output: 20
+      var obj2 = new ConstructorFunction(42);
+      console.log(obj2.someValue); // Output: 42
 
    4. ‘this’ in Immediately Invoked Function expression (IIFE)
    In IIFE, value of this is always equal to Window object. Let’s see an example:
    // IIFE outside any function 
    (function() {
    console.log(this); // Output: Window object
-   })()
+   })();
+
    // IIFE inside an object function
    var obj = {};
    var someFunc = function() {
-   console.log("Functions this");
-   console.log(this === obj);
-   console.log('++++++++++++++++++++++++++');
+     console.log("Functions this");
+     console.log(this === obj);
+     console.log('++++++++++++++++++++++++++';
+   }
+   
    // IIFE 
    (function() {
       console.log("IIFE this");
