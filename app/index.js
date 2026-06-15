@@ -10,7 +10,8 @@
 // import * as o06 from "./06.functionsTwo";
 // import * as o06 from "./06.functionsThree";
 // import * as o06 from "./06.functionsFour";
-import * as o06 from "./06.functionsFive";
+// import * as o06 from "./06.functionsFive";
+import * as o06 from "./06.functionsSix";
 // import * as o07 from "./07.promisesOne";
 // import * as o07 from "./07.promisesTwo";
 // import * as o07 from "./07.promisesWith-AsyncFunc";

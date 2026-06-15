@@ -1,15 +1,54 @@
 console.log("Topic: Promises part2");
 
-// ======================= Task 01 ===================================
+// ========================== 01 =====================================
+// UA: Напишіть функцію getPromise, яка повертає проміс, що вирішуєтся
+// і  із тим мамим рядком що отримує. Якщо вхідний рядок "Coddy" то проміс
+//  відхиляє його повідомленням "Rejected".
+// EN: Write a function getPromise which returns a promise which resolves
+// the same string or reject with the string "Rejected" if the input string
+// is "Coddy".
+
+// Solution:
+/*
+  Проміси (promises) — це об'єкти Javascript, які забезпечують виконання 
+  асинхронних завдань та повертають результат, який може вирішитись як
+  успішно так і невдачею.
+*/
+function getPromise(s) {
+  // Write code here
+  return new Promise((resolve, reject) => {
+    if (s === "Coddy") {
+      reject("Rejected");
+    } else {
+      resolve(s);
+    }
+  });
+  // return promise.then(s => console.log(s)).catch(val => console.log(val));
+  /* так писати не можна бо методи .then() та .catch() всередині функції будуть
+  тільки виводити в консоль якесь значення замість того щоб повернути значення
+  вирішеного чи невдалого промісу.*/
+}
+// Tests:
+getPromise("Coddy")
+  .then((val) => console.log(val))
+  .catch((err) => console.log(err)); // Rejected
+
+getPromise("Coddy and friends")
+  .then((val) => console.log(val))
+  .catch((err) => console.log(err)); // Coddy and friends
+// ===================================================================
+
+// ======================= Task 02 ===================================
 // UA: Створіть літерал об'єтку handlePromise із такими полями: promise,
 //     resolve, reject, onSuccess, onError. Далі задайте першим трьом
 //     полям значення null, а останні два поля - це функції, які отримують
-//     один параметр і виводять у консоль відповідні повідомлення: перша
-//     - `Promise is resolved with data: ${paramName}`, друга
-//     - `Promise is rejected with error: ${paramName}`.
+//     один параметр і виводять у консоль відповідні повідомлення:
+//     перша - `Promise is resolved with data: ${paramName}`;
+//     друга - `Promise is rejected with error: ${paramName}`.
 //     Створіть три обробника подій click для кнопок "Create Promise",
-//     "Resolve Promise", "Reject Promise". Перший обробник, створює проміс,
-//     заповнює перші три поля, описаного вище об'єкту: властивість promise
+//     "Resolve Promise", "Reject Promise".
+//     Перший обробник, створює проміс, заповнює перші три поля, описаного
+//      вище об'єкту: властивість promise
 //     отримує новий створений проміс, властивість resolve і reject отримують
 //     посилання на відповідні функції resolve і reject. Наступні два
 //     обробника запускають методи resolve та reject.
@@ -57,7 +96,7 @@ document.getElementById("btn-reject-promise").addEventListener("click", () => {
 });
 // ===================================================================
 
-// ======================= Task 02 ===================================
+// ======================= Task 03 ===================================
 // UA: Використовуючи попереднє завдання. Продублюйте рядок з методом then.
 // EN: Using the previous task. Duplicate the line with the then method.
 

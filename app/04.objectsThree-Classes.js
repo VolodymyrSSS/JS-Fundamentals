@@ -1322,31 +1322,26 @@ const basicDevice1 = new SmartDevice("Smart Plug");
 const basicDevice2 = new SmartDevice(" Thermostat");
 console.log(`Total devices now: ${SmartDevice.getDeviceCount()}`); // Total devices now: 2
 
-// ========================== Task 01 ===================================
-// UA: Подібно до літералів об’єктів, класи можуть включати геттери/сеттери,
-//     обчислені атрибути, поля тощо. Можете показати приклад для user.name,
-//     що реалізований за допомогою get/set. Крім того, додайте поле name
-//     та метод sayHi, що виводить в консоль "Привіт, Marianna!". Покажіть
-//     що важливою відмінністю полів класу є те, що вони задаються в окремих
-//     об’єктах, а не в User.prototype як то геттери/сеттери та методи класу.
-// EN: Like object literals, classes can include getters/setters, computed
-//     attributes, fields, etc. You can show an example for user.name that
-//     is implemented using get/set. Also, add a name field and a sayHi method
-//     that prints "Hello, Marianna!" to the console. Show that an important
-//     difference between class fields is that they are defined in individual
-//     objects, not in User.prototype like getters/setters and class methods.
+// ========================== Task 23 ===================================
+/* 
+  Подібно до літералів об’єктів, класи можуть включати геттери/сеттери,
+  обчислені атрибути, поля тощо. Можете показати приклад для user.name,
+  що реалізований за допомогою get/set. Крім того, додайте поле name
+  та метод sayHi, що виводить в консоль "Привіт, Marianna!". Покажіть
+  що важливою відмінністю полів класу є те, що вони задаються в окремих
+  об’єктах, а не в User.prototype як то геттери/сеттери та методи класу.
+*/
 
-// solution via class and getter/setter
+// solution:
 class User {
   _name = "Marianna"; // задали поле класу
 
   constructor(name = "Marianna") {
-    // викликає сеттер
-    this.name = name;
+    this.name = name; // викликає сеттер
   }
   // визначили getter
   get name() {
-    return this._name;
+    return this._name; // повертає значення поля
   }
   // визначили setter
   set name(value) {
@@ -1363,18 +1358,674 @@ class User {
   }
 }
 
-// перевірка роботи
+// Tests:
 let userModest = new User("Modest"); // constructor() викликається автоматично за допомогою new
 console.log(userModest.name); // Modest
 
 userDeviant = new User("L");
 // Тут Marianna зберігається як дефолтне знач, але setter відкидає "L" як незадовільн умову
-console.log(userDeviant.name); // Ім’я занадто коротке.
+console.log(userDeviant.name); // Ім’я занадто коротке. Викликаємо як звичайну властивість об'єкта
 
-new User().sayHi(); // Привіт, Marianna!
+new User().sayHi(); // Привіт, Marianna! Викликаємо як метод об'єкта (з дужками)
 
 // покажемо, що важливою відмінністю полів класу є те, що вони задаються в окремих об’єктах, а не в User.prototype:
 let userM = new User();
 console.log(userM._name); // Marianna (значення поля береться в instance класу)
 console.log(User.prototype._name); // undefined (такої властивості немає в прототипі бо то є поле а не метод)
 console.log(User.prototype.sayHi); // function... (метод визначений в прототипі)
+
+// ========================== Task 24 ===================================
+/* 
+  Створіть клас Validator, який надає статичні допоміжні методи для перевірок
+  вводу електронної пошти та номеру телефону користувачів.
+  Вимоги:
+  1. Використайте regExp для перевірки формату електронної пошти та номеру телефону.
+  2. Визначте статичний метод isValidEmail(email: string), який повертає true,
+     якщо електронна адреса відповідає стандартному шаблону (something@domain.com),
+     інакше false.
+  3. Визначте статичний метод isValidPhone(phone: string), який повертає true
+     якщо номер телефону складається рівно з 10 цифр, інакше false.
+  4. Продемонструйте використання, статичних методів класу Validator.
+*/
+// Solution:
+/*
+ Особливістю статичних методів є те, що вони належать класу, а не його екземплярам.
+ Це означає, що ви можете викликати їх без створення об'єкта класу. Вони ідеально 
+ підходять для утилітарних функцій, які не потребують доступу до властивостей конкретного
+ об'єкта. У цьому випадку, методи isValidEmail та isValidPhone є допоміжними функціями 
+ для перевірки форматів вводу, і вони не залежать від стану конкретного екземпляра 
+ Validator. Тому їх реалізація як статичних методів є логічним вибором.
+*/
+class Validator {
+  static isValidEmail(email) {
+    return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email); // Простий шаблон для перевірки формату електронної пошти
+  }
+
+  static isValidPhone(phone) {
+    return /^\d{10}$/.test(phone); // Перевіряє, що номер телефону складається рівно з 10 цифр
+  }
+}
+// Tests:
+const emailCheck = Validator.isValidEmail("test@example.com");
+console.log(emailCheck); // true
+const phoneCheck = Validator.isValidPhone("1234567890");
+console.log(phoneCheck); // true
+const invalidEmailCheck = Validator.isValidEmail("invalid-email");
+console.log(invalidEmailCheck); // false
+const invalidPhoneCheck = Validator.isValidPhone("12345");
+console.log(invalidPhoneCheck); // false
+
+// ========================== Task 25 ===================================
+/*
+  Implement the prepareForFlight() method in the Airplane class so that it:
+  1. Prints a message indicating the airplane is preparing for flight.
+  2. Starts the engine by calling its start() method.
+  3. Deploys the wings’ flaps by calling their deployFlaps() method.
+*/
+// Solution:
+class Engine {
+  constructor(power) {
+    this.power = power;
+  }
+  start() {
+    console.log("Engine starting...");
+  }
+}
+class Wings {
+  constructor(span) {
+    this.span = span;
+  }
+  deployFlaps() {
+    console.log("Flaps deploying...");
+  }
+}
+class Airplane {
+  constructor(model) {
+    this.model = model;
+    this.engine = new Engine(1000); // використання компоненту двигуна з потужністю 1000
+    this.wings = new Wings(50); // використання компоненту крил з розмахом 50 метрів
+  }
+
+  /*
+    Це демонструє композицію: Airplane не здійснює сам запуск або визначення крил 
+    — він делегує ці обов'язки своїм компонентам Engine та Wings.
+  */
+  prepareForFlight() {
+    console.log(`${this.model} preparing for flight.`);
+    this.engine.start(); // використовуємо Engine компонент
+    this.wings.deployFlaps(); // використовуємо Wings компонент
+  }
+}
+
+// ========================== Task 26 ===================================
+/*
+  Створіть клас Stack з основними операціями та окремими функціями, які 
+  демонструють, як використовувати стек для вирішення практичних завдань.
+  1. Отже спочатку створіть клас Stack з методами:
+  - push(value): додати елемент зверху
+  - pop(): видалити та повернути верхній елемент
+  - top(): повернути верхній елемент без видалення
+  - size(): повернути кількість елементів
+  - empty(): повернути true, якщо стек порожній, інакше false
+  2. Потім, напишіть окремо функцію яка приймає на вхід масив arr та використовує 
+    методи класу Stack для його реверсу і повертає новий реверсний масив.
+  3. Напишіть окремо функцію nse, яка отримує цілочисельний масив і повертає
+    масив, що містить найближчий менший елемент кожного елемента (ліворуч).
+    Якщо ліворуч віделемента немає меншого елемента, повертається -1. Використайте
+    методи класу Stack, щоб вирішити цю підзадачу!
+  3. Напишіть функцію isBalancedParentheses, яка отримує на вхід різні дужки: 
+    круглі, квадратні, фігурні та повертає true, якщо кількість відкриваючих дрівнює
+    кількості закриваючих дужок, а інакше false. Тобто, кожен символ дужки відкриття 
+    повинен мати відповідний символ дужкизакриття. Використайте клас Stack, щоб 
+    вирішити цю проблему! Приклади:
+    Input: "({[]})" → Output: true
+    Input: "({[)})]" → Output: false
+  4. Напишіть функцію isPalindrome, яка отримує рядок і повертає значення true,
+    якщо рядок є паліндромом, інакше false. Паліндром — це слово або фраза, яка
+    читається однаково як у зворотному, так і в прямому порядку.
+*/
+// Solution:
+class Stack {
+  constructor() {
+    this.elements = [];
+  }
+
+  push(value) {
+    this.elements.push(value);
+  }
+
+  pop() {
+    if (this.elements.length === 0) return undefined;
+    return this.elements.pop();
+  }
+
+  top() {
+    if (this.elements.length === 0) return undefined;
+    return this.elements[this.elements.length - 1];
+  }
+
+  size() {
+    return this.elements.length;
+  }
+
+  empty() {
+    return this.elements.length === 0;
+  }
+}
+// функція для реверсу масиву за допомогою класу Stack
+function reverseArrayByStack(arr) {
+  const stack = new Stack(); // створюємо новий екземпляр стеку
+
+  // передаємо всі елементи в стек використовуючи метод push класу Stack
+  for (const element of arr) {
+    stack.push(element);
+  }
+
+  const result = []; // створюємо новий масив для збереження реверсованих елементів
+  // поки стек не порожній, виводимо елементи з нього і додаємо їх до результуючого масиву
+  while (!stack.empty()) {
+    result.push(stack.pop());
+  }
+
+  return result;
+}
+
+// функція nse для знаходження найближчого меншого елемента зліва
+function nse(arr) {
+  const stack = new Stack(); // створюємо новий екземпляр стеку
+  const result = []; // створюємо масив для збереження результатів
+
+  // проходимо по кожному елементу вхідного масиву
+  for (const element of arr) {
+    // видаляємо елементи, які більші або рівні поточному елементу
+    while (!stack.empty() && stack.top() >= element) {
+      stack.pop();
+    }
+
+    // якщо стек порожній, то немає меншого елемента зліва, тому додаємо -1
+    if (stack.empty()) {
+      result.push(-1);
+    } else {
+      result.push(stack.top()); // додаємо найближчий менший елемент зліва
+    }
+
+    // додаємо поточний елемент для майбутніх порівнянь бо наступний
+    // елемент не знав би про те, що було раніше
+    stack.push(element);
+  }
+
+  return result;
+}
+
+// функція для перевірки збалансованості дужок варіант 1
+/*
+  1. Створюємо пустий стек для зберігання дужок;
+  1. Проходимось по рядку дужок: символ за символом;
+  2. Додаємо символ відкритих дужок ((, [, {) в стек;
+  3. А коли виявляємо символ закритих дужок (), ], }), спочатку перевіряємо чи 
+    стек порожній і чи верхній елемент стеку відрізняється від відповідного символу
+    для відкриваючої дужки. Якщо так - повертаєм false;
+  4. Якщо закриваючадужка підходить відкриваючій, то видаляєм відкриваючу дужку зі стеку;
+  5. У кінці, якщо стек порожній - це значить усі відкриваючі дужки знайшли відповідні 
+    закриваючі дужки - повертаємо true, інакше - повертаємо false.
+*/
+function isBalancedParentheses1(s) {
+  const stack = new Stack(); // створюємо новий екземпляр стеку
+  // проходимо по кожному символу в рядку
+  for (const ch of s) {
+    // якщо це відкриваюча дужка, додаємо її в стек
+    if (ch === "(" || ch === "[" || ch === "{") {
+      stack.push(ch);
+      // якщо це закриваюча дужка, перевіряємо верхній елемент стеку
+    } else if (ch === ")" || ch === "]" || ch === "}") {
+      if (stack.empty()) return false; // якщо стек порожній, то немає відкриваючої дужки для цієї закриваючої
+      // перевіряємо чи верхній елемент стеку - відкриваюча дужка підходить для цієї закриваючої
+      const top = stack.top();
+      if (
+        (ch === ")" && top !== "(") ||
+        (ch === "]" && top !== "[") ||
+        (ch === "}" && top !== "{")
+      ) {
+        return false;
+      }
+      stack.pop(); // якщо закриваюча дужка підходить відкриваючій, то видаляємо відкриваючу дужку зі стеку
+    }
+  }
+
+  return stack.empty(); // якщо в кінці стек порожній, то всі дужки збалансовані
+}
+
+// функція для перевірки збалансованості дужок варіант 2
+function isBalancedParentheses2(s) {
+  const stack = new Stack(); // створюємо новий екземпляр стеку
+  // словник для відповідності закриваючих дужок їх відкриваючим аналогам
+  const pairs = {
+    ")": "(",
+    "]": "[",
+    "}": "{",
+  };
+  // проходимо по кожному символу в рядку
+  for (const char of s) {
+    // якщо це відкрита дужка, додаємо її в стек
+    if (["(", "[", "{"].includes(char)) {
+      stack.push(char);
+      // якщо це закрита дужка, перевіряємо верхній елемент стеку
+    } else if ([")", "]", "}"].includes(char)) {
+      // якщо стек порожній або верхній елемент не відповідає відкриваючій дужці, то рядок не збалансований
+      if (stack.empty() || stack.pop() !== pairs[char]) {
+        return false; // не збалансовано
+      }
+    }
+  }
+
+  return stack.empty(); // якщо після обробки всіх символів стек порожній, то рядок збалансований
+}
+
+// функція для перевірки чи є рядок паліндромом
+function isPalindrome(s) {
+  const stack = new Stack(); // створюємо новий екземпляр стеку
+
+  // проходимо по кожному символу в рядку та додаємо його в стек
+  for (const ch of s) {
+    stack.push(ch);
+  }
+
+  // створюємо новий рядок у реверсованому порядку, витягуючи символи зі стеку
+  let reversed = "";
+  while (!stack.empty()) {
+    reversed += stack.pop();
+  }
+
+  // порівнюємо оригінальний рядок з реверсованим
+  return s === reversed;
+}
+
+// Tests:
+let stack1 = new Stack();
+console.log(stack1.empty()); // true
+stack1.push(10);
+stack1.push(20);
+console.log(stack1.size()); // 2
+console.log(stack1.top()); // 20
+console.log(stack1.pop()); // 20
+console.log(stack1.top()); // 10
+console.log(stack1.empty()); // false
+
+console.log(reverseArrayByStack([1, 2, 3, 4, 5])); // [5, 4, 3, 2, 1]
+
+console.log(nse([4, 5, 2, 10, 8])); // [-1, 4, -1, 2, 2]
+/*
+  Because when we process 8, the nearest smaller element to its left 
+  is not 10 (since 10 ≥ 8, it gets popped).
+  The next candidate left in the stack is 2, which is smaller than 8.
+  So the correct nearest smaller element is 2, not -1. Nearest smaller
+  element to the left, not necessarily the immediate neighbor.
+*/
+console.log(nse([5, 4, 3, 2, 1])); // [-1, -1, -1, -1, -1]
+console.log(nse([2, 1, 3, 4, 2])); // [-1, -1, -1, 3, -1 ]
+
+console.log(isBalancedParentheses1("({[]})")); // true
+console.log(isBalancedParentheses1("({[)})]")); // false
+console.log(isBalancedParentheses1("())")); // false
+console.log(isBalancedParentheses1("()")); // true
+console.log(isBalancedParentheses2("({[]}")); // false
+console.log(isBalancedParentheses2("([)]")); // false
+console.log(isBalancedParentheses2("(){}[]")); // true
+
+console.log(isPalindrome("racecar")); // true
+console.log(isPalindrome("algorithm")); // false
+console.log(isPalindrome("madam")); // true
+console.log(isPalindrome("level")); // true
+console.log(isPalindrome("deified")); // true
+console.log(isPalindrome("hello")); // false
+console.log(isPalindrome("1221")); // true
+
+// ========================== Task 27 ===================================
+/*
+  Створіть клас Stack2, який буде мати усі методи класу Stack, але з
+  додатковими функціями:
+  1. min - повертає мінімальне число в стеку на даний момент.
+  2. max - повертає максимальне число в стеку на даний момент.
+ Проте, для вирішення цієї задачі намагайтеся не перебирати всі елементи 
+ стеку під час кожного додавання (push) чи видалення (pop) елементу з стеку.
+*/
+// Solution:
+/*
+  Ми можемо реалізувати min() та max() безпосередньо всередині методів min/max, але 
+  тоді кожен виклик повинен буде сканувати всі елементи стеку, щоб знайти мінімум або
+  максимум. Це означає часову складність O(n) замість O(1). Ось як це виглядає, якщо
+  буде збережено все автономно:
+
+  min() {
+    if (this.empty()) return undefined;
+    let minVal = this.elements[0];
+    for (const el of this.elements) {
+      if (el < minVal) minVal = el;
+    }
+    return minVal;
+  }
+
+  max() {
+    if (this.empty()) return undefined;
+    let maxVal = this.elements[0];
+    for (const el of this.elements) {
+      if (el > maxVal) maxVal = el;
+    }
+    return maxVal;
+  }
+  Але в завданні є додаткова умова: "...намагайтеся не перебирати всі елементи 
+  стеку...". Це означає, що ми повинні підтримувати мінімум та максимум в O(1) 
+  часі. Для цього ми можемо створити два додаткові стеки: один для мінімумів і
+  один для максимумів. Коли ми додаємо новий елемент, ми порівнюємо його з 
+  поточним мінімумом чи максимумом і оновлюємо відповідний стек. Коли ми видаляємо
+  елемент, ми також порівнюємо його з поточним мінімумом або максимумом, і 
+  видаляємо його з відповідного стеку. Таким чином, ми завжди матимемо доступ
+  до поточного мінімуму чи максимуму за O(1) час.
+*/
+class Stack2 {
+  constructor() {
+    this.elements = [];
+    this.minStack = []; // стек для збереження і утримання мінімальних значень
+    this.maxStack = []; // стек для збереження і утримання максимальних значень
+  }
+
+  push(element) {
+    this.elements.push(element);
+
+    // підтримака мінімального значення в minStack
+    if (this.minStack.length === 0) {
+      this.minStack.push(element); // якщо стек мінімумів порожній, то поточний елемент є мінімумом
+    } else {
+      // порівнюємо поточний елемент з останнім мінімумом і додаємо менший з них в minStack
+      this.minStack.push(
+        Math.min(element, this.minStack[this.minStack.length - 1]),
+      );
+    }
+
+    // підтримка максимального значення в maxStack
+    if (this.maxStack.length === 0) {
+      this.maxStack.push(element); // якщо стек максимумів порожній, то поточний елемент є максимумом
+    } else {
+      // порівнюємо поточний елемент з останнім максимумом і додаємо більший з них в maxStack
+      this.maxStack.push(
+        Math.max(element, this.maxStack[this.maxStack.length - 1]),
+      );
+    }
+  }
+
+  pop() {
+    if (this.elements.length === 0) return undefined; // якщо стек порожній, повертаємо undefined
+    this.minStack.pop(); // видаляємо верхній елемент з minStack, оскільки він відповідає верхньому елементу в elements
+    this.maxStack.pop(); // видаляємо верхній елемент з maxStack, оскільки він відповідає верхньому елементу в elements
+    return this.elements.pop(); // видаляємо і повертаємо верхній елемент з основного стеку
+  }
+
+  top() {
+    return this.elements[this.elements.length - 1];
+  }
+
+  size() {
+    return this.elements.length;
+  }
+
+  empty() {
+    return this.elements.length === 0;
+  }
+
+  min() {
+    if (this.minStack.length === 0) return undefined; // якщо стек мінімумів порожній, то немає мінімального значення
+    return this.minStack[this.minStack.length - 1]; // повертаємо останній елемент в minStack який є поточним мінімумом
+  }
+
+  max() {
+    if (this.maxStack.length === 0) return undefined; // якщо стек максимумів порожній, то немає максимального значення
+    return this.maxStack[this.maxStack.length - 1]; // повертаємо останній елемент в maxStack який є поточним максимумом
+  }
+}
+// Tests:
+const stack2 = new Stack2();
+stack2.push(3);
+stack2.push(5);
+console.log(stack2.min()); // 3
+console.log(stack2.max()); // 5
+stack2.push(7);
+console.log(stack2.pop()); // 7
+console.log(stack2.max()); // 5
+stack2.push(2);
+console.log(stack2.min()); // 2
+console.log(stack2.pop()); // 2
+console.log(stack2.min()); // 3
+
+// ========================== Task 28 ===================================
+/*
+  Створіть клас Queue з основними операціями та окремими функціями, які 
+  демонструють, як використовувати queue (чергу) для вирішення практичних
+  завдань.
+  1. Реалізуйте клас Queue з методами:
+    - enqueue(value): додати елемент у кінець черги
+    - dequeue(): видалити елемент з початку черги
+    - front(): повернути перший елемент без видалення
+    - rear(): повернути останній елемент без видалення
+    - size(): повернути кількість елементів у черзі
+  2. Напишіть окремо функцію reverse, яка приймає масив arr та використовує
+  методи класу Queue для його реверсу і повертає новий реверсний масив.
+  3. Напишіть функцію maxWindowSum, яка отримує масив цілих чисел (a) та розмір
+  ковзаючого вікна (k), і яка повертає максимальну суму у ковзаючого вікна.
+  4. Напишіть функцію hotPotato, яка отримує список імен та кількість кидків,
+  імітуючи гру в «гарячу картоплю»: кидайте картоплю кілька разів (кожен кидок
+  переміщує особу, яка сидить попереду, на задню), потім особа, яка сидить 
+  попереду, вибуває. Повторюйте, доки не залишиться одна особа, і врешті 
+  поверніть її ім'я.
+*/
+// Solution:
+/*
+  Черга є протилежністю стеку з точки зору порядку: вона дотримується 
+  принципу FIFO (перший прийшов, перший вийшов). Це означає, що елементи
+  додаються в кінці та видаляються з початку.
+*/
+class Queue {
+  constructor() {
+    this.items = [];
+  }
+
+  enqueue(item) {
+    this.items.push(item);
+  }
+
+  dequeue() {
+    this.items.shift();
+  }
+
+  front() {
+    if (this.items.length === 0) return undefined;
+    return this.items[0];
+  }
+
+  rear() {
+    if (this.items.length === 0) return undefined;
+    return this.items[this.items.length - 1];
+  }
+
+  size() {
+    return this.items.length;
+  }
+}
+
+// функція для реверсу масиву за допомогою класу Queue
+function reverse(a) {
+  const q = new Queue();
+
+  // ставимо всі елементи в чергу використовуючи метод enqueue класу Queue
+  for (const element of a) {
+    q.enqueue(element);
+  }
+
+  // витягуємо елементи з черги і додаємо їх в результативний масив у зворотному порядку
+  const result = []; // створюємо новий масив для збереження реверсованих елементів
+  while (q.size() > 0) {
+    const front = q.front(); // отримуємо перший елемент з черги (який є найстарішим)
+    q.dequeue(); // видаляємо цей елемент з черги
+    result.unshift(front); // додаємо його на початок результативного масиву, щоб отримати реверсований порядок
+  }
+
+  return result;
+}
+
+// функція для знаходження максимальної суми у ковзаючому вікні розміру k
+/*
+  Алгоритм вирішення задачі може бути наступним:
+  1. Будемо використовувати чергу для зберігання поточного вікна розміром k;
+  2. Будемо Відстежувати суму елементів у вікні та максимальну суму, знайдену на даний момент.
+  3. Для кожного нового елемента:
+  - ставимо його в чергу та додаємо до суми;
+  - якщо розмір черги буде перевищувати k, тоді вилучаємо з черги найстаріший елемент і
+    одночасно віднімаємо його від суми;
+  - відстежуємо максимальну суму, знайдену на даний момент.
+*/
+function maxWindowSum(a, k) {
+  const q = new Queue(); // створюємо нову чергу для зберігання поточного вікна
+  let currentSum = 0; // змінна для відстеження суми поточного вікна
+  let maxSum = -Infinity; // змінна для збереження максимальної суми можна і так let maxSum = null;
+
+  for (const num of a) {
+    q.enqueue(num); // додаємо новий елемент до черги
+    currentSum += num; // додаємо його значеннядо поточної суми
+
+    // якщо розмір черги перевищує k, видаляємо найстаріший елемент
+    if (q.size() > k) {
+      const removed = q.front(); // отримуємо значення найстарішого елементу з черги
+      q.dequeue(); // видаляємо найстаріший елемент з черги
+      currentSum -= removed; // віднімаємо його значення від поточної суми
+    }
+    /* якщо написати так то буде помилка, бо метод dequeue() не повертає видалений елемент, а просто видаляє його з черги.
+      if (q.size() > k) {
+        const removed = q.dequeue();
+        currentSum -= removed;
+      }
+      ось тут ми в класі Queue не маємо слова return a просто видаляємо елемент (не повертаємо!)
+      dequeue() {
+        this.items.shift(); 
+      }    
+    */
+
+    // оновлюємо максимальну суму, якщо поточна сума більша
+    if (q.size() === k && currentSum > maxSum) {
+      maxSum = currentSum;
+    }
+  }
+
+  return maxSum;
+}
+
+// функція для гри в hotPotato
+/*
+  Для вирішення потрібно:
+  1. Додати всі імена до черги;
+  2. Далі слідкуємо, поки залишається більше однієї людини:
+    - виконайте кидки: кожен кидок = візьміть людину попереду, перемістіть 
+    її назад (enqueue(front); dequeue()).
+    - після кидків видаліть людину попереду (dequeue()).
+  3. Коли залишається лише одна людина, поверніть її ім'я (front()).
+*/
+function hotPotato(names, tosses) {
+  const q = new Queue();
+
+  for (const name of names) {
+    q.enqueue(name); // додаємо усі імена в чергу
+  }
+
+  while (q.size() > 1) {
+    // кидаємо визначену кількість разів
+    for (let i = 0; i < tosses; i++) {
+      const person = q.front(); // отримати ім'я персони спереду
+      q.dequeue(); // видалити пеосону спереду
+      q.enqueue(person); // перемістити ім'я персони назад
+    }
+    q.dequeue(); // видалити персону спереду
+  }
+
+  return q.front(); // повертаєм останнє ім'я персони
+}
+
+// Tests:
+const queue1 = new Queue();
+queue1.enqueue(1);
+queue1.enqueue(2);
+queue1.enqueue(3);
+queue1.enqueue(4);
+console.log(queue1.front()); // 1
+console.log(queue1.rear()); // 4
+console.log(queue1.dequeue()); // 1
+console.log(queue1.front()); // 2
+console.log(queue1.size()); // 3
+
+console.log(reverse([1, 2, 3, 4, 5])); // [5, 4, 3, 2, 1]
+
+console.log(maxWindowSum([2, 1, 5, 4, 3, 6], 3)); // 12 (5 + 4 + 3)
+console.log(maxWindowSum([1, 2, 3, 4, 5], 2)); // 9 (4 + 5)
+console.log(maxWindowSum([4, -2, 1, 3, -1, 2], 4)); // 6 (4 + (-2) + 1)
+console.log(maxWindowSum([1, 2, 3], 1)); // 3 (максимальний елемент)
+
+console.log(hotPotato(["Alice", "Bob", "Charlie", "Dave", "Eve"], 3)); // Alice
+/*
+  Toss 3 → Alice → Bob → Charlie → eliminated → [Dave,Eve,Alice,Bob]
+  Toss 3 → Dave → Eve → Alice → eliminated → [Bob,Dave,Eve]
+  Toss 3 → Bob → Dave → Eve → eliminated → [Bob,Dave]
+  Toss 3 → Bob → Dave → Bob → eliminated → [Dave]  
+  Result: Alice.
+*/
+console.log(hotPotato(["John", "Jane", "Jim", "Jill", "Jeff", "Jerry"], 5)); // Jill
+// ========================== Task 29 ===================================
+/*
+  Переробіть клас Queue для підтримки циклічної черги та перейменуйте його
+  на CircularQueue. Конструктор приймає ціле число — максимальний розмір
+  циклічної черги. Коли черга заповнюється і в чергу ставиться новий елемент,
+  найстаріший елемент (початковий) видаляється, щоб звільнити місце. Оновіть
+  при потребі інші методи для підтримки такої циклічності.
+*/
+
+// Solution:
+/*
+  Сутністю рішення є таке: коли черга заповнена і ви додаєте до черги новий
+  елемент, найстаріший елемент (початковий) автоматично видаляється, щоб звільнити
+  місце. Реалізуємо це так:
+*/
+class CircularQueue {
+  constructor(size) {
+    this.items = [];
+    this.maxSize = size;
+  }
+
+  enqueue(item) {
+    // якщо черга заповнена, видаляємо найстаріший елемент (той що спереду)
+    if (this.items.length === this.maxSize) {
+      this.dequeue();
+    }
+    this.items.push(item); // додаєм новий елемент в чергу
+  }
+
+  dequeue() {
+    this.items.shift();
+  }
+
+  front() {
+    return this.items[0];
+  }
+
+  rear() {
+    return this.items[this.items.length - 1];
+  }
+
+  size() {
+    return this.items.length;
+  }
+}
+
+// Tests:
+const queue2 = new CircularQueue(3);
+queue2.enqueue(1);
+queue2.enqueue(2);
+queue2.enqueue(3);
+queue2.enqueue(4);
+// Enqueue 1,2,3 → [1,2,3] than Enqueue 4 → queue full, remove 1 → [2,3,4]
+console.log(queue2.front()); // 2

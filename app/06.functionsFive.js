@@ -1,48 +1,49 @@
-console.log("Topic: Functions, part 5");
+console.log("Functions from Coddy, JS part 5");
 // =================================== 01 ==================================
 /*
-  Create a function named countStarfish that receives text as its parameter.
-  This function aims to locate all occurrences of the word 'starfish' in the 
-  given text, which represents conversations overheard at the beach. It should
-  determine the total count of 'starfish' appearances, accounting for case 
-  variations (e.g., 'Starfish','STARFISH', etc.). Additionally, it should 
-  identify the number of times 'starfish' appears as a standalone word.
-  1. Check if the current word is equal to 'starfish' (lowercase). If so, 
-    increment the standalone count.
-  2. If the current word contains 'starfish' as a substring (but is not an 
-    exact match), increment the total count.
-  3. After processing all the words, return an object with the total and 
-    standalone counts.
-  Parameters:
-  - text (string): The input text containing conversations overheard at 
-    the beach.
-  - The function returns an object with two properties:
-    - total (integer): The total occurrences of 'starfish' (case-insensitive) 
-    in the text.
-    - standalone (integer): The number of times 'starfish' appears as a standalone 
-    word in the text.
+  Створіть функцію countStarfish, яка отримує текст як параметр. Ця функція
+  має на меті знайти всі входження слова «starfish» у заданому тексті, який
+  представляє розмови, почуті на пляжі. Вона повинна визначити загальну кількість
+  появи слова «starfish», враховуючи варіації регістру (наприклад, «Starfish»,
+  «STARFISH» тощо). Крім того, вона повинна визначити кількість разів, коли 
+  «starfish» з'являється як окреме слово. Для цього потрібно виконати:
+  1. Перевірте, чи поточне слово дорівнює «starfish» (нижній регістр). Якщо 
+  так, збільште рахунок кількості окремих слів.
+  2. Якщо поточне слово містить «starfish» як підрядок (але не є точним 
+  збігом), збільште рахунок загальної кількості.
+  3. Після обробки всіх слів поверніть об'єкт, який містить загальну кількість
+  та кількістю окремих слів.
+  Параметри: text (рядок): вхідний текст, що містить розмови, почуті на пляжі.
+  Функція повертає об'єкт із двома властивостями:
+  - total (ціле число): рахннок загальної кількості входжень слова «starfish» (без 
+    урахування регістру) у тексті;
+  - standalone (ціле число): рахунок кількості разів, коли «starfish» з'являється як 
+    окреме слово в тексті.
 */
 // Solution:
 function countStarfish(text) {
+  // переводимо увесь текст в нижній регістр для забезпечення нечутливого регістру
   const lowerText = text.toLowerCase();
 
-  // Replace common punctuation with spaces
+  // замінюємо коми, крапки, знаки оклику та знак питання на пробіли
   const cleanedText = lowerText
     .replaceAll(",", " ")
     .replaceAll(".", " ")
     .replaceAll("!", " ")
     .replaceAll("?", " ");
 
-  const words = cleanedText.split(" ");
+  const words = cleanedText.split(" "); // розділяємо текст на слова за пробілами
 
-  let total = 0;
-  let standalone = 0;
+  let total = 0; // змінна для підрахунку загальної кількості входжень слова "starfish"
+  let standalone = 0; // змінна для підрахунку кількості разів, коли "starfish" з'являється як окреме слово
 
+  // проходимо циклом по кожному слову в масиві
   for (const word of words) {
     if (word === "starfish") {
-      total++;
-      standalone++;
+      total++; // збільшуємо загальну кількість, якщо слово є точним збігом "starfish"
+      standalone++; // збільшуємо кількість окремих слів, якщо слово є точним збігом "starfish"
     } else if (word.includes("starfish")) {
+      // збільшуємо загальну кількість, якщо слово містить "starfish" як підрядок, але не є точним збігом
       total++;
     }
   }
@@ -60,22 +61,22 @@ console.log(countStarfish("Look! There's a starfish on the starboard side!"));
 
 // =================================== 02 ==================================
 /*
-  Write a function processAnimalTag that takes animalTag and rescueOrder and 
-  returns an object with the original tag, its reversed version, and the rescue
-  number in binary format.
-  The wildlife rehabilitation center needs to process animal identification tags 
-  for their database system.
-    Parameters:
-  - animalTag (string): The animal's identification tag
-  - rescueOrder (number): The rescue order number in decimal
-  Returns: An object with three properties. Format: 
-  { original: "tag", reversed: "gat", binary: "1010" }
+  Напишіть функцію processAnimalTag, яка приймає animalTag та rescueOrder і 
+  повертає об'єкт з оригінальною міткою, її зворотною версією та номером 
+  рятувального наказу у двійковому форматі. Центру реабілітації дикої природи
+  потрібно обробляти ідентифікаційні мітки тварин для своєї системи баз даних.
+    Параметри:
+  - animalTag (рядок): Ідентифікаційна мітка тварини;
+  - rescueOrder (число): Номер наказу на порятунок у десятковому форматі;
+    Повертає: Об'єкт із трьома властивостями. Формат:
+    { original: "tag", reversed: "gat", binary: "1010" }
 */
 // Solution:
 function processAnimalTag(animalTag, rescueOrder) {
-  const originalTag = animalTag;
-  const reversedTag = animalTag.split("").reverse().join("");
-  const binaryOrder = rescueOrder.toString(2);
+  const originalTag = animalTag; // Зберігаємо початкову мітку
+  const reversedTag = animalTag.split("").reverse().join(""); // Розділяємо рядок на масив символів, розвертаємо його та з'єднуємо назад у рядок
+  // aбо так; const reversedTag = [...animalTag].reverse().join(""); // спочатку конвертуємо і озділяємо рядок на масив символівз
+  const binaryOrder = rescueOrder.toString(2); // Конвертуємо десяткове число в двійковий рядок
 
   return {
     original: originalTag,
@@ -977,59 +978,62 @@ console.log(
 
 // =================================== 16 ==================================
 /*
-  Create a function named balancedContrast that receives arr, condition,
-  and str as its parameters. This function manipulates the given array and
-  string to create a balanced contrast based on certain conditions.
-  Array manipulation:
-  - If an element is greater than condition, reverse its position in the array.
-  - If an element is less than or equal to condition, keep its position unchanged.
-  String manipulation:
-  - Reverse the entire string.
-  - For each character in the original string:
-    - If the character is in the first half of the alphabet ('a' to 'm'), convert
-      the corresponding character in the reversed string to uppercase.
-    - If the character is in the second half of the alphabet ('n' to 'z'),
-      convert the corresponding character in the reversed string to lowercase.
-  Combine the manipulated array and string into an object and return it.
-  Parameters:
-  - arr (array): An array of numbers.
-  - condition (number): The threshold value for array manipulation.
-  - str (string): A string containing lowercase alphabets and spaces.
-  Returns:
-  - array: The manipulated array.
-  - string: The manipulated string.
+  Створіть функцію balancedContrast, яка отримує arr, condition та str як 
+  параметри. Ця функція маніпулює заданим масивом та рядком, щоб створити
+  збалансований контраст на основі певних умов.
+  Маніпуляції з масивами:
+  - Якщо елемент більший за порогове значення, змінити його позицію
+    в масиві на протилежну;
+  - Якщо елемент менший або дорівнює пороговому значенню, зберегти 
+    його позицію незмінною.
+  Маніпуляції з рядками:
+  - Змінити регістр усього рядка.
+  - Для кожного символу в оригінальному рядку:
+    -Якщо символ знаходиться в першій половині алфавіту (від 'a' до 'm'), 
+    перетворити відповідний символ у зворотному рядку на верхній регістр;
+    -Якщо символ знаходиться в другій половині алфавіту (від 'n' до 'z'),
+    перетворити відповідний символ у зворотному рядку на нижній регістр.
+  Об'єднайте оброблений масив і рядок в об'єкт і поверніть його.
+  Параметри:
+  - arr (масив): масив чисел;
+  - condition (число): порогове значення для маніпулювання масивом;
+  - str (рядок): рядок, що містить малі літери та пробіли.
+  Повертає:
+  - array: маніпульований масив;
+  - string: маніпульований рядок.
 */
 // Solution:
 function balancedContrast(arr, condition, str) {
-  // --- Array manipulation ---
-  const manipulatedArray = arr.slice(); // Create a copy to avoid mutating original
+  // --- Маніпуляція з масивом ---
+  const manipulatedArray = arr.slice(); // створюємо копію для уникнення мутації оригіналу
+  // Проходимо по масиву і змінюємо позиції елементів, які більші за порогове значення (condition)
   for (let i = 0; i < arr.length; i++) {
-    // Loop through the array
     if (arr[i] > condition) {
-      const j = arr.length - 1 - i; // arr.length - 1 is the last index of the array, subtracting i gives the mirrored index
-      manipulatedArray[i] = arr[j]; // Replace with the mirrored element
+      // arr.length - 1 це останній індекс масиву, а віднімання "i" дасть дзеркальний індекс
+      const j = arr.length - 1 - i; // знаходимо протилежну позицію для символу
+      manipulatedArray[i] = arr[j]; // заміна символу на протилежний
     }
   }
 
-  // --- String manipulation ---
-  const reversed = str.split("").reverse(); // Reverse the string into an array of characters
+  // --- Маніпуляція з рядком ---
+  const reversed = str.split("").reverse(); // створюємо копію рядка і розвертаємо її
+  // Проходимо по кожному символу переробленого рядка і змінюємо регістр відповідного символу
   const resultChars = reversed.map((ch, i) => {
-    // Map each character in the reversed string
-    const originalChar = str[i]; // Get the corresponding character from the original string
-    const code = originalChar.charCodeAt(0); // Get ASCII code of the original character
+    const originalChar = str[i]; // беремо відповідний символ початкового рядка
+    const code = originalChar.charCodeAt(0); // отримуємо ASCII-код символу початкового рядка
 
     if (code >= 97 && code <= 109) {
-      // a–m
+      // символи в діапазоні a–m
       return ch.toUpperCase();
     } else if (code >= 110 && code <= 122) {
-      // n–z
+      // символи в діапазоні n–z
       return ch.toLowerCase();
     } else {
-      return ch; // spaces unchanged
+      return ch; // символ не змінений (наприклад, пробіл)
     }
   });
 
-  const manipulatedString = resultChars.join(""); // Join the array back into a string
+  const manipulatedString = resultChars.join(""); // конвертуємо масив назад у рядок
 
   return {
     array: manipulatedArray,
@@ -1414,44 +1418,43 @@ console.log(
 
 // =================================== 23 ==================================
 /*
-  Create a function named tasselBaseConverter that receives tasselColor and
-  number as parameters. This function converts a decimal number to a different
-  base based on the tassel color:
-  - "red": Binary (base 2)
-  - "blue": Hexadecimal (base 16)
-  - "green": Octal (base 8)
-  Parameters:
-  - tasselColor (string): The color of the tassel, determining the target base.
-    Valid colors: "red", "blue", "green".
-  - number (string): The decimal number to convert, in the range 0 to 10,000 
-    (inclusive).
-  The function returns the converted number as a string in the base
-  corresponding to the tasselColor.
+  Створіть функцію tasselBaseConverter, яка отримує tasselColor та
+  number як параметри. Ця функція перетворює десяткове число в іншу систему
+  числення на основі кольору закладки:
+  - "red": Двійкова (основа 2)
+  - "blue": Шістнадцяткова (основа 16)
+  - "green": Вісімкова (основа 8)
+  Параметри:
+  - tasselColor (рядок): Колір закладки, що визначає цільову систему числення.
+    Допустимі кольори: "red", "blue", "green".
+  - number (рядок): Десяткове число для перетворення в діапазоні від 0 до 10 000 (включно).
+  Функція повертає перетворене число як рядок в основі що відповідає tasselColor.
 */
 // Solution:
 function tasselBaseConverter(tasselColor, number) {
-  const decimal = parseInt(number, 10); // Convert the input string to a decimal number
+  const decimal = parseInt(number, 10); // конвертуємо в десяткове число
 
-  let base = 10; // Default base (should not be used since we expect valid tasselColor)
+  let base = 10; // основа за замовчуванням, але ми її змінюємо залежно від кольору закладки
+  // визначаємо основу по кольору закладки
   if (tasselColor === "red") {
-    // Binary
+    // для двійкової системи числення
     base = 2;
   } else if (tasselColor === "blue") {
-    // Hexadecimal
+    // для шістнадцяткової системи числення
     base = 16;
   } else if (tasselColor === "green") {
-    // Octal
+    // для вісімкової системи числення
     base = 8;
   }
 
-  let result = decimal.toString(base); // Convert the decimal number to the target base as a string
+  let result = decimal.toString(base); // конвертуємо в потрібну систему числення маючи основу
 
+  // для шістнадцяткової системи числення, конвертуємо літери в верхній регістр як прийнято в шістнадцятковому форматі
   if (base === 16) {
-    // For hexadecimal, convert letters to uppercase
     result = result.toUpperCase();
   }
 
-  return result; // Return the converted number as a string
+  return result; // повертаємо результат як рядок
 }
 // Tests:
 console.log(tasselBaseConverter("red", 0)); // "0"
@@ -1466,20 +1469,19 @@ console.log(tasselBaseConverter("green", 64)); // "100"
 
 // Solution via functional approach using a mapping object:
 /*
-  Define a mapping object from tassel colors to bases.
-  const baseMap = { red: 2, blue: 16, green: 8 };
-  Use the tassel color to look up the base directly.
-  Convert the decimal number with .toString(base).
-  Uppercase the result if the base is 16.
-  Return the converted string.
+  Сторюємо об'єкт відображення кольорів закладки із визначеними основами 
+  числення типу: const baseMap = { red: 2, blue: 16, green: 8 };
+  Будемо використовувати колір закладок для безпосереднього пошуку основи
+  числення і конвертуємо десяткове число за допомогою .toString(base).
 */
 function tasselBaseConverter2(tasselColor, number) {
-  const baseMap = { red: 2, blue: 16, green: 8 };
-  const decimal = parseInt(number, 10);
+  const baseMap = { red: 2, blue: 16, green: 8 }; // об'єкт для відображення кольорів закладки на основі числення
+  const decimal = parseInt(number, 10); // конвертуємо в десяткове число
 
-  const base = baseMap[tasselColor]; // direct lookup
-  let result = decimal.toString(base);
+  const base = baseMap[tasselColor]; // отримуємо основу числення по кольору закладки
+  let result = decimal.toString(base); // конвертуємо в потрібну систему числення
 
+  // конвертуємо у верхній регістр для шістнадцяткової системи числення
   if (base === 16) {
     result = result.toUpperCase();
   }
