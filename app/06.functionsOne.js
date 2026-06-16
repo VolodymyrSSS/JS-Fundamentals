@@ -363,42 +363,6 @@ console.log(player.getStatus()); // Knight has 70 health
 // console.log(arrX8);
 // console.log(arrX16);
 
-// Task 4. NFE
-// UА: Створіть функцію fibo, яка повинна підраховувати числа Фібоначчі по формулі
-//     F0 = 0, F1 = 1, Fn = Fn-1 + Fn-2.
-//     Створіть функцію factorial, яка повинна обрахувати факторіал числа по формулі
-//     Fn = 1 * 2 *..*n.
-//     Використовуйте Named Function Expression (NFE).
-// EN: Create a function fibo should calculate Fibonacci numbers according to the formula
-//     F0 = 0, F1 = 1, Fn = Fn-1 + Fn-2.
-//     Create a function factorial which should calculate factorial of a number n
-//     according to the formula Fn = 1 * 2 *..*n.
-//     Use Named Function Expression (NFE).
-
-// solution1 for fibo
-// const fibo = function fibonacci(n) {
-// 	if (n === 0) {
-// 		return 0;
-// 	} else if (n === 1) {
-// 		return 1;
-// 	} else {
-// 		return fibonacci(n - 1) + fibonacci(n - 2);
-// 	}
-// };
-
-// console.log(fibo(6)); // 8 (Fibonacci number at index 6)
-
-// // solution1 for factorial
-// function factorial(n) {
-// 	if (n === 0 || n === 1) {
-// 		return 1;
-// 	} else {
-// 		return n * factorial(n - 1);
-// 	}
-// }
-
-// console.log(factorial(5)); // 120 (Factorial of 5)
-
 // Task 5. FC
 // UA: Об'явіть дві змінні для рядкових символів: params і body та надайте їм такі значення,
 //     які  будуть представляти собою список параметрів та тіло майбутньої функції.
