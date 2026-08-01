@@ -1,4 +1,4 @@
-console.log("Topic: Objects Part Three - Classes");
+console.log("Topic: JS, Objects. part 3 - Classes(p1)");
 
 // =============================== 01 =======================================
 /*  1. Create a VendingMachine class that represents a drink vending machine

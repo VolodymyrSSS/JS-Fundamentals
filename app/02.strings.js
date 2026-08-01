@@ -1,6 +1,6 @@
-console.log("Topic: Strings-Numbers");
+console.log("Topic: Strings,  JS part 2");
 
-// ===========================Task 01===================================
+// =============================== 01 ===================================
 // UA: Як відомо в JS не існує окремого типу для одного символу. Але як
 //     отримати перший символ рядка? А як отримати останній символ рядка?
 //     Покажіть декілька варіантів.
@@ -8,53 +8,52 @@ console.log("Topic: Strings-Numbers");
 //     But how do you get the first character of a string? And how to get
 //     the last character of a string? Show several options.
 
-// let str = 'Hello dude';
+let str1 = "Hello dude";
 
 // solution via for..of loop:
-// for (let char of str) {
-// 	console.log(char); // H,e,l,l,o, ,d,u,d,e (char becomes "H", then "e", then "l"..)
-// }
+for (let char of str1) {
+  console.log(char); // H,e,l,l,o, ,d,u,d,e (char becomes "H", then "e", then "l"..)
+}
 
 // solution via str[pos] for the first character:
-// let firstCharacter = str[0];
-// console.log(firstCharacter); // H
+let firstCharacter = str1[0];
+console.log(firstCharacter); // H
 
 // solution via str.at(pos) method for the first character:
-// let firstChar = str.at(0);
-// console.log(firstChar); // H
+let firstChar = str1.at(0);
+console.log(firstChar); // H
 
 // solution via prop length for the last character:
-// console.log(str.length); // 10
-// let lastCharacter = str.length - 1; // index for the last character
-// console.log(str[lastCharacter]); // e
+console.log(str1.length); // 10
+let lastCharacter = str1.length - 1; // index for the last character
+console.log(str1[lastCharacter]); // e
 
 // solution via str.at(pos) method for the last character:
-// console.log(str.at(-1)); // e
-// =====================================================================
+console.log(str1.at(-1)); // e
 
-// ===========================Task 02===================================
+// =============================== 02 ===================================
 // UA: Знайдіть позиції усіх одинакових підрядків у заданому рядку.
 //     Що робити, якщо нам потрібно перевірити тільки наявність підрядку,
 //     і не потрібна його позиція?
 // EN: Find the positions of all identical substrings in the given string.
 //     What if we need to test for the match, but don’t need its position?
 
-// let str = 'As sly as a fox, as strong as an ox';
+let str2 = "As sly as a fox, as strong as an ox";
 
-// solution via indexOf method finding all occurrences:
-/* this method looks for the substr in str, starting from the given
-   position pos, and returns the position where the match was found
-   or -1 if nothing can be found. The optional second parameter allows
-   us to start searching from a given position */
+// solution via indexOf(substr, pos) method finding all occurrences:
+/* this method looks for the substr(or target) in str, starting from the 
+   given position pos, and returns the position where the match was found
+   or -1 if nothing can be found. The optional second parameter (pos)
+   allows us to start searching from a given position. */
 
-// let target = 'as'; // let's look for it
-// let pos = 0;
-// while (true) {
-// 	let foundPos = str.indexOf(target, pos);
-// 	if (foundPos == -1) break;
-// 	console.log(`Found at ${foundPos}`);
-// 	pos = foundPos + 1; // continue the search from the next position
-// }
+let target = "as"; // let's look for it
+let pos = 0;
+while (true) {
+  let foundPos = str2.indexOf(target, pos);
+  if (foundPos == -1) break;
+  console.log(`Found at ${foundPos}`);
+  pos = foundPos + 1; // continue the search from the next position
+}
 
 /* keep in mind, that is a slight inconvenience with indexOf in
    the if-tests: if found the match at the starting position, 'if'
@@ -66,211 +65,80 @@ console.log("Topic: Strings-Numbers");
    } */
 
 // so, algorithm for the task can be layed out shorter and using -1:
-// let pos = -1;
-// while ((pos = str.indexOf(target, pos + 1)) != -1) {
-// 	console.log(pos);
-// }
+let pos2 = -1;
+while ((pos2 = str2.indexOf(target, pos2 + 1)) != -1) {
+  console.log(pos2);
+}
 
-/* There is also a similar method str.lastIndexOf(substr, position)
+/* There is also a similar method str.lastIndexOf(substr, pos)
    that searches from the end of a string to its beginning.
    It would list the occurrences in the reverse order */
 
 // solution via includes method if we only need to find the match:
 /* This method returns true/false depending on whether str 
-   contains substr within */
-// console.log(str.includes('as')); // true
+   contains substr within str. */
+console.log(str1.includes("as")); // true
 /* the optional second argument of str.includes is the position
-   to start searching from. So for out task, for example be sure
+   to start searching from. So for our task, for example be sure
    to have substing after 16th position*/
-// console.log(str.includes('as', 16)); // true
-// console.log(str.includes('as', 30)); // false
+console.log(str1.includes("as", 16)); // true
+console.log(str1.includes("as", 30)); // false
 
 // solution via startsWith method if we only need to find the match:
-// console.log(str.startsWith('as')); // false
-// console.log(str.startsWith('As')); // true
-// console.log(str.startsWith('as', 17)); // true
+console.log(str1.startsWith("as")); // false
+console.log(str1.startsWith("As")); // true
+console.log(str1.startsWith("as", 17)); // true
 
 // solution via endsWith method if we only need to find the match:
-// console.log(str.endsWith('as', 17)); // false
-// console.log(str.endsWith('as', 19)); // true
-// =====================================================================
+console.log(str1.endsWith("as", 17)); // false
+console.log(str1.endsWith("as", 19)); // true
 
-// ===========================Task 03===================================
+// =============================== 03 ===================================
 // UA: В нас є рядок символів str. Покажіть 3 методи як можна отримати
 //     підрядок. Вкажіть на особливості кожного з них.
 // EN: We have a string of characters str. Show 3 methods how you can
 //     get a substring. Specify the characteristics of each of them.
 
-// let printingHouse = 'Ababagalamaga';
+let printingHouse = "Ababagalamaga";
 
-// solution via slice methods:
-// // it returns the part of the string from start to (but not including) end, so:
-// let substring1 = printingHouse.slice(0, 5);
-// console.log(substring1); // Ababa
-// console.log(printingHouse.slice(0, 1)); // from 0 to 1, but not including 1, so only character at 0 -> 'A',
-// // if there is no second argument, then slice goes till the end of the string:
-// let substring2 = printingHouse.slice(5);
-// console.log(substring2); // galamaga
-// // negative values for start/end are also possible. They mean the position
-// // is counted from the string end:
-// let substring3 = printingHouse.slice(-10, -6);
-// console.log(substring3); // baga
+// solution via slice(start, end) methods:
+// it returns the part of the string from start to (but not including) end, so:
+let substring1 = printingHouse.slice(0, 5);
+console.log(substring1); // Ababa
+console.log(printingHouse.slice(0, 1)); // from 0 to 1, but not including 1, so only character at 0 is 'A'
+// if there is no second argument, then slice goes till the end of the string:
+let substring2 = printingHouse.slice(5);
+console.log(substring2); // galamaga
+// negative values for start/end are also possible. They mean the position
+// is counted from the string end:
+let substring3 = printingHouse.slice(-10, -6);
+console.log(substring3); // baga
 
-// // solution via str.substring(start [, end]) methods:
+// solution via str.substring(start [, end]) methods:
 // it returns the part of the string between start and end (not including end).
-// let substring4 = printingHouse.substring(0, 5); // Ababa
-// console.log(substring4); // Ababa
-// console.log(printingHouse.substring(0, 1)); // from 0 to 1, but not including 1, so only character at 0 -> 'A',
-// let substring5 = printingHouse.substring(5);
-// console.log(substring5); // galamaga
-// // this method is almost the same as slice, but it allows start to be greater
-// // than end (in this case it simply swaps start and end values):
-// let substring6 = printingHouse.substring(3, 7);
-// console.log(substring6); // baga
-// substring6 = printingHouse.substring(7, 3);
-// console.log(substring6); // baga
-// // negative arguments are (unlike slice) not supported, they are treated as 0
+let substring4 = printingHouse.substring(0, 5); // Ababa
+console.log(substring4); // Ababa
+console.log(printingHouse.substring(0, 1)); // from 0 to 1, but not including 1, so only character at 0 -> 'A',
+let substring5 = printingHouse.substring(5);
+console.log(substring5); // galamaga
+// this method is almost the same as slice, but it allows start to be greater
+// than end (in this case it simply swaps start and end values):
+let substring6 = printingHouse.substring(3, 7);
+console.log(substring6); // baga
+substring7 = printingHouse.substring(7, 3);
+console.log(substring7); // baga
+// negative arguments are (unlike slice) not supported, they are treated as 0
 
-// // solution via str.substr(start [, length]) methods:
-// // this method returns the part of the string from start, with the given length:
-// let substring7 = printingHouse.substr(0, 5); // Ababa
-// console.log(substring7); // Ababa
-// console.log(printingHouse.substr(0, 1)); // from the 0-th position get 1 character -> 'A'
-// // the first argument may be negative, to count from the end:
-// let substring8 = printingHouse.substr(-8, 8);
-// console.log(substring8); // galamaga
-// =====================================================================
+// solution via str.substr(start [, length]) methods:
+// this method returns the part of the string from start, with the given length:
+let substring8 = printingHouse.substr(0, 5); // Ababa
+console.log(substring8); // Ababa
+console.log(printingHouse.substr(0, 1)); // from the 0-th position get 1 character -> 'A'
+// the first argument may be negative, to count from the end:
+let substring9 = printingHouse.substr(-8, 8);
+console.log(substring9); // galamaga
 
-// ===========================Task 04===================================
-// UA: Ми маємо декілька змінних у яких значеннями є цілі числа та
-//     десяткові і навіть такі, які є рядками. Як нам вивести в консоль
-//     тільки такі змінні, які є числами і мають тільки цілі значення?
-// EN: We have several variables whose values are integers and decimals.
-//     How can we output to the console only those variables that are
-//     numbers and have only integer values?
-
-// const num1 = 4;
-// const num2 = 5.2;
-// const num3 = 7;
-// const num4 = 10.0;
-// const num5 = 3.14;
-// const num6 = '9.0';
-// const num7 = '9.8';
-
-// solution via using the Modulo Operator (%) and typeof:
-// we first use typeof to check if the variable is of type
-// "number", and then we use the modulo operator - if the
-// remainder of the division by 1 is 0, after that we output
-// the variable to the console
-// if (typeof num1 === 'number' && num1 % 1 === 0) {
-// 	console.log(`The ${num1} is an integer`);
-// }
-// if (typeof num2 === 'number' && num2 % 1 === 0) {
-// 	console.log(`The ${num2} is an integer`);
-// }
-// if (typeof num3 === 'number' && num3 % 1 === 0) {
-// 	console.log(`The ${num3} is an integer`);
-// }
-// if (typeof num4 === 'number' && num4 % 1 === 0) {
-// 	console.log(`The ${num4} is an integer`);
-// }
-// if (typeof num5 === 'number' && num5 % 1 === 0) {
-// 	console.log(`The ${num5} is an integer`);
-// }
-// if (typeof num6 === 'number' && num6 % 1 === 0) {
-// 	console.log(`The ${num6} is an integer`);
-// }
-// if (typeof num7 === 'number' && num7 % 1 === 0) {
-// 	console.log(`The ${num7} is an integer`);
-// }
-// // or we can wrap it in a function like this:
-// function isInteger(num) {
-// 	if (typeof num === 'number' && num % 1 === 0) {
-// 		console.log(`The ${num} is an integer`);
-// 	}
-// }
-// isInteger(num1);
-// isInteger(num2);
-// isInteger(num3);
-// isInteger(num4);
-// isInteger(num5);
-// isInteger(num6);
-// isInteger(num7);
-// ====================================================================
-
-// ===========================Task 05===================================
-// UA: З теорії JS ми знаємо, що кожен символ має відповідний числовий
-//     код. Отже, існують спеціальні методи, які дозволяють отримати
-//     символ по його коду і назад. Покажіть, як отримати числовий код
-//     по символу та як отримати символ по його числовому коду? Для чого
-//     це потрібно? Крім того, виведіть в консоль латинський алфавіт та
-//     букви з діакритичними знаками (Á,Ç,É,Ú...), які знаходяться в
-//     діапазоні їх числових кодів від 65 до 220. Зробіть висновок за
-//     результатами. Врешті, як правильно зробити порівняння, враховуючи
-//     відмінності алфавітів різних країн?
-// EN: From JS theory we know that each character has a corresponding numeric code.
-//     So, there are special methods that allow to get the character for the code
-//     and back. Show how to get a numeric code by its symbol, and how to get a
-//     character by its code? What is it for?
-//     In addition, output to the console the Latin alphabet in both cases and letters
-//     with diacritical marks (Á,Ç,É,Ú...) that are in the range of their numeric codes
-//     from 65 to 220. Draw a conclusion based on the results.
-//     After all, how to properly make a comparison, taking into account the differences
-//     in the alphabets of different countries?
-
-// solution via codePointAt method for getting the numeric code:
-/* it returns a decimal number representing the code for the character 
-   at position pos. Here, different case letters have different codes*/
-// console.log('Nice'.codePointAt(0)); // 78
-// console.log('nice'.codePointAt(0)); // 110
-// console.log('nice'.codePointAt(0).toString(16)); // 7e (if we need a hexadecimal value)
-// console.log('Nice'.codePointAt(1)); // 105
-// console.log('nice'.codePointAt(2)); // 99
-// console.log('nice'.codePointAt(2).toString(16)); // 63 (if we need a hexadecimal value)
-
-// solution via fromCodePoint for getting the character by its numeric code:
-// // it creates a character by its numeric code:
-// console.log(String.fromCodePoint(78)); // N
-// console.log(String.fromCodePoint(110)); // n
-
-/* strings are compared character-by-character in alphabetical order. 
-   The greater code means that the character is greater. The code for
-   'n' (110) is greater than the code for 'N' (78)*/
-// console.log('a' > 'Z'); // true
-// console.log('Österreich' > 'Zealand'); // true
-
-// solution via of getting the characters with codes 65..220 (the latin alphabet
-// // in both cases and letters with diacritical marks) by making a string of them:
-// let str = '';
-// for (let i = 65; i <= 220; i++) {
-// 	str += String.fromCodePoint(i);
-// }
-// console.log(str); // Output:
-// ABCDEFGHIJKLMNOPQRSTUVWXYZ[\]^_`abcdefghijklmnopqrstuvwxyz{|}~
-//  ¡¢£¤¥¦§¨©ª«¬­®¯°±²³´µ¶·¸¹º»
-// ¼½¾¿ÀÁÂÃÄÅÆÇÈÉÊËÌÍÎÏÐÑÒÓÔÕÖ×ØÙÚÛÜ
-// See? Capital characters go first, then a few special ones,
-// then lowercase characters, and Ö near the end of the output.
-// Now it becomes obvious why a > Z and why 'Österreich' > 'Zealand'.
-// So, all lowercase letters go after uppercase letters because their
-// codes are greater. Some letters like Ö stand apart from the main
-// alphabet. Here, its code is greater than anything from a to z.
-
-// To do string comparisons is more complex than it may seem,
-// because alphabets are different for different languages.
-// So, the browser needs to know the language to compare.
-// Standard ECMA-402 provides a special method to compare strings in
-// different languages.
-// The call str.localeCompare(str2) returns an integer indicating
-// whether str is less, equal or greater than str2 according to the
-// language rules:
-// Returns a negative number if str is less than str2.
-// Returns a positive number if str is greater than str2.
-// Returns 0 if they are equivalent.
-// console.log('Österreich'.localeCompare('Zealand')); // -1
-// =====================================================================
-
-// ===========================Task 06===================================
+// =============================== 04 ===================================
 // UA: Напишіть код, який запитує користувача ввести логін використоуючи
 //     "prompt". Якщо відвідувач вводить "Admin", то далі запитується
 //     пароль, якщо вводить порожній рядок або Esc – показує "Canceled",
@@ -291,62 +159,26 @@ console.log("Topic: Strings-Numbers");
 //     For solution use nested if blocks. Mind the overall readability
 //     of the code.
 
-// // solution:
-// let userName = prompt("Who's there?", '');
+// solution via if-operator and prompt:
+// let userName1 = prompt("Who's there?", "");
 
-// if (userName === 'Admin') {
-// 	let pass = prompt('Password?', '');
+// if (userName1 === "Admin") {
+//   let pass = prompt("Password?", "");
 
-// 	if (pass === 'TheMaster') {
-// 		alert('Welcome!');
-// 	} else if (pass === '' || pass === null) {
-// 		alert('Canceled');
-// 	} else {
-// 		alert('Wrong password');
-// 	}
-// } else if (userName === '' || userName === null) {
-// 	alert('Canceled');
+//   if (pass === "TheMaster") {
+//     alert("Welcome!");
+//   } else if (pass === "" || pass === null) {
+//     alert("Canceled");
+//   } else {
+//     alert("Wrong password");
+//   }
+// } else if (userName1 === "" || userName1 === null) {
+//   alert("Canceled");
 // } else {
-// 	alert("I don't know you");
-// }
-// =====================================================================
-
-// ===========================Task 07===================================
-// UA: Напишіть функцію ucFirst(str), яка повертає рядок str у якого
-//     перший символ буде у верхньому регістрі, наприклад:
-//     ucFirst("modest") == "Modest";
-// EN: Write a function ucFirst(str) that returns the string str with
-//     the uppercased first character, for instance:
-//     ucFirst("modest") == "Modest";
-
-// // solution via str[pos], and str.slice() and concatenation:
-// // we can’t 'replace' the first character, because strings in JavaScript are
-// // immutable, but we can make a new string based on the existing one, with
-// // the uppercased first character:
-// // let newStr = str[0].toUpperCase() + str.slice(1);
-// // But, if str is empty, then str[0] is undefined, and as undefined doesn’t
-// // have the toUpperCase() method, we’ll get an error.
-// // The easiest way out is to add a test for an empty string, like this:
-// function ucFirst(str) {
-//   if (!str) return str;
-//   return str[0].toUpperCase() + str.slice(1);
+//   alert("I don't know you");
 // }
 
-// // solution via str.at() and str.substring() and concatenation:
-// function ucFirst(str) {
-// 	let firstCharUppercased;
-// 	let restStr;
-// 	if (!str) return str;
-
-// 	firstCharUppercased = str.at(0).toUpperCase();
-// 	restStr = str.substring(1);
-// 	return firstCharUppercased + restStr;
-// }
-
-// console.log(ucFirst('modest')); // Modest
-// =====================================================================
-
-// ===========================Task 08===================================
+// =============================== 04 ===================================
 // UA: Паліндром — це слово, фраза або інший тип рядка символів, який
 //     можна прочитати як прямо так і ззаду наперед. Наприклад, “racecar”
 //     і “Anna” є паліндромами. A от “Tisch” і “Juan” не є паліндромами,
@@ -359,44 +191,40 @@ console.log("Topic: Strings-Numbers");
 //     right to left. Write code that will show whether a word is
 //     a palindrome or not.
 
-// let testWord1 = 'Racecar';
-// let testWord2 = 'Tisch';
-// let testWord3 = 'Anna';
-// let testWord4 = 'Juan';
+let testWord1 = "Racecar";
+let testWord2 = "Tisch";
+let testWord3 = "Anna";
+let testWord4 = "Juan";
 
-// // solution via chain of methods toLowerCase/split/reverse/join:
-// if (
-// 	testWord1.toLowerCase() ===
-// 	testWord1.toLowerCase().split('').reverse().join('')
-// ) {
-// 	console.log(`The ${testWord1} is Palindrome`); // The Racecar is Palindrome
-// } else {
-// 	console.log(`The ${testWord1} is not Palindrome`);
-// }
+// solution via chain of methods toLowerCase/split/reverse/join:
+if (
+  testWord1.toLowerCase() ===
+  testWord1.toLowerCase().split("").reverse().join("")
+) {
+  console.log(`The ${testWord1} is Palindrome`); // The Racecar is Palindrome
+} else {
+  console.log(`The ${testWord1} is not Palindrome`);
+}
+if (
+  testWord2.toLowerCase() ===
+  testWord2.toLowerCase().split("").reverse().join("")
+) {
+  console.log(`The ${testWord2} is Palindrome`);
+} else {
+  console.log(`The ${testWord2} is not Palindrome`); // The Tisch is not Palindrome
+}
 
-// if (
-// 	testWord2.toLowerCase() ===
-// 	testWord2.toLowerCase().split('').reverse().join('')
-// ) {
-// 	console.log(`The ${testWord2} is Palindrome`);
-// } else {
-// 	console.log(`The ${testWord2} is not Palindrome`); // The Tisch is not Palindrome
-// }
-// // ...testWord3...testWord4... or we can wrap it to the function like this:
-// const palindrome = (str) => {
-// 	// turn the string to lowercase
-// 	str = str.toLowerCase();
-// 	// convert to arr, reverse, and convert back to string
-// 	return str === str.split('').reverse().join('')
-// 		? `The ${str} is Palindrome`
-// 		: `The ${str} is not Palindrome`;
-// };
+// Solution via arrow function creation and ternary operator:
+const palindrome = (str) => {
+  str = str.toLowerCase(); // приводимо рядок до нижнього регістру, щоб не враховувати регістр
+  // конвертуємо в масив, перевертаємо та конвертуємо назад в рядок
+  return str === str.split("").reverse().join("")
+    ? `The ${str} is Palindrome`
+    : `The ${str} is not Palindrome`;
+};
 
-// console.log(palindrome(testWord1)); // The racecar is Palindrome
-// console.log(palindrome(testWord2)); // The tisch is not Palindrome
-// console.log(palindrome(testWord3)); // The anna is Palindrome
-// console.log(palindrome(testWord4)); // The juan is not Palindrome
-// =====================================================================
+console.log(palindrome(testWord3)); // The anna is Palindrome
+console.log(palindrome(testWord4)); // The juan is not Palindrome
 
 // ===========================Task 09===================================
 // UA: Анаграма рядка — це інший рядок символів, що містить ті
@@ -409,83 +237,81 @@ console.log("Topic: Strings-Numbers");
 //     other. Write code to verify that the two strings "Mary" and "Army"
 //     are anagrams of each other.
 
-// const str1 = 'Mary';
-// const str2 = 'Army';
+const str3 = "Mary";
+const str4 = "Army";
 
-// // solution via for loop and chain of arr methods:
-// // manually iterate through the characters of the strings, remove spaces,
-// // and convert them to lowercase:
-// let cleanedStr1 = '';
-// for (let i = 0; i < str1.length; i++) {
-// 	if (str1[i] !== ' ') {
-// 		cleanedStr1 += str1[i].toLowerCase();
-// 	}
-// }
-// let cleanedStr2 = '';
-// for (let i = 0; i < str2.length; i++) {
-// 	if (str2[i] !== ' ') {
-// 		cleanedStr2 += str2[i].toLowerCase();
-// 	}
-// }
-// // sort the characters in the cleaned strings and convert back
-// const sortedStr1 = cleanedStr1.split('').sort().join(''); // amry
-// const sortedStr2 = cleanedStr2.split('').sort().join(''); // amry
-// // Check if the sorted strings are equal
-// if (sortedStr1 === sortedStr2) {
-// 	console.log(`${str1} and ${str2} are anagrams`);
-// } else {
-// 	console.log(`${str1} and ${str2} are not anagrams`);
-// }
-// // or we can wrap it into the function and make more simple like this:
-// console.log(areAnagrams(str1, str2)); // true
-// function areAnagrams(first, second) {
-// 	// for case insensitivity, change both words to lowercase.
-// 	let a = first.toLowerCase();
-// 	let b = second.toLowerCase();
-// 	// Sort the strings, and join the resulting array to a string. Compare the results
-// 	a = a.split('').sort().join('');
-// 	b = b.split('').sort().join('');
-// 	return a === b;
-// }
-// // or using func with regEx:
-// function areAnagrams(str1, str2) {
-// 	// Remove spaces and convert both strings to lowercase for a case-insensitive comparison
-// 	const cleanedStr1 = str1.replace(/\s/g, '').toLowerCase();
-// 	const cleanedStr2 = str2.replace(/\s/g, '').toLowerCase();
-// 	// Sort the characters in the strings and compare them
-// 	const sortedStr1 = cleanedStr1.split('').sort().join('');
-// 	const sortedStr2 = cleanedStr2.split('').sort().join('');
-// 	return sortedStr1 === sortedStr2;
-// }
-// if (areAnagrams(str1, str2)) {
-// 	console.log(`${str1} and ${str2} are anagrams.`);
-// } else {
-// 	console.log(`${str1} and ${str2} are not anagrams.`);
-// }
+// Solution via for-loop and chain of arr methods:
+let cleanedStr3 = ""; // тут буде зберігатись рядок без пробілів та в нижньому регістрі
+for (let i = 0; i < str3.length; i++) {
+  if (str3[i] !== " ") {
+    cleanedStr3 += str3[i].toLowerCase();
+  }
+}
+let cleanedStr4 = "";
+for (let i = 0; i < str4.length; i++) {
+  if (str4[i] !== " ") {
+    cleanedStr4 += str4[i].toLowerCase();
+  }
+}
+// тепер можна конвертувати в масив і відсортувати символи в очищених рядках та конвертувати назад у рядок
+const sortedStr3 = cleanedStr3.split("").sort().join(""); // amry
+const sortedStr4 = cleanedStr4.split("").sort().join(""); // amry
+// перевіримо чи відсортовані рядки однакові
+if (sortedStr3 === sortedStr4) {
+  console.log(`${str3} and ${str4} are anagrams`);
+} else {
+  console.log(`${str3} and ${str4} are not anagrams`);
+}
 
-// // solution via flag - check if the cleaned strings have the same characters:
-// // Remove spaces and convert both strings to lowercase for a case-insensitive comparison
-// const cleanedStr1 = str1.replace(/\s/g, '').toLowerCase(); // using RegEx
-// const cleanedStr2 = str2.replace(/\s/g, '').toLowerCase(); // using RegEx
-// // check if the strings have the same length:
-// if (cleanedStr1.length !== cleanedStr2.length) {
-// 	console.log(`${str1} and ${str2} are not anagrams`);
-// } else {
-// 	let areAnagrams = true;
-// 	for (let i = 0; i < cleanedStr1.length; i++) {
-// 		// check if the cleaned strings have the same characters
-// 		if (cleanedStr1.indexOf(cleanedStr2[i]) === -1) {
-// 			areAnagrams = false;
-// 			break;
-// 		}
-// 	}
-// 	if (areAnagrams) {
-// 		console.log(`${str1} and ${str2} are anagrams`);
-// 	} else {
-// 		console.log(`${str1} and ${str2} are not anagrams`);
-// 	}
-// }
-// =====================================================================
+// Solution via arrow function creation and ternary operator:
+// console.log(areAnagrams(str3, str4)); // true
+const areAnagrams1 = (first, second) => {
+  let a = first.toLowerCase();
+  let b = second.toLowerCase();
+
+  a = a.split("").sort().join("");
+  b = b.split("").sort().join("");
+
+  return a === b;
+};
+
+// Solution via using regEx:
+function areAnagrams2(str3, str4) {
+  const cleanedStr1 = str3.replace(/\s/g, "").toLowerCase();
+  const cleanedStr2 = str4.replace(/\s/g, "").toLowerCase();
+
+  const sortedStr1 = cleanedStr1.split("").sort().join("");
+  const sortedStr2 = cleanedStr2.split("").sort().join("");
+  return sortedStr1 === sortedStr2;
+}
+
+if (areAnagrams2(str3, str4)) {
+  console.log(`${str3} and ${str4} are anagrams.`);
+} else {
+  console.log(`${str3} and ${str4} are not anagrams.`);
+}
+
+// Solution via flag - check if the cleaned strings have the same characters:
+const cleanedStr1 = str3.replace(/\s/g, "").toLowerCase(); // using RegEx
+const cleanedStr2 = str4.replace(/\s/g, "").toLowerCase(); // using RegEx
+// перевірка довжини очищених рядків
+if (cleanedStr1.length !== cleanedStr2.length) {
+  console.log(`${str3} and ${str4} are not anagrams`);
+} else {
+  let areAnagrams = true;
+  for (let i = 0; i < cleanedStr1.length; i++) {
+    // перевірка чи рядок має той самий символ що і в іншому рядку
+    if (cleanedStr1.indexOf(cleanedStr2[i]) === -1) {
+      areAnagrams = false;
+      break;
+    }
+  }
+  if (areAnagrams) {
+    console.log(`${str3} and ${str4} are anagrams`);
+  } else {
+    console.log(`${str3} and ${str4} are not anagrams`);
+  }
+}
 
 // ===========================Task 10===================================
 // UA: Намалюйте в консолі піраміду на 10 рівнів, як показано нижче:
@@ -1012,3 +838,43 @@ isAdmin && console.log("Admin privileges granted."); // Output: Admin privileges
 let isGuest = false;
 isGuest && console.log("Guest access."); // No output
 // ===================================================================================
+
+// =============================== 09 ===================================
+/*
+  Дано рядок. Вам потрібно вивести лише алфавітні символи, ігноруючи цифри,
+  символи та знаки. Напишіть програму, яка зчитує рядок зі стандартного вводу
+  та виводить лише алфавітно-цифрові символи з рядка на вивід.
+    Вхідні дані: He-ll0,W0rl#d!
+    Вихідні дані: HellWrld
+*/
+// Solution:
+// Підключаємо модуль fs для читання вводу
+// const fs = require("fs");
+// Зчитуємо ввід як рядок
+// const input = fs.readFileSync(0, "utf8").trim(); або
+const input5 = "He-ll0,W0rl#d!";
+
+// Змінна для результату
+let result = "";
+
+// Перебираємо кожен символ рядка
+for (let i = 0; i < input5.length; i++) {
+  const ch = input5[i]; // поточний символ
+
+  // Перевіряємо, чи символ є літерою (A–Z або a–z)
+  if ((ch >= "A" && ch <= "Z") || (ch >= "a" && ch <= "z")) {
+    result += ch; // додаємо до результату
+  }
+}
+
+// Виводимо результат
+console.log(result);
+
+// альтернативний варіант через
+const input6 = "C8*od,dy@.Te#c4h";
+const result = input6
+  .split("") // розбиваємо рядок на масив символів
+  .filter((ch) => (ch >= "A" && ch <= "Z") || (ch >= "a" && ch <= "z")) // залишаємо тільки літери
+  .join(""); // з’єднуємо назад у рядок
+
+console.log(result);

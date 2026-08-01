@@ -1554,3 +1554,37 @@ const numbers = [1, 2, 3];
 const doubled = numbers.map((num) => num * 2);
 console.log(doubled); // Output: [2, 4, 6]
 // ===================================================================================
+// ===========================Task 07===================================
+// UA: Напишіть функцію ucFirst(str), яка повертає рядок str у якого
+//     перший символ буде у верхньому регістрі, наприклад:
+//     ucFirst("modest") == "Modest";
+// EN: Write a function ucFirst(str) that returns the string str with
+//     the uppercased first character, for instance:
+//     ucFirst("modest") == "Modest";
+
+// // solution via str[pos], and str.slice() and concatenation:
+// // we can’t 'replace' the first character, because strings in JavaScript are
+// // immutable, but we can make a new string based on the existing one, with
+// // the uppercased first character:
+// // let newStr = str[0].toUpperCase() + str.slice(1);
+// // But, if str is empty, then str[0] is undefined, and as undefined doesn’t
+// // have the toUpperCase() method, we’ll get an error.
+// // The easiest way out is to add a test for an empty string, like this:
+// function ucFirst(str) {
+//   if (!str) return str;
+//   return str[0].toUpperCase() + str.slice(1);
+// }
+
+// // solution via str.at() and str.substring() and concatenation:
+// function ucFirst(str) {
+// 	let firstCharUppercased;
+// 	let restStr;
+// 	if (!str) return str;
+
+// 	firstCharUppercased = str.at(0).toUpperCase();
+// 	restStr = str.substring(1);
+// 	return firstCharUppercased + restStr;
+// }
+
+// console.log(ucFirst('modest')); // Modest
+// =====================================================================
