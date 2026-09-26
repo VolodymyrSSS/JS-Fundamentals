@@ -732,3 +732,52 @@ function climb_stairs3(n) {
   return dp[n];
 }
 console.log(climb_stairs3(13)); // 377
+
+// =================================== 06 ==================================
+/*
+  Напишіть функцію power для обчислення степеня числа. Покажіть щонайменше 2
+  рішення: з використанням рекурсії та без.
+*/
+// Solution via iteration:
+/* Алгоритм
+  1. Ініціалізувати результат як 1.
+  2. Множити результат на основу багаторазово, точно помноживши його на показник
+     степеня. Це імітує основу i показник степеня
+  3.Повернути результат.
+*/
+function power1(base, exponent) {
+  let result = 1; // починаємо з 1 (нейтральний елемент)
+
+  // множимо результат (основу) на себе exponent разів
+  for (let i = 0; i < exponent; i++) {
+    result *= base; // множимо основу на поточний результат
+  }
+
+  return result; // виводимо результат
+}
+console.log(power1(2, 3)); // 8
+
+// Solution via recursive1:
+function power2(base, exponent) {
+  if (exponent == 1) {
+    return base;
+  } else {
+    return base * power(base, exponent - 1);
+  }
+}
+console.log(power2(3, 3)); // 27
+
+// Solution via recursive2:
+function power3(base, exponent) {
+  if (exponent === 0) return 1; // база рекурсії
+  if (exponent === 1) return base; // другий базовий випадок
+
+  return base * power3(base, exponent - 1);
+}
+console.log(power3(2, 2)); // 4
+
+// Solution via build-in operator:
+function powerBuiltin(base, exponent) {
+  return base ** exponent;
+}
+console.log(powerBuiltin(3, 2)); // 9

@@ -1,45 +1,43 @@
-console.log("Topic: Functions, part 1");
+console.log("Topic: JS, Functions, part 1");
 
-// ==================== Task 1 keywords this ========================
-// UA: Що таке ключове слово "this"? Як воно визначається?
-// EN: What is the keyword "this"? How is it defined?
+// =================================== 01 ==================================
+// Що таке ключове слово "this"? Як воно визначається?
 
-/* У більшості випадків ключове слово this визначається тим як функція
+/* У більшості випадків ключове слово "this" визначається тим як функція
    була викликана. Воно не може бути визначено під час виконання функції
    та може мати різні значення кожен раз коли функція викликається. 
-   Можна змінити значення this використавши .call(), .apply() та .bind()
-   методи. Tакож, значення this еквівалентне значенню об'єкта, що викликав
-   цю функцію. Ключовому слову this не призначається значення до тих
-   пір доки об'єкт не викличе функцію де this є визначено.
+   Можна змінити значення "this" використавши .call(), .apply() та .bind()
+   методи. Tакож, значення "this" еквівалентне значенню об’єкта, що викликав
+   цю функцію. Ключовому слову "this" не призначається значення до тих
+   пір доки об’єкт не викличе функцію де "this" є визначено.
 
-   1. Ключове слово this на глобальному рівні (global scope):
-   When functions are executed in the global scope, value of this is 
-   window object. This is because when we call a function in global scope
-   by default they are invoked on the Window object. In strict mode, value
-   of this in the global context will be undefined.
+   1. Ключове слово "this" на глобальному рівні (global scope):
+   Коли функції виконуються в глобальній області видимості, значення "this"
+   є об’єктом "Window". Це тому, що коли ми викликаємо функцію в глобальній
+   області видимості, за замовчуванням вона викликається для об'єкта "Window".
+   У строгому режимі значення "this" у глобальному контексті буде "undefined".
    var myFunciton = function(){
-      console.log(this);
-      console.log(this=== window);
+      console.log(this); // Output: Window object / undefined (in strict mode)
+      console.log(this=== window); // Output: true бо запис myFunction() є еквівалентрним запису window.myFuntion()
    }
-   myFunction();// Output: Window object. In strict mode value will be undefined
-   // myFunction() is equivalent to window.myFuntion()
+   myFunction();
 
-   2.When a function is called as a method of an object, it’s this is set to
-   the object the method is called on.
+   2. Коли функція викликається як метод об’єкта, її "this" встановлюється
+   на об’єктi, для якого викликається метод.
       var val = 37;
       var myObj = {
          val : 10,
          someFunction : function(){
-            console.log(this.val); //Output: 10 since tha value of this is equal to myObj
-            console.log(window.val); //Output: 37
-            console.log(this === myObj); // true
-            console.log(this); //Output: myObj object
+            console.log(this.val); // Output: 10 бо значення "this" встановлюється на об’єкті myObj
+            console.log(window.val); // Output: 37
+            console.log(this === myObj); // Output: true
+            console.log(this); // Output: myObj object
          }
       }
       myObj.someFunction();
 
-   3.When a function is used as a constructor (with the new keyword), its this
-   is bound to the new object being constructed.
+   3. Коли функція використовується як конструктор (з ключовим словом "new"),
+   її "this" прив'язується до нового об’єкта, що створюється.
       function ConstructorFunc(value){
          this.someValue = value;
       }
@@ -48,37 +46,37 @@ console.log("Topic: Functions, part 1");
       var obj2 = new ConstructorFunction(42);
       console.log(obj2.someValue); // Output: 42
 
-   4. ‘this’ in Immediately Invoked Function expression (IIFE)
-   In IIFE, value of this is always equal to Window object. Let’s see an example:
-   // IIFE outside any function 
-   (function() {
-   console.log(this); // Output: Window object
-   })();
+   4. Ключове слово "this" у Immediately Invoked Function expression (IIFE)
+   Ключове слово "this" у виразі функції, що негайно викликається (IIFE) значення 
+   "this" завжди дорівнює об’єкту "Window". Розглянемо приклад:
+      4.1. коли IIFE поза межами будь-якої функції:
+         (function() {
+            console.log(this); // Output: Window object
+         })();
+      4.2. коли IIFE всередині об’єкта
+         var obj = {};
+         var someFunc = function() {
+            console.log("Function\'s this"); // Function's this
+            console.log(this === obj); // true
+            console.log('++++++++++++++++++++++++++');
 
-   // IIFE inside an object function
-   var obj = {};
-   var someFunc = function() {
-     console.log("Functions this");
-     console.log(this === obj);
-     console.log('++++++++++++++++++++++++++';
-   }
-   
-   // IIFE 
-   (function() {
-      console.log("IIFE this");
-      console.log(this); // Output: Window object
-      console.log("IIFE");
-      })()
-   };
-   obj.func = someFunc;
-   obj.func();
-   This is because, value of this inside a function is equal to the object 
-   on which it is called. someFunc is called on obj, hence value of this 
-   inside someFunc is obj. But, IIFE is self-invoked, it has not been called 
-   by any object. Hence, the value of this inside IIFE is Window object.
+            (function() {
+               console.log("IIFE\'s this"); // IIFE's this
+               console.log(this); // Output: Window object
+               console.log("IIFE"); // IIFE
+            })()
+         };
+         obj.func = someFunc;
+         obj.func();
 
-   5. Inside event handler, value of this is equal to the element on which
-   the event is fired. Let’s see this with an example of click event.
+         Це пояснюється тим, що значення "this" всередині функції дорівнює об'єкту
+         для якого вона викликається. Адже someFunc викликається для "obj", отже,
+         значення "this" всередині someFunc дорівнює "obj". А от IIFE викликається
+         самостійно, його не викликав жодний об'єкт. Тому значення "this" всередині
+         IIFE дорівнює об'єкту "Window".
+
+   5. Всередині обробника подій значення "this" дорівнює елементу, для якого спрацьовує
+   подія. Розглянемо це на прикладі події click.
    <body>
       <div id="divId">
          Hello
@@ -89,86 +87,80 @@ console.log("Topic: Functions, part 1");
          function clickMe(event) {
             console.log(event.currentTarget);
             console.log("CLick Me");
-            console.log(this);
+            console.log(this); // <div id="divId">...
          }
 	   </script>
    </body>
-   When we click on the div, from the above console output we can see that value
-   of this is equal to the div element which we clicked.
+   Коли ми клацаєм на div, у консолі ми бачимо, що значення "this" дорівнює елементу "div",
+   на якому ми клацнули.
 */
 
-// =====================Task 1 FDS===================================
-// UА: Маємо функцію introduce, яка використовує спеціальне ключове
-//     слово 'this' для передачі контенту title, що визначений в об'єктах
-//     lecturer та student. Покажіть, як викликати цю функцію із цим
-//     контентом для різних аргументів використавши метод call()?
-// EN: We have the introduce function, which uses the special keyword
-//     'this' to transfer the title content defined in the lecturer
-//     and student objects. Show how to call this function with this
-//     content for different arguments using the call() method?
+// =================================== 02 ==================================
+/* 
+   Маємо функцію introduce, яка використовує спеціальне ключове слово 'this'
+   для передачі контенту title, що визначений в об’єктах lecturer та student.
+   Покажіть, як викликати цю функцію із цим контентом та інших аргументів
+   використавши метод call()? Іншими аргументами функції є ім’я та фамілія:
+      - lecturer: firstName = 'Derek', lastName = 'Asencheim'
+      - student: firstName = 'Nike', lastName = 'Terner'
+      - student: firstName = 'Mark-Andre', lastName = 'Machony'
+*/
+function introduce(firstName, lastName) {
+  console.log(`Hello, I am ${this.title} ${firstName} ${lastName}.`);
+}
+const lecturer = {
+  title: "Dr.",
+};
+const student = {
+  title: "student",
+};
 
-//     Arguments:
-//     lecturer: firstName = 'Derek', lastName = 'Asencheim'
-//     student: firstName = 'Nike', lastName = 'Terner'
-//     student: firstName = 'Mark-Andre', lastName = 'Machony'
-
-// function introduce(firstName, lastName) {
-// 	console.log(`Hello, I am ${this.title} ${firstName} ${lastName}.`);
-// }
-
-// const lecturer = {
-// 	title: 'Dr.',
-// };
-
-// const student = {
-// 	title: 'student',
-// };
-
-// solution via call method:
+// Solution via call method:
 /* the call() method of Function instances calls this function with
    a given "this" value and arguments provided individually */
-// introduce.call(lecturer, 'Derek', 'Asencheim'); // "Hello, I am Dr. Derek Asencheim."
-// introduce.call(student, 'Nike', 'Terner'); // "Hello, I am student Nike Terner."
-// introduce.call(student, 'Mark-Andre', 'Machony'); // "Hello, I am student Mark-Andre Machony."
-// ==================================================================
+introduce.call(lecturer, "Derek", "Asencheim"); // "Hello, I am Dr. Derek Asencheim."
+introduce.call(student, "Nike", "Terner"); // "Hello, I am student Nike Terner."
+introduce.call(student, "Mark-Andre", "Machony"); // "Hello, I am student Mark-Andre Machony."
 
-// =====================Task 2 FDS===================================
-// UА: Маємо функцію greet, яка використовує спеціальне ключове слово 'this'
-//     для передачі контенту title, що визначений в обєктi agent.
-//     Покажіть, як викликати цю функцію із цим контентом для різних аргументів
-//     використавши метод apply?
-// EN: We have the introduce function, which uses the special keyword 'this'
-//     to transfer the title content defined in the lecturer and student objects.
-//     Show how to call this function with this content for different arguments using
-//     the apply method?
-//
-// Arguments:
-//     salutation = 'Вітання!', name = 'Тарас',
-//     salutation = 'Greetings!', name = 'John',
-//     salutation = 'Salutation!', name = 'Sharlise', salutation = 'Gruß!', name = 'Fritz',
-//     salutation = 'Saludo!', name = 'Carlos', salutation = '挨拶!', name = 'Saki',
+// =================================== 03 ==================================
+/* 
+   Маємо функцію greet, яка використовує спеціальне ключове слово 'this' для
+   передачі контенту title, що визначений в об’єктi agent. Покажіть, як викликати
+   цю функцію із цим контентом та іншими аргументами використавши метод apply?
+   Інші аргументи функції є вітання різними мовами та ім’я агента з нерухомості:
+      salutation = 'Вітання!', name = 'Тарас',
+      salutation = 'Greetings!', name = 'John',
+      salutation = 'Salutation!', name = 'Sharlise',
+      salutation = 'Gruß!', name = 'Fritz',
+      salutation = 'Saludo!', name = 'Carlos',
+      salutation = '挨拶!', name = 'Saki',
+*/
+function greet(salutation, name) {
+  console.log(`${salutation}, ${this.title} ${name}`);
+}
+const agent = {
+  title: "real-estate agent",
+};
 
-// function greet(salutation, name) {
-// 	console.log(`${salutation}, ${this.title} ${name}`);
-// }
-// const agent = {
-// 	title: 'real-estate agent',
-// };
+// Solution:
+/* the apply() method of Function instances calls this function with a given
+   "this" value, and arguments provided as an array (or an array-like object) */
+greet.apply(agent, ["Вітання!", "Тарас"]); // Вітання!, real-estate agent Тарас
+greet.apply(agent, ["Greetings!", "John"]); // Greetings!, real-estate agent John
+greet.apply(agent, ["Salutation!", "Sharlise"]); // Salutation!, real-estate agent Sharlise
+greet.apply(agent, ["Gruß!", "Fritz"]); // Gruß!, real-estate agent Fritz
+greet.apply(agent, ["Saludo!", "Carlos"]); // Saludo!, real-estate agent Carlos
+greet.apply(agent, ["挨拶！", "Saki"]); // 挨拶!, real-estate agent Saki
 
-// solution via apply method:
-// the apply() method of Function instances calls this function with a given
-// "this" value, and arguments provided as an array (or an array-like object)
-// greet.apply(agent, ['Вітання!', 'Тарас']); // Вітання!, real-estate agent Тарас
-// greet.apply(agent, ['Greetings!', 'John']); // Greetings!, real-estate agent John
-// greet.apply(agent, ['Salutation!', 'Sharlise']); // Salutation!, real-estate agent Sharlise
-// greet.apply(agent, ['Gruß!', 'Fritz']); // Gruß!, real-estate agent Fritz
-// greet.apply(agent, ['Saludo!', 'Carlos']); // Saludo!, real-estate agent Carlos
-// greet.apply(agent, ['挨拶！', 'Saki']); // 挨拶!, real-estate agent Saki
-// ==================================================================
-// ==================== Task 2 this =================================
-/* Add a method called getStatus to the player object that returns a 
-   string with the player's name and health using the this keyword.
-   Expected Output Format: "Knight has 70 health". */
+// =================================== 04 ==================================
+/* 
+   Маємо об’єкт player, який параметрами має ім’я (name) і рівень здоров’я (health)
+   та метод, що обчислює втрату рівня здоров’я гравця, що використовує ключове
+   слово "this" для доступу до параметрів цього об’єкта.
+   Додайте метод getStatus до об’єкта player, який повертає рядок з іменем та станом
+   здоров’я гравця, використовуючи ключове слово this. Очікуваний результат має
+   бути: "Knight has 70 health".
+*/
 // Solution:
 /* Ключове слово "this" у JavaScript посилається на об'єкт, який наразі
    виконує код. Воно дозволяє отримати доступ до властивостей та методів
@@ -185,157 +177,173 @@ const player = {
     return this.name + " has " + this.health + " health";
   },
 };
-
-// Test
 player.takeDamage(30);
 console.log(player.getStatus()); // Knight has 70 health
 
-// =====================Task 3 FDS===================================
-// UА: Для чого використовують 'сlosure' (замикання) в JavaScript? Покажіть
-//     сутність замикання на прикладі використавши для цього дані:
-//     function outerFunction(){}, function innerFunction() {},
-//     const outerVariable = 'I am from outer function';
-// EN: What is 'closure' used for in JavaScript? Show the essence of
-//     the 'closure' with an example using the following data:
-//     function outerFunction(){}, function innerFunction() {},
-//     const outerVariable = 'I am from outer function';
+// =================================== 05 ==================================
+/* Створіть анонімну функцію, яка повинна вивести повідомлення 'Some message'
+   у коноль. ця функція є обробником події click для кнопки. Також виведіть у
+   консоль, що показує ключове слово this.
+*/
+const button = document.getElementById("btn-create-promise"); // визначемо node button
 
-// solution:
-// Closures are commonly used to create private variables and encapsulation
-// in JavaScript. By defining variables within an outer function and returning
-// an inner function that accesses and modifies those variables, you can
-// control the visibility and manipulation of data. This allows you to achieve
-// information hiding and avoid global namespace pollution.
-// Closures are often used in scenarios such as event handlers, callbacks, and
-// maintaining state in functional programming. They provide a way to create
-// persistent references to variables. So, the example will be:
-// function outerFunction() {
-// 	const outerVariable = 'I am from outer function';
-// 	function innerFunction() {
-// 		console.log(outerVariable);
-// 	}
-// 	return innerFunction;
-// }
-// const closure = outerFunction();
-// closure(); // I am from outer function
+// Solution via function declaration:
+const handler1 = function () {
+  console.log("Some message");
+  console.log(this); // <button id="btn-create-promise" type="button">Create Promise</button>
+};
+button.addEventListener("click", handler1);
 
-// =====================Task 2 FDS===================================
-// Task 1. FDS
-// UА: Створіть функцію conc, яка повинна конкатенувати значення
-//     двух параметрів a і b та повертати рядок.
-//     Використовуйте Function Declaration Statement (FDS).
-//     Викликайте функцію до її створення.
-//     Тестові дані:
-//     a = '1', b = '1', result = '11'
-//     a = 1, b = 1, result = '11'
-// EN: Create a function conc, which should concatenate the values
-//     of two parameters a and b and return a string.
-//     Use Function Declaration Statement (FDS).
-//     Call a function before it declaration.
-//     Test data:
-//     a = '1', b = '1', result = '11'
-//     a = 1, b = 1, result = '11'
+// Solution via arrow function
+const handler2 = () => {
+  console.log("Some message");
+  console.log(this); // {} - тому що стрілкова фукнція не має свого this
+};
+button.addEventListener("click", handler2);
 
-// let result1 = conc('1', '1');
-// console.log(result1); // 11
+// Solution via IIFE
+(function () {
+  const button = document.getElementById("btn-create-promise");
+  const handler3 = function () {
+    console.log("Some message");
+    console.log(this); // <button id="btn-create-promise" type="button">Create Promise</button>
+  };
+  button.addEventListener("click", handler3);
+})();
 
-// let result2 = conc(1, 1);
-// console.log(result2); // 11
+// =================================== 06 ==================================
+/* Для чого використовують 'сlosure' (замикання) в JavaScript? Покажіть
+   сутність замикання на прикладі використавши для цього дані:
+   function outerFunction(){}, function innerFunction() {},
+   const outerVariable = 'I am from outer function'.
+*/
+// Solution:
+/* Замикання зазвичай використовуються для створення приватних змінних та 
+ інкапсуляції в JavaScript. Визначаючи змінні всередині зовнішньої функції
+ та повертаючи внутрішню функцію, яка отримує доступ до цих змінних та змінює
+ їх, можна контролювати доступ до цих данних та маніпулювати ними. Це дозволяє
+ приховувати інформацію та уникати глобального забруднення простору іменами.
+ Замикання часто використовуються в таких сценаріях, як обробники подій, зворотні
+ виклики та підтримка стану у функціональному програмуванні. Вони надають спосіб
+ створення постійних посилань на "замкнуті" змінні. Отже, рішення буде таким:
+*/
+function outerFunction() {
+  const outerVariable = "I am from outer function";
 
-// var1 - via глобальний об'єкт String()
-// function conc(a, b) {
-// 	return String(a) + String(b);
-// }
+  function innerFunction() {
+    console.log(outerVariable); // посилання на змінну зовнішньої функції
+  }
 
-// var2 - via шаблонні строки (завжди повертають рядок символів)
-// function conc(a, b) {
-// 	return `${a}${b}`;
-// }
+  return innerFunction;
+}
+const closure = outerFunction();
+closure(); // I am from outer function
 
-// var3 - довільний варіант через об'єкт що повертає функцію
-// function createSomeObj() {
-// 	return {
-// 		conc: conc,
-// 	};
+// =================================== 07 ==================================
+/* Створіть функцію conc, яка повинна конкатенувати значення двух параметрів
+   a і b та повертає рядок. Для рішення використайте Function Declaration
+   Statement (FDS). Для розуміння FDS викликайте функцію до її створення.
+   Тестові дані: a = '1', b = '1', result = '11' або a = 1, b = 1, result = '11'
+*/
+// Solution via converting to string:
+let result1 = conc("1", "1"); // викликали до створення
+console.log(result1); // 11
+let result2 = conc(1, 1); // викликали до створення
+console.log(result2); // 11
+// створюємо функцію використовуючи вбудований String() метод
+function conc(a, b) {
+  return String(a) + String(b);
+}
 
-// 	function conc(a, b) {
-// 		return `${a}${b}`;
-// 	}
-// }
+// Solution via шаблонні строки (завжди повертають рядок символів):
+function conc2(a, b) {
+  return `${a}${b}`;
+}
 
-// console.log(createSomeObj().conc(1, 1)); // 11
+// Solution via object's metod:
+function createSomeObj() {
+  return {
+    conc: conc3,
+  };
 
-// Task 2. FDE
-// UА: Створіть функцію comp, яка повинна порівнювати значення
-//     двох параметрів a та b і повертати 1, якщо вони рівні та -1, якщо вони не рівні.
-//     Використовуйте Function Definition Expression (FDE).
-//     Викликайте функцію до її створення.
-//     Тестові дані:
-//     a = 'abc', b = 'abc', result = 1
-//     a = 'abC', b = 'abc', result = -1
-// EN: Create a function comp, which should compare the values
-//     of two parameters a and b, and return 1, when they equal and return -1,
-//     when they are not equal.
-//     Use Function Definition Expression (FDE).
-//     Call a function before it declaration.
-//     Test data:
-//     a = 'abc', b = 'abc', result = 1
-//     a = 'abC', b = 'abc', result = -1
+  function conc3(a, b) {
+    return `${a}${b}`;
+  }
+}
+console.log(createSomeObj().conc(1, 1)); // 11
 
-// const result1 = comp('abc', 'abc');
-// console.log(result1); // 1
+// =================================== 08 ==================================
+/* Створіть функцію comp, яка повинна порівнювати значення двох параметрів a
+   та b і повертати 1, якщо вони рівні та -1, якщо вони не рівні. У своєму
+   рішенні застосуйте Function Definition Expression (FDE). Викликайте
+   функцію до її створення. Для тестування візьміть такі дані:
+   a = 'abc', b = 'abc', result = 1 та a = 'abC', b = 'abc', result = -1
+*/
+// Solution via if or ternary operartor:
+const result3 = comp("abc", "abc");
+console.log(result3); // 1
+const result4 = comp("abC", "abc");
+console.log(result4); // -1
 
-// const result2 = comp('abC', 'abc');
-// console.log(result2); // -1
+function comp(a, b) {
+  if (a === b) {
+    return 1;
+  }
+  return -1;
+  // або
+  // return a === b ? 1 : -1;
+}
 
-// var 1 - via оператор if
-// function comp(a, b) {
-// 	if (a === b) {
-// 		return 1;
-// 	}
-// 	return -1;
-// }
+// =================================== 09 ==================================
+/* Вкажіть значення за замовчуванням для параметрів функції greet, якщо вони 
+  не були визначені або не були надані.
+*/
+// Solution via OR (||) operator:
+function greet(name, greeting) {
+  name = name || "Guest";
+  greeting = greeting || "Hello";
+  console.log(`${greeting}, ${name}!`);
+}
+greet(); // Output: Hello, Guest!
+greet("Eve"); // Output: Hello, Eve!
 
-// var 2 -  via ternary оператор
-// function comp(a, b) {
-// 	return a === b ? 1 : -1;
-// }
+// solution via assigning default values in the parameters:
+function greet1(name = "Guest", greeting = "Hello") {
+  console.log(`${greeting}, ${name}!`);
+}
+console.log(greet1()); // Output: Hello, Guest!
+console.log(greet1("Frank")); // Output: Hello, Frank!
+console.log(greet1("Grace", "Hi")); // Output: Hi, Grace!
 
-// Task 3. AF
-// UA: Створіть анонімну функцію, яка повинна
-//     вивести повідомлення 'message in console' в конолі.
-//     Використовуйте її як обробник події click для кнопки.
-//     При цьому виведіть в консоль що показує ключове слово this.
-// EN: Create an anonymous function, which should display
-//     message 'message in console' in console.
-//     Use it as an event handler of event click of the button.
-//     At the same time, display the keyword this in the console.
+// =================================== 10 ==================================
+/* В нас є функція greet(), яка повертає дефолтне значення у разі, якщо не
+   було отримано аргумент. Перепишіть її в іншому варіанті використавши оператори
+   if..else та оператор "АБО" (||).
+*/
+// solution via if..else operators:
+function greet2(name) {
+  let displayName;
+  if (name === null || name === undefined || name === "") {
+    displayName = "Guest";
+  } else {
+    displayName = name;
+  }
+  console.log(`Hello, ${displayName}!`);
+}
+greet2("Alice"); // Output: Hello, Alice!
+greet2(null); // Output: Hello, Guest!
 
-// const button = document.getElementById('btn-create-promise'); // define the button-node
+// solution via ||-operator:
+/* Ми можемо використовувати логічний оператор АБО для присвоєння значення за замовчуванням,
+  якщо перший операнд має falsy значення (null, undefined, 0, "", false). */
+function greet3(name) {
+  let displayName = name || "Guest";
+  console.log(`Hello, ${displayName}!`);
+}
 
-// var 1 - via function declaration
-// const handler = function () {
-// 	console.log('message in console');
-// 	console.log(this); // <button id="btn-create-promise" type="button">Create Promise</button>
-// };
-// button.addEventListener('click', handler);
-
-// solution via arrow function
-// const handler = () => {
-// 	console.log('message in console');
-// 	console.log(this); // {} because the arrow function is used
-// };
-// button.addEventListener('click', handler);
-
-// var 3 - via IIFE
-// (function () {
-// 	const button = document.getElementById('btn-create-promise');
-// 	const handler = function () {
-// 		console.log('message in console');
-// 		console.log(this); // <button id="btn-create-promise" type="button">Create Promise</button>
-// 	};
-// 	button.addEventListener('click', handler);
-// })();
+greet3("Ellis"); // Output: Hello, Ellis!
+greet3(0); // Output: Hello, Guest!
+greet3(""); // Output: Hello, Guest!
 
 // ============================Task 17===================================
 // UA: Створіть масив з цілих чисел. Напишіть функцію, яка на основі
@@ -458,18 +466,6 @@ console.log(player.getStatus()); // Knight has 70 health
 // };
 // findVowels(string); // 9
 
-// // solution via regEx:
-// const findVowels = (str) => {
-// 	// to match vowels (case-insensitive)
-// 	const vowelCount = str.match(/[aeiou]/gi);
-// 	console.log(vowelCount); // ['A', 'a', 'a', 'O', 'a', 'o', 'a', 'a', 'O']
-
-// 	// check if vowelCount is null (no matches found) or get its length
-// 	return vowelCount ? vowelCount.length : 0;
-// };
-// const vowelCount = findVowels(string);
-// console.log(vowelCount); // 9
-
 // Task 7. IIFE
 // UA: Створіть конструкцію, за допомогою якої буде виконана раніше реалізована
 //     функція conc.
@@ -554,118 +550,6 @@ console.log(player.getStatus()); // Knight has 70 health
 // console.log(parts(param1, param2));
 
 // via ...rest
-
-// ============================Task 08================================================
-// UA: Вкажіть значення за замовчуванням для параметрів функції, якщо вони не визначені
-//     або не надані.
-// EN: Provide default values for function parameters if they are undefined or not
-//     provided.
-
-// function greet(name, greeting) {
-//   name = name || "Guest";
-//   greeting = greeting || "Hello";
-//   console.log(`${greeting}, ${name}!`);
-// }
-// greet();       // Output: Hello, Guest!
-// greet("Eve");  // Output: Hello, Eve!
-
-// solution via assigning default values in the parameters
-function greet(name = "Guest", greeting = "Hello") {
-  console.log(`${greeting}, ${name}!`);
-}
-console.log(greet()); // Output: Hello, Guest!
-console.log(greet("Frank")); // Output: Hello, Frank!
-console.log(greet("Grace", "Hi")); // Output: Hi, Grace!
-// ===================================================================================
-
-// ============================Task 01================================================
-// UA: В нас є функція greet(), яка повертає дефолтне значення у разі, якщо
-//     не було отримано аргумент.
-//     Перепишіть її в іншому варіанті використавши оператор АБО (||)?
-// EN: We have a greet() function that returns a default value if no argument
-//     is received. Rewrite it in another way using the OR operator (||)?
-
-function greet1(name) {
-  let displayName;
-  if (name === null || name === undefined || name === "") {
-    displayName = "Guest";
-  } else {
-    displayName = name;
-  }
-  console.log(`Hello, ${displayName}!`);
-}
-greet1("Alice"); // Output: Hello, Alice!
-greet1(null); // Output: Hello, Guest!
-
-// solution via || operator
-/*We can use the logical OR operator to assign a default value if the first operand 
-is falsy (null, undefined, 0, "", false).*/
-
-function greet2(name) {
-  let displayName = name || "Guest";
-  console.log(`Hello, ${displayName}!`);
-}
-
-greet2("Ellis"); // Output: Hello, Ellis!
-greet2(null); // Output: Hello, Guest!
-greet2(""); // Output: Hello, Guest!
-// ===================================================================================
-
-// ============================Task ??===================================
-// UA: Напишіть функцію яка перевіряє чи рядок містить цифри? А як зміниться
-//     функція якщо перевіряти чи містяться в рядку тільки цифри?
-// EN: Write a function that checks whether a string contains numbers? And
-//     how will the function change if you check whether the string contains
-//     only numbers?
-
-// solution via RegEx using test method:
-// function containsNumbers(str) {
-// 	return /\d/.test(str); // the \d metacharacter matches any digit (0 - 9) in the string
-// 	// or can use [0-9] like:
-// 	// return /[0-9]/.test(str);
-// }
-
-// usage check
-// console.log(containsNumbers('hello123')); // true
-// console.log(containsNumbers('javascript')); // false
-// console.log(containsNumbers('3 apples')); // true
-
-// solution via regExp using test method to check only numbers:
-/* the ^ character marks the beginning of the string input, and
-   the $ character marks the end of it. Adding the + character 
-   after the \d makes regex match one or more occurrences of the
-   \d pattern.*/
-// function containsOnlyNumbers(str) {
-// 	return /^\d+$/.test(str); //
-// 	// or can use [0-9] like:
-// 	// return /^[0-9]+$/.test(str);
-// }
-// usage check:
-// console.log(containsOnlyNumbers('hello123')); // false
-// console.log(containsOnlyNumbers('3453')); // true
-// console.log(containsOnlyNumbers('3 apples')); // false
-
-// solution via RegEx using String match() method:
-/* the String match() method returns an array of all the matches
-   of a regular expression in a string. If there are no matches, 
-   it returns null. */
-// function containsNumbers(str) {
-// 	return str.match(/\d/);
-// }
-// console.log(containsNumbers('hello123')); // [ '1', index: 5, input: 'hello123', groups: undefined ]
-// console.log(containsNumbers('javascript')); // null
-// console.log(containsNumbers('3 apples')); // [ '3', index: 0, input: '3 apples', groups: undefined ]
-
-/* That's why we pass the result of match() to the Boolean() constructor
- to convert it to a Boolean value. Boolean() converts truthy values to true, 
- and falsy values to false. */
-// function containsNumbers(str) {
-// 	return Boolean(str.match(/\d/));
-// }
-// console.log(containsNumbers('hello123')); // true
-// console.log(containsNumbers('javascript')); // false
-// console.log(containsNumbers('3 apples')); // true
-// ======================================================================
 
 // =====================Task 09===================================
 // UА: Є масив fruits з елементами які повторяються. Потрібно дізнатись,
@@ -1588,3 +1472,38 @@ console.log(doubled); // Output: [2, 4, 6]
 
 // console.log(ucFirst('modest')); // Modest
 // =====================================================================
+
+// =================================== ?? ==================================
+/*  Знайдіть максимальну різницю між двома елементами заданого масиву при
+    цьому не використовувати вбудовані методи.
+*/
+// Solution:
+const myArr11 = [7, 1, 5, 3, 6, 4];
+function maxDifference(arr) {
+  let minEle = arr[0]; // припустим, що перший елемент масиву - це елемент з мінімальним значенням
+  let maxDiff = 0; // початкове значення для максимальної різниці
+
+  // ітеруємо по усіх елементах масиву
+  for (let i = 1; i < arr.length; i++) {
+    // знаходимо різницю між поточним елементом та мінімальним елементом
+    let diff = arr[i] - minEle;
+
+    if (diff > maxDiff) {
+      maxDiff = diff; // присвоюємо значення змінній maxDiff
+    }
+
+    // якщо поточний елемент менше мінімального
+    if (arr[i] < minEle) {
+      minEle = arrp[i]; // то визначаєм поточний елемент як елемент із мінімальним значенням
+    }
+  }
+  return maxDiff;
+}
+console.log(maxDifference(myArr11)); // 5
+/* Чому не 6 (7–1)? Бо цей алгоритм не дозволяє брати різницю між першим елементом (7) і
+  другим елементом (1) у зворотному порядку. Він завжди рахує arr[i] - minEle, де minEle
+  — це мінімум серед попередніх елементів, а не серед усіх. Тобто:
+  Для 7 і 1 різниця була б 7 - 1 = 6. Але коли ми дійшли до 7, мінімального ще не було (бо
+  це перший елемент). Коли ми дійшли до 1, він став новим мінімальним, але ми вже не можемо
+  повернутися назад до 7.
+*/

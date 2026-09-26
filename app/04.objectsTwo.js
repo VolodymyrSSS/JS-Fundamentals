@@ -831,3 +831,85 @@ console.log(person2.lastName);
 
 // const resultMap = entries.reduce();
 // console.log(set);
+
+// =================================== 01 ==================================
+/*
+  Напишіть функцію countCharacters, яка приймає рядок і повертає об’єкт з 
+  кількістю входжень кожного символу.
+*/
+// Solution via for..of loop (iterates over values of an iterable):
+/* Алгоритм рішення:
+  1. Створити порожній об’єкт counts.
+  2. Перебераєм кожен символ у рядку.
+  - Якщо символ вже існує як ключ у counts, збільшуєм його значення.
+  - Якщо ні, ініціалізуємо його 1.
+  3. Повертаємо кінцевий об’єкт.
+*/
+function countCharacters1(str) {
+  const counts = {}; // створюємо пустий об’єкт куда будемо заносити кількість входжень
+
+  // перебераєм кожен символ у рядку бо for..of цикл ітерує по символам/елементам рядка
+  for (let char of str) {
+    // якщо ключ існує, збільшуєм підрахунок ключів; інакше - ініціалізуємо значення 1
+    counts[char] = (counts[char] || 0) + 1;
+  }
+
+  return counts;
+}
+console.log(countCharacters1("hello"));
+// { h: 1, e: 1, l: 2, o: 1 }
+
+/* більш очевидний метод з використанням оператора if:
+function countCharacters(str) {
+    const counts = {};
+
+    for (let char of str) {
+        if (counts[char]) {
+          // якщо ключ вже існує, збільшуємо підрахунок входжень
+          counts[char] += 1;
+        } else {
+          // якщо ні, ініціалізуємо 1
+          counts[char] = 1;
+        }
+    }
+
+    return counts;
+}
+*/
+
+// Solution via for..in loop (iterates over keys of an object):
+function countCharacters2(str) {
+  const counts = {};
+
+  // перебераєм кожен ключ у рядку бо for..in цикл ітерує по ключам обєкта, але якщо
+  // ітеруємо по рядку це будуть індекси ("0", "1", "2", ...) а нам треба символи рядку
+  for (let i in str) {
+    const char = str[i]; // створюємо змінну для доступу до символу рядка
+
+    // якщо значення ключа вже є в об’єкті, то збільшуємо його на 1
+    if (counts[char]) {
+      counts[char] += 1;
+    } else {
+      // якщо значення ключа немає в об’єкті, то ініціалізуємо його 1
+      counts[char] = 1;
+    }
+  }
+
+  return counts; // повертаємо результуючий об’єкт
+}
+console.log(countCharacters2("programming"));
+// { p: 1, r: 2, o: 1, g: 2, a: 1, m: 2, i: 1, n: 1 }
+
+// Solution with reduce method:
+function countCharactersReduce3(str) {
+  return str.split("").reduce((acc, char) => {
+    if (acc[char]) {
+      acc[char] += 1;
+    } else {
+      acc[char] = 1;
+    }
+    return acc;
+  }, {});
+}
+console.log(countCharactersReduce3("Oblivion"));
+// { O: 1, b: 1, l: 1, i: 2, v: 1, o: 1, n: 1 }

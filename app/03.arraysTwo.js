@@ -254,11 +254,11 @@ console.log(doubledChocolates2); // [6, 8, 14, 4]
   (список).
 */
 // Solution:
-const prices = [199.99, 249.5, 79.99, 12.5, 8.99, 350.75];
+const prices2 = [199.99, 249.5, 79.99, 12.5, 8.99, 350.75];
 // Сортуємо від найменшої до найбільшої
-prices.sort((a, b) => a - b);
+prices2.sort((a, b) => a - b);
 // Округлюємо до цілих
-const roundedPrices = prices.map((p) => Math.round(p));
+const roundedPrices = prices2.map((p) => Math.round(p));
 // Фільтруємо < 200
 const filteredUnder200 = roundedPrices.filter((p) => p < 200);
 // Застосовуємо 10% знижку і округлюємо до найближчого цілого
