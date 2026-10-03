@@ -11,7 +11,6 @@
 // import * as o04 from "./04.objectsFour-Classes";
 // import * as o05 from './05.date';
 // import * as o06 from "./06.functions1-basic";
-import * as o06 from "./06.functions2";
 // import * as o06 from "./06.functions3";
 // import * as o06 from "./06.functions4";
 // import * as o06 from "./06.functions5";
@@ -19,7 +18,7 @@ import * as o06 from "./06.functions2";
 // import * as o06 from "./06.functions7-Recursion";
 // import * as o06 from "./06.functions8";
 // import * as o06 from "./06.functions10-regEx";
-// import * as o07 from "./07.promisesOne";
+import * as o07 from "./07.promisesOne";
 // import * as o07 from "./07.promisesTwo";
 // import * as o07 from "./07.promisesWith-AsyncFunc";
 // import * as o08 from './08.async-functions';
